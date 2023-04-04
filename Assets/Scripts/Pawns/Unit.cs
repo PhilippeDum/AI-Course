@@ -37,11 +37,6 @@ public class Unit : MonoBehaviour
         agent.stoppingDistance = stoppingDistance;
     }
 
-    void Update()
-    {
-        
-    }
-
     #region Movement
 
     #endregion
