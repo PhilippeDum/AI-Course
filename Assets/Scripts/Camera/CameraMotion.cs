@@ -58,18 +58,6 @@ public class CameraMotion : MonoBehaviour
         {
             _targetPosition.x -= _speedCursor * Time.deltaTime;
         }
-
-        /*if (Input.mousePosition.y >= Screen.height - borderLimit)
-        {
-            // top
-        }
-        if (Input.mousePosition.y < Screen.height - borderLimit)
-        {
-            // bottom
-        }
-
-        _targetPosition.x = Mathf.Clamp(_targetPosition.x, -_range.x, _range.x);
-        _targetPosition.z = Mathf.Clamp(_targetPosition.z, -_range.y, _range.y);*/
         
         transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime * _smoothing);
     }
@@ -82,30 +70,18 @@ public class CameraMotion : MonoBehaviour
             position.z < _range.y;
     }
 
-    private bool IsInBoundsXTop(float positionAxis)
-    {
-        return positionAxis < _range.x;
-    }
-
-    private bool IsInBoundsXBottom(float positionAxis)
-    {
-        return positionAxis > -_range.x;
-    }
-
     private void Update()
     {
         HandleInput();
 
-        if (_input != Vector3.zero)
-            Move();
-        else
-            MoveCursor();
+        Move();
+        MoveCursor();
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(transform.position, 5f);
         Gizmos.DrawWireCube(Vector3.zero, new Vector3(_range.x * 2f, 5f, _range.y * 2f));
-    }
+    }*/
 }
