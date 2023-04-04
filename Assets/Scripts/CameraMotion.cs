@@ -3,8 +3,10 @@ using UnityEngine;
 public class CameraMotion : MonoBehaviour
 {
     [SerializeField] private float _speed = 1f;
+    [SerializeField] private float _speedCursor = 10f;
     [SerializeField] private float _smoothing = 5f;
     [SerializeField] private Vector2 _range = new (100, 100);
+    [SerializeField] private float borderLimit = 10f;
 
     private Vector3 _targetPosition;
     private Vector3 _input;
@@ -28,7 +30,47 @@ public class CameraMotion : MonoBehaviour
     private void Move()
     {
         Vector3 nextTargetPosition = _targetPosition + _input * _speed;
-        if (IsInBounds(nextTargetPosition)) _targetPosition = nextTargetPosition;
+
+        if (IsInBounds(nextTargetPosition)) 
+            _targetPosition = nextTargetPosition;
+
+        transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime * _smoothing);
+    }
+
+    private void MoveCursor()
+    {
+        if (Input.mousePosition.y > Screen.height - borderLimit)
+        {
+            _targetPosition.z += _speedCursor * Time.deltaTime;
+        }
+
+        if (Input.mousePosition.y < borderLimit)
+        {
+            _targetPosition.z -= _speedCursor * Time.deltaTime;
+        }
+
+        if (Input.mousePosition.x > Screen.width - borderLimit)
+        {
+            _targetPosition.x += _speedCursor * Time.deltaTime;
+        }
+
+        if (Input.mousePosition.x < borderLimit)
+        {
+            _targetPosition.x -= _speedCursor * Time.deltaTime;
+        }
+
+        /*if (Input.mousePosition.y >= Screen.height - borderLimit)
+        {
+            // top
+        }
+        if (Input.mousePosition.y < Screen.height - borderLimit)
+        {
+            // bottom
+        }
+
+        _targetPosition.x = Mathf.Clamp(_targetPosition.x, -_range.x, _range.x);
+        _targetPosition.z = Mathf.Clamp(_targetPosition.z, -_range.y, _range.y);*/
+        
         transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime * _smoothing);
     }
 
@@ -40,10 +82,24 @@ public class CameraMotion : MonoBehaviour
             position.z < _range.y;
     }
 
+    private bool IsInBoundsXTop(float positionAxis)
+    {
+        return positionAxis < _range.x;
+    }
+
+    private bool IsInBoundsXBottom(float positionAxis)
+    {
+        return positionAxis > -_range.x;
+    }
+
     private void Update()
     {
         HandleInput();
-        Move();
+
+        if (_input != Vector3.zero)
+            Move();
+        else
+            MoveCursor();
     }
 
     private void OnDrawGizmos()

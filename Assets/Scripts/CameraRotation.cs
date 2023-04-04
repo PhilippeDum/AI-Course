@@ -17,12 +17,14 @@ public class CameraRotation : MonoBehaviour
     private void HandleInput()
     {
         if (!Input.GetMouseButton(1)) return;
+
         _targetAngle += Input.GetAxisRaw("Mouse X") * _speed;
     }
 
     private void Rotate()
     {
         _currentAngle = Mathf.Lerp(_currentAngle, _targetAngle, Time.deltaTime * _smoothing);
+
         transform.rotation = Quaternion.AngleAxis(_currentAngle, Vector3.up);
     }
 

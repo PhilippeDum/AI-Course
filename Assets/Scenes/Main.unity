@@ -442,9 +442,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142b1111064352c44b361fa21149d0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0.3
+  _speed: 0.05
+  _speedCursor: 10
   _smoothing: 5
   _range: {x: 20, y: 20}
+  borderLimit: 10
 --- !u!4 &800062062
 Transform:
   m_ObjectHideFlags: 0

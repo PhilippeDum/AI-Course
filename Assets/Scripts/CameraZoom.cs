@@ -25,7 +25,10 @@ public class CameraZoom : MonoBehaviour
     private void Zoom()
     {
         Vector3 nextTargetPosition = _targetPosition + _cameraDirection * (_input * _speed);
-        if (IsInBounds(nextTargetPosition)) _targetPosition = nextTargetPosition;
+
+        if (IsInBounds(nextTargetPosition)) 
+            _targetPosition = nextTargetPosition;
+
         _cameraHolder.localPosition = Vector3.Lerp(_cameraHolder.localPosition, _targetPosition, Time.deltaTime * _smoothing);
     }
 
