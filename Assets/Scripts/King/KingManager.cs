@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class KingManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class KingManager : MonoBehaviour
     [SerializeField] private Transform gathering;
 
     private Vector3 movePosition;
+    private Vector3 center;
 
     [Header("Production Properties")]
     [SerializeField] private int nbUnitsToProduct = 0;
@@ -19,6 +21,21 @@ public class KingManager : MonoBehaviour
     [SerializeField] private List<Unit> selectedUnits;
 
     private bool inProduction;
+
+    // Formation
+    private FormationBase _formation;
+
+    public FormationBase Formation
+    {
+        get
+        {
+            if (_formation == null) _formation = GetComponent<FormationBase>();
+            return _formation;
+        }
+        set => _formation = value;
+    }
+
+    private List<Vector3> points = new List<Vector3>();
 
     #region Getters / Setters
 
@@ -34,11 +51,19 @@ public class KingManager : MonoBehaviour
         set { selectedUnits = value; }
     }
 
+    public Vector3 Center
+    {
+        get { return center; }
+        set { center = value; }
+    }
+
     #endregion
 
     private void Start()
     {
         inProduction = false;
+
+        center = gathering.position;
     }
 
     private void Update()
@@ -46,6 +71,8 @@ public class KingManager : MonoBehaviour
         HandleProduction();
 
         HandleMovement();
+
+        HandleArmy();
     }
 
     #region Production
@@ -98,8 +125,10 @@ public class KingManager : MonoBehaviour
             movePosition = hit.point;
         }
 
-        if (Input.GetMouseButtonDown(1) && movePosition != null)
+        if (Input.GetMouseButtonDown(1))
         {
+            center = movePosition;
+
             for (int i = 0; i < selectedUnits.Count; i++)
             {
                 selectedUnits[i].MoveToPosition(movePosition);
@@ -108,4 +137,31 @@ public class KingManager : MonoBehaviour
     }
 
     #endregion
+
+    private void HandleArmy()
+    {
+        if (units.Count == 0) return;
+
+        //int sqrtUnitsCount = (int)Mathf.Sqrt(units.Count);
+
+        Debug.Log($"{units.Count} => {Mathf.RoundToInt(Mathf.Sqrt(units.Count))}");
+
+        int round = Mathf.RoundToInt(Mathf.Sqrt(units.Count));
+
+        int width = units.Count - round;
+        int depth = round;
+
+        //Debug.Log($"{units.Count} => sqrt = {sqrtUnitsCount}");
+        Debug.Log($"{units.Count} => width = {width} & depth = {depth}");
+
+        points = Formation.EvaluatePoints(width, depth).ToList();
+
+        Debug.Log($"points = {points.Count}");
+
+        /*for (int i = 0; i < units.Count; i++)
+        {
+            if (units[i] != null)
+                units[i].transform.position = Vector3.MoveTowards(units[i].transform.position, center + points[i], units[i].Speed * Time.deltaTime);
+        }*/
+    }
 }

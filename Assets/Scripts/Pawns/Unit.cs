@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,9 +13,6 @@ public class Unit : MonoBehaviour
     [SerializeField] private float speed = 3.5f;
     [SerializeField] private float stoppingDistance = 1f;
 
-    [Header("Flocking")]
-    [SerializeField] private float distance;
-
     public enum UnitType
     {
         Pawn
@@ -26,6 +24,12 @@ public class Unit : MonoBehaviour
     {
         get { return selection; }
         set { selection = value; }
+    }
+
+    public float Speed
+    {
+        get { return speed; }
+        set { speed = value; }
     }
 
     #endregion
@@ -43,10 +47,6 @@ public class Unit : MonoBehaviour
     {
         agent.SetDestination(position);
     }
-
-    #endregion
-
-    #region Flocking
 
     #endregion
 }
