@@ -39,26 +39,26 @@ public class CameraMotion : MonoBehaviour
 
     private void MoveCursor()
     {
-        if (Input.mousePosition.y > Screen.height - borderLimit)
+        if (Input.mousePosition.y > Screen.height - borderLimit && _targetPosition.z < _range.y)
         {
             _targetPosition.z += _speedCursor * Time.deltaTime;
         }
 
-        if (Input.mousePosition.y < borderLimit)
+        if (Input.mousePosition.y < borderLimit && _targetPosition.z > -_range.y)
         {
             _targetPosition.z -= _speedCursor * Time.deltaTime;
         }
 
-        if (Input.mousePosition.x > Screen.width - borderLimit)
+        if (Input.mousePosition.x > Screen.width - borderLimit && _targetPosition.x < _range.x)
         {
             _targetPosition.x += _speedCursor * Time.deltaTime;
         }
 
-        if (Input.mousePosition.x < borderLimit)
+        if (Input.mousePosition.x < borderLimit && _targetPosition.x > -_range.x)
         {
             _targetPosition.x -= _speedCursor * Time.deltaTime;
         }
-        
+
         transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime * _smoothing);
     }
 
