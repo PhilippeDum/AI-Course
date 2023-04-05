@@ -60,8 +60,8 @@ public class SelectionManager : MonoBehaviour
         float width = cursorMousePos.x - startPosition.x;
         float height = cursorMousePos.y - startPosition.y;
 
-        selectionBox.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height)) / canvasScaler.transform.localScale;
-        selectionBox.anchoredPosition = (startPosition + new Vector2(width / 2, height / 2)) / canvasScaler.transform.localScale;
+        selectionBox.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
+        selectionBox.anchoredPosition = startPosition + new Vector2(width / 2, height / 2);
     }
 
     private void ReleaseSelectionBox()
@@ -77,6 +77,7 @@ public class SelectionManager : MonoBehaviour
 
             if (screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y)
             {
+                Debug.Log($"unit in screen : {unit}");
                 selectedUnits.Add(unit);
                 unit.Selection.SetActive(true);
             }
