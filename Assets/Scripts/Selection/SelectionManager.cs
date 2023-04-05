@@ -60,8 +60,8 @@ public class SelectionManager : MonoBehaviour
         float width = cursorMousePos.x - startPosition.x;
         float height = cursorMousePos.y - startPosition.y;
 
-        selectionBox.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
-        selectionBox.anchoredPosition = startPosition + new Vector2(width / 2, height / 2);
+        selectionBox.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height)) / canvasScaler.transform.localScale;
+        selectionBox.anchoredPosition = (startPosition + new Vector2(width / 2, height / 2)) / canvasScaler.transform.localScale;
     }
 
     private void ReleaseSelectionBox()
