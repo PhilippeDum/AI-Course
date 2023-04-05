@@ -39,6 +39,11 @@ public class Unit : MonoBehaviour
 
     #region Movement
 
+    public void MoveToPosition(Vector3 position)
+    {
+        agent.SetDestination(position);
+    }
+
     #endregion
 
     #region Flocking

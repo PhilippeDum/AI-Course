@@ -7,12 +7,16 @@ public class KingManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject unitPrefab;
     [SerializeField] private Transform unitParent;
+    [SerializeField] private Transform gathering;
+
+    private Vector3 movePosition;
 
     [Header("Production Properties")]
     [SerializeField] private int nbUnitsToProduct = 0;
     [SerializeField] private int maxUnitsArray = 10;
     [SerializeField] private float timeOfProduction = 3f;
     [SerializeField] private List<Unit> units;
+    [SerializeField] private List<Unit> selectedUnits;
 
     private bool inProduction;
 
@@ -24,6 +28,12 @@ public class KingManager : MonoBehaviour
         set { units = value; }
     }
 
+    public List<Unit> SelectedUnits
+    {
+        get { return selectedUnits; }
+        set { selectedUnits = value; }
+    }
+
     #endregion
 
     private void Start()
@@ -32,6 +42,15 @@ public class KingManager : MonoBehaviour
     }
 
     private void Update()
+    {
+        HandleProduction();
+
+        HandleMovement();
+    }
+
+    #region Production
+
+    private void HandleProduction()
     {
         if (Input.GetKeyDown(KeyCode.Space) && nbUnitsToProduct < maxUnitsArray)
         {
@@ -44,30 +63,48 @@ public class KingManager : MonoBehaviour
         }
     }
 
-    #region Production
-
     private IEnumerator StartProduction()
     {
         inProduction = true;
-
-        Debug.Log($"Production in progress...");
 
         while (nbUnitsToProduct > 0)
         {
             yield return new WaitForSeconds(timeOfProduction);
 
-            GameObject unit = Instantiate(unitPrefab, unitParent);
+            Unit unit = Instantiate(unitPrefab, unitParent).GetComponent<Unit>();
 
-            units.Add(unit.GetComponent<Unit>());
+            unit.MoveToPosition(gathering.position);
+
+            units.Add(unit);
 
             nbUnitsToProduct--;
-
-            Debug.Log($"{unit.name} ready !");
         }
 
         inProduction = false;
+    }
 
-        Debug.Log($"Production finished !");
+    #endregion
+
+    #region Movement
+
+    private void HandleMovement()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            // Add if condition to detect enemy for attack
+
+            movePosition = hit.point;
+        }
+
+        if (Input.GetMouseButtonDown(1) && movePosition != null)
+        {
+            for (int i = 0; i < selectedUnits.Count; i++)
+            {
+                selectedUnits[i].MoveToPosition(movePosition);
+            }
+        }
     }
 
     #endregion

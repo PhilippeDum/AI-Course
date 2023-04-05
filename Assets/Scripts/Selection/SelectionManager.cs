@@ -11,9 +11,6 @@ public class SelectionManager : MonoBehaviour
     private Vector2 startPosition;
     private KingManager kingManager;
 
-    [Header("Selection")]
-    [SerializeField] private List<Unit> selectedUnits;
-
     private void Start()
     {
         kingManager = FindObjectOfType<KingManager>();
@@ -21,24 +18,20 @@ public class SelectionManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0))
         {
             startPosition = Input.mousePosition;
 
-            Deselect();
+            DetectUnit();
+        }
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (!Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0))
+        {
+            startPosition = Input.mousePosition;
 
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                if (hit.transform.CompareTag("Unit"))
-                {
-                    Unit unit = hit.transform.GetComponent<Unit>();
+            DeselectAll();
 
-                    selectedUnits.Add(unit);
-                    unit.Selection.SetActive(true);
-                }
-            }
+            DetectUnit();
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -49,6 +42,28 @@ public class SelectionManager : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             UpdateSelectionBox(Input.mousePosition);
+        }
+    }
+
+    private void DetectUnit()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            if (hit.transform.CompareTag("Unit"))
+            {
+                Unit unit = hit.transform.GetComponent<Unit>();
+
+                if (!unit.Selection.activeSelf)
+                {
+                    SelectUnit(unit);
+                }
+                else
+                {
+                    DeselectUnit(unit);
+                }
+            }
         }
     }
 
@@ -77,20 +92,30 @@ public class SelectionManager : MonoBehaviour
 
             if (screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y)
             {
-                Debug.Log($"unit in screen : {unit}");
-                selectedUnits.Add(unit);
-                unit.Selection.SetActive(true);
+                SelectUnit(unit);
             }
         }
     }
 
-    private void Deselect()
+    private void SelectUnit(Unit unit)
     {
-        foreach (Unit unit in selectedUnits)
+        kingManager.SelectedUnits.Add(unit);
+        unit.Selection.SetActive(true);
+    }
+
+    private void DeselectUnit(Unit unit)
+    {
+        kingManager.SelectedUnits.Remove(unit);
+        unit.Selection.SetActive(false);
+    }
+
+    private void DeselectAll()
+    {
+        foreach (Unit unit in kingManager.SelectedUnits)
         {
             unit.Selection.SetActive(false);
         }
 
-        selectedUnits.Clear();
+        kingManager.SelectedUnits.Clear();
     }
 }
