@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Rendering.FilterWindow;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -11,17 +13,32 @@ public class SelectionManager : MonoBehaviour
     private Vector2 startPosition;
     private KingManager kingManager;
 
+    [Header("UI")]
+    [SerializeField] private Text infosTitle;
+    [SerializeField] private Text infosDescription;
+    [SerializeField] private Text optionsTitle;
+    [SerializeField] private Text optionsDescription;
+    [SerializeField] private Button optionsButton;
+
     private void Start()
     {
         kingManager = FindObjectOfType<KingManager>();
+
+        SetupUI(false, false, false, false, false);
     }
 
     private void Update()
     {
+        HandleSelection();
+    }
+
+    #region Selection
+
+    private void HandleSelection()
+    {
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0))
         {
             startPosition = Input.mousePosition;
-            //kingManager.Center = startPosition;
 
             DetectUnit();
         }
@@ -29,7 +46,6 @@ public class SelectionManager : MonoBehaviour
         if (!Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0))
         {
             startPosition = Input.mousePosition;
-            //kingManager.Center = startPosition;
 
             DeselectAll();
 
@@ -49,10 +65,17 @@ public class SelectionManager : MonoBehaviour
 
     private void DetectUnit()
     {
+        if (EventSystem.current.IsPointerOverGameObject(-1)) return;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
+            if (hit.transform.CompareTag("Unit") || hit.transform.CompareTag("King"))
+                ShowInfos(hit.transform);
+            else
+                SetupUI(false, false, false, false, false);
+
             if (hit.transform.CompareTag("Unit"))
             {
                 Unit unit = hit.transform.GetComponent<Unit>();
@@ -120,4 +143,51 @@ public class SelectionManager : MonoBehaviour
 
         kingManager.SelectedUnits.Clear();
     }
+
+    #endregion
+
+    #region UI
+
+    private void SetupUI(bool state1, bool state2, bool state3, bool state4, bool state5)
+    {
+        infosTitle.gameObject.SetActive(state1);
+        infosDescription.gameObject.SetActive(state2);
+        optionsTitle.gameObject.SetActive(state3);
+        optionsDescription.gameObject.SetActive(state4);
+        optionsButton.gameObject.SetActive(state5);
+    }
+
+    private void ShowInfos(Transform hitTransform)
+    {
+        if (hitTransform.GetComponent<Element>())
+        {
+            Element element = hitTransform.GetComponent<Element>();
+
+            infosTitle.text = $"Infos '{element.ElementName}'";
+            infosDescription.text = element.ElementDescription;
+
+            if (element.CompareTag("King"))
+            {
+                infosDescription.text = $"{element.ElementDescription}";
+
+                optionsButton.name = element.ElementButtonName;
+                optionsButton.GetComponentInChildren<Text>().text = element.ElementButtonName;
+                optionsButton.onClick.AddListener(delegate { kingManager.AddUnitToProduction(); });
+
+                SetupUI(true, true, true, false, true);
+            }
+
+            if (element.CompareTag("Unit"))
+            {
+
+            }
+        }
+    }
+
+    public void UpdateText(string text)
+    {
+        infosDescription.text = $"Main Base : creating {text} unit(s)";
+    }
+
+    #endregion
 }

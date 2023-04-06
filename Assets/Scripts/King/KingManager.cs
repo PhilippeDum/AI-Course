@@ -14,6 +14,8 @@ public class KingManager : MonoBehaviour
     [SerializeField] private LayerMask floorLayer;
     [SerializeField] private Vector3 center;
 
+    private SelectionManager _selectionManager;
+
     [Header("Production Properties")]
     [SerializeField] private int nbUnitsToProduct = 0;
     [SerializeField] private int maxUnitsArray = 10;
@@ -62,6 +64,8 @@ public class KingManager : MonoBehaviour
 
     private void Start()
     {
+        _selectionManager = FindObjectOfType<SelectionManager>();
+
         inProduction = false;
 
         center = gathering.position;
@@ -92,6 +96,16 @@ public class KingManager : MonoBehaviour
         {
             StartCoroutine(StartProduction());
         }
+    }
+
+    public void AddUnitToProduction()
+    {
+        if (nbUnitsToProduct < maxUnitsArray)
+        {
+            nbUnitsToProduct++;
+        }
+
+        _selectionManager.UpdateText(nbUnitsToProduct.ToString());
     }
 
     private IEnumerator StartProduction()

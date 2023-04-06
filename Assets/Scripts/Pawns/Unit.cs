@@ -15,7 +15,8 @@ public class Unit : MonoBehaviour
 
     public enum UnitType
     {
-        Pawn
+        Pawn,
+        Rider
     }
 
     #region Getters / Setters
