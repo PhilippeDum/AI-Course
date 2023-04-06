@@ -6,8 +6,8 @@ public abstract class FormationBase : MonoBehaviour
     [SerializeField][Range(0, 10)] protected float _noise = 0;
     [SerializeField][Range(0, 10)] protected float spread = 1;
 
-    public abstract IEnumerable<Vector3> EvaluatePoints(int _unitWidth, int _unitDepth);
-    public abstract Vector3 EvaluatePointsV2(int _unitWidth, int _unitDepth);
+    //public abstract IEnumerable<Vector3> EvaluatePoints(int _unitWidth, int _unitDepth);
+    public abstract List<Vector3> EvaluatePoints(int _length, Vector3 center);
 
     public Vector3 GetNoise(Vector3 position)
     {

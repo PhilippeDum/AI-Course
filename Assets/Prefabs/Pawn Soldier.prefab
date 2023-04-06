@@ -88,8 +88,7 @@ MonoBehaviour:
   selection: {fileID: 4344964187730607820}
   unitType: 0
   speed: 3.5
-  stoppingDistance: 1
-  distance: 0
+  stoppingDistance: 0
 --- !u!1 &4344964187730607820
 GameObject:
   m_ObjectHideFlags: 0

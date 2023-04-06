@@ -21,7 +21,7 @@ public class SelectionManager : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0))
         {
             startPosition = Input.mousePosition;
-            kingManager.Center = startPosition;
+            //kingManager.Center = startPosition;
 
             DetectUnit();
         }
@@ -29,7 +29,7 @@ public class SelectionManager : MonoBehaviour
         if (!Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0))
         {
             startPosition = Input.mousePosition;
-            kingManager.Center = startPosition;
+            //kingManager.Center = startPosition;
 
             DeselectAll();
 

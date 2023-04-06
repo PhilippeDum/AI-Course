@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class KingManager : MonoBehaviour
 {
@@ -9,9 +11,8 @@ public class KingManager : MonoBehaviour
     [SerializeField] private GameObject unitPrefab;
     [SerializeField] private Transform unitParent;
     [SerializeField] private Transform gathering;
-
-    private Vector3 movePosition;
-    private Vector3 center;
+    [SerializeField] private LayerMask floorLayer;
+    [SerializeField] private Vector3 center;
 
     [Header("Production Properties")]
     [SerializeField] private int nbUnitsToProduct = 0;
@@ -35,7 +36,7 @@ public class KingManager : MonoBehaviour
         set => _formation = value;
     }
 
-    private List<Vector3> points = new List<Vector3>();
+    [SerializeField] private List<Vector3> points = new List<Vector3>();
 
     #region Getters / Setters
 
@@ -70,9 +71,12 @@ public class KingManager : MonoBehaviour
     {
         HandleProduction();
 
-        HandleMovement();
+        if (Input.GetMouseButtonDown(1))
+        {
+            HandleMovement();
+        }
 
-        HandleArmy();
+        //HandleArmy();
     }
 
     #region Production
@@ -118,50 +122,40 @@ public class KingManager : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorLayer))
         {
             // Add if condition to detect enemy for attack
 
-            movePosition = hit.point;
+            center = hit.point;
+            MoveSelectedUnit(hit.point);
         }
+    }
 
-        if (Input.GetMouseButtonDown(1))
+    private void MoveSelectedUnit(Vector3 position)
+    {
+        for (int i = 0; i < selectedUnits.Count; i++)
         {
-            center = movePosition;
-
-            for (int i = 0; i < selectedUnits.Count; i++)
-            {
-                selectedUnits[i].MoveToPosition(movePosition);
-            }
+            selectedUnits[i].MoveToPosition(position);
         }
+
+        HandleArmy();
     }
 
     #endregion
 
-    private void HandleArmy()
+
+    public void HandleArmy()
     {
-        if (units.Count == 0) return;
+        int totalUnits = selectedUnits.Count;
 
-        //int sqrtUnitsCount = (int)Mathf.Sqrt(units.Count);
+        if (totalUnits == 0) return;
 
-        Debug.Log($"{units.Count} => {Mathf.RoundToInt(Mathf.Sqrt(units.Count))}");
+        points = Formation.EvaluatePoints(totalUnits, center);
 
-        int round = Mathf.RoundToInt(Mathf.Sqrt(units.Count));
-
-        int width = units.Count - round;
-        int depth = round;
-
-        //Debug.Log($"{units.Count} => sqrt = {sqrtUnitsCount}");
-        Debug.Log($"{units.Count} => width = {width} & depth = {depth}");
-
-        points = Formation.EvaluatePoints(width, depth).ToList();
-
-        Debug.Log($"points = {points.Count}");
-
-        /*for (int i = 0; i < units.Count; i++)
+        for (int i = 0; i < selectedUnits.Count; i++)
         {
-            if (units[i] != null)
-                units[i].transform.position = Vector3.MoveTowards(units[i].transform.position, center + points[i], units[i].Speed * Time.deltaTime);
-        }*/
+            if (selectedUnits[i] != null)
+                selectedUnits[i].MoveToPosition(points[i]);
+        }
     }
 }
