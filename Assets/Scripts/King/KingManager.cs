@@ -1,14 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class KingManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject unitPrefab;
+    [SerializeField] private GameObject pawnUnitPrefab;
+    [SerializeField] private GameObject riderUnitPrefab;
     [SerializeField] private Transform unitParent;
     [SerializeField] private Transform gathering;
     [SerializeField] private LayerMask floorLayer;
@@ -116,7 +114,7 @@ public class KingManager : MonoBehaviour
         {
             yield return new WaitForSeconds(timeOfProduction);
 
-            Unit unit = Instantiate(unitPrefab, unitParent).GetComponent<Unit>();
+            Unit unit = Instantiate(pawnUnitPrefab, unitParent).GetComponent<Unit>();
 
             unit.MoveToPosition(gathering.position);
 
