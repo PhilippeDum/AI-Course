@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Unit
   - King
+  - Upgrade
+  - Enemy
   layers:
   - Default
   - TransparentFX

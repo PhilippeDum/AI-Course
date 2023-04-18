@@ -12,11 +12,11 @@ public class KingManager : MonoBehaviour
     [SerializeField] private LayerMask floorLayer;
     [SerializeField] private Vector3 center;
 
-    private SelectionManager _selectionManager;
+    private UIManager uiManager;
 
     [Header("Production Properties")]
-    [SerializeField] private int nbUnitsToProduct = 0;
-    [SerializeField] private int maxUnitsArray = 10;
+    [SerializeField] private int pawnsToProduct = 0;
+    [SerializeField] private int ridersToProduct = 0;
     [SerializeField] private float timeOfProduction = 3f;
     [SerializeField] private List<Unit> units;
     [SerializeField] private List<Unit> selectedUnits;
@@ -36,7 +36,7 @@ public class KingManager : MonoBehaviour
         set => _formation = value;
     }
 
-    [SerializeField] private List<Vector3> points = new List<Vector3>();
+    private List<Vector3> points = new List<Vector3>();
 
     #region Getters / Setters
 
@@ -62,7 +62,7 @@ public class KingManager : MonoBehaviour
 
     private void Start()
     {
-        _selectionManager = FindObjectOfType<SelectionManager>();
+        uiManager = FindObjectOfType<UIManager>();
 
         inProduction = false;
 
@@ -77,40 +77,46 @@ public class KingManager : MonoBehaviour
         {
             HandleMovement();
         }
-
-        //HandleArmy();
     }
 
     #region Production
 
     private void HandleProduction()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && nbUnitsToProduct < maxUnitsArray)
-        {
-            nbUnitsToProduct++;
-        }
-
-        if (nbUnitsToProduct > 0 && !inProduction)
+        if ((pawnsToProduct > 0 || ridersToProduct > 0) && !inProduction)
         {
             StartCoroutine(StartProduction());
         }
     }
 
-    public void AddUnitToProduction()
+    public void AddPawnToProduction()
     {
-        if (nbUnitsToProduct < maxUnitsArray)
-        {
-            nbUnitsToProduct++;
-        }
+        pawnsToProduct++;
 
-        _selectionManager.UpdateText(nbUnitsToProduct.ToString());
+        UpdateKingText();
+    }
+
+    public void AddRiderToProduction()
+    {
+        ridersToProduct++;
+
+        UpdateKingText();
+    }
+
+    public void UpdateKingText()
+    {
+        Element element = GetComponent<Element>();
+
+        string text = $"{element.ElementDescription}\nIn Production : pawns ({pawnsToProduct}) & riders ({ridersToProduct})";
+
+        uiManager.UpdateText(text);
     }
 
     private IEnumerator StartProduction()
     {
         inProduction = true;
 
-        while (nbUnitsToProduct > 0)
+        while (pawnsToProduct > 0)
         {
             yield return new WaitForSeconds(timeOfProduction);
 
@@ -120,7 +126,20 @@ public class KingManager : MonoBehaviour
 
             units.Add(unit);
 
-            nbUnitsToProduct--;
+            pawnsToProduct--;
+        }
+
+        while (ridersToProduct > 0)
+        {
+            yield return new WaitForSeconds(timeOfProduction);
+
+            Unit unit = Instantiate(riderUnitPrefab, unitParent).GetComponent<Unit>();
+
+            unit.MoveToPosition(gathering.position);
+
+            units.Add(unit);
+
+            ridersToProduct--;
         }
 
         inProduction = false;

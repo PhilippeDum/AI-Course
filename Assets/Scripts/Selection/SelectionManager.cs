@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEditor.Rendering.FilterWindow;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -11,20 +9,14 @@ public class SelectionManager : MonoBehaviour
     [SerializeField] private CanvasScaler canvasScaler;
 
     private Vector2 startPosition;
+    private Element currentElement;
     private KingManager kingManager;
-
-    [Header("UI")]
-    [SerializeField] private Text infosTitle;
-    [SerializeField] private Text infosDescription;
-    [SerializeField] private Text optionsTitle;
-    [SerializeField] private Text optionsDescription;
-    [SerializeField] private Button optionsButton;
+    private UIManager uiManager;
 
     private void Start()
     {
         kingManager = FindObjectOfType<KingManager>();
-
-        SetupUI(false, false, false, false, false);
+        uiManager = FindObjectOfType<UIManager>();
     }
 
     private void Update()
@@ -71,23 +63,38 @@ public class SelectionManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            if (hit.transform.CompareTag("Unit") || hit.transform.CompareTag("King"))
-                ShowInfos(hit.transform);
-            else
-                SetupUI(false, false, false, false, false);
-
-            if (hit.transform.CompareTag("Unit"))
+            if (hit.transform.GetComponent<Element>())
             {
-                Unit unit = hit.transform.GetComponent<Unit>();
+                currentElement = hit.transform.GetComponent<Element>();
 
-                if (!unit.Selection.activeSelf)
+                uiManager.ShowInfos(currentElement);
+
+                if (currentElement.ElementSelection == null) return;
+
+                if (!currentElement.ElementSelection.activeSelf)
                 {
-                    SelectUnit(unit);
+                    currentElement.ElementSelection.SetActive(true);
+
+                    if (currentElement.CompareTag("Unit"))
+                    {
+                        Unit unit = currentElement.GetComponent<Unit>();
+                        SelectUnit(unit);
+                    }
                 }
                 else
                 {
-                    DeselectUnit(unit);
+                    currentElement.ElementSelection.SetActive(false);
+
+                    if (currentElement.CompareTag("Unit"))
+                    {
+                        Unit unit = currentElement.GetComponent<Unit>();
+                        DeselectUnit(unit);
+                    }
                 }
+            }
+            else
+            {
+                uiManager.HandleUI(false);
             }
         }
     }
@@ -141,52 +148,13 @@ public class SelectionManager : MonoBehaviour
             unit.Selection.SetActive(false);
         }
 
-        kingManager.SelectedUnits.Clear();
-    }
-
-    #endregion
-
-    #region UI
-
-    private void SetupUI(bool state1, bool state2, bool state3, bool state4, bool state5)
-    {
-        infosTitle.gameObject.SetActive(state1);
-        infosDescription.gameObject.SetActive(state2);
-        optionsTitle.gameObject.SetActive(state3);
-        optionsDescription.gameObject.SetActive(state4);
-        optionsButton.gameObject.SetActive(state5);
-    }
-
-    private void ShowInfos(Transform hitTransform)
-    {
-        if (hitTransform.GetComponent<Element>())
+        if (currentElement != null)
         {
-            Element element = hitTransform.GetComponent<Element>();
-
-            infosTitle.text = $"Infos '{element.ElementName}'";
-            infosDescription.text = element.ElementDescription;
-
-            if (element.CompareTag("King"))
-            {
-                infosDescription.text = $"{element.ElementDescription}";
-
-                optionsButton.name = element.ElementButtonName;
-                optionsButton.GetComponentInChildren<Text>().text = element.ElementButtonName;
-                optionsButton.onClick.AddListener(delegate { kingManager.AddUnitToProduction(); });
-
-                SetupUI(true, true, true, false, true);
-            }
-
-            if (element.CompareTag("Unit"))
-            {
-
-            }
+            currentElement.ElementSelection.SetActive(false);
+            currentElement = null;
         }
-    }
 
-    public void UpdateText(string text)
-    {
-        infosDescription.text = $"Main Base : creating {text} unit(s)";
+        kingManager.SelectedUnits.Clear();
     }
 
     #endregion

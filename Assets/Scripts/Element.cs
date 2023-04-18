@@ -4,7 +4,9 @@ public class Element : MonoBehaviour
 {
     [SerializeField] private string elementName;
     [SerializeField] private string elementDescription;
-    [SerializeField] private string elementButtonName;
+    [SerializeField] private string elementFirstButtonName;
+    [SerializeField] private string elementSecondButtonName;
+    [SerializeField] private GameObject elementSelection;
 
     public string ElementName
     {
@@ -18,9 +20,21 @@ public class Element : MonoBehaviour
         set { elementDescription = value; }
     }
 
-    public string ElementButtonName
+    public string ElementFirstButtonName
     {
-        get { return elementButtonName; }
-        set { elementButtonName = value; }
+        get { return elementFirstButtonName; }
+        set { elementFirstButtonName = value; }
+    }
+
+    public string ElementSecondButtonName
+    {
+        get { return elementSecondButtonName; }
+        set { elementSecondButtonName = value; }
+    }
+
+    public GameObject ElementSelection
+    {
+        get { return elementSelection; }
+        set { elementSelection = value; }
     }
 }
