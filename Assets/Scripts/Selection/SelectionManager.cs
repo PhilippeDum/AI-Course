@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,21 +14,30 @@ public class SelectionManager : MonoBehaviour
     private KingManager kingManager;
     private UIManager uiManager;
 
+    // Double click
+    private float firstLeftClickTime;
+    private float timeBetweenLeftClick = 0.3f;
+    private bool isTimeCheckAllowed = true;
+    private int LeftClickNum = 0;
+    private bool selectAllSameUnit;
+
     private void Start()
     {
+        selectAllSameUnit = false;
+
         kingManager = FindObjectOfType<KingManager>();
         uiManager = FindObjectOfType<UIManager>();
     }
 
     private void Update()
     {
-        HandleSelection();
+        HandleDetectionAndSelection();
     }
 
-    #region Selection
-
-    private void HandleSelection()
+    private void HandleDetectionAndSelection()
     {
+        DoubleClick();
+
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0))
         {
             startPosition = Input.mousePosition;
@@ -53,6 +63,44 @@ public class SelectionManager : MonoBehaviour
         {
             UpdateSelectionBox(Input.mousePosition);
         }
+    }
+
+    private void DoubleClick()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            LeftClickNum++;
+        }
+
+        if (LeftClickNum == 1 && isTimeCheckAllowed)
+        {
+            firstLeftClickTime = Time.time;
+            StartCoroutine(DetectDoubleLeftClick());
+        }
+    }
+
+    private IEnumerator DetectDoubleLeftClick()
+    {
+        isTimeCheckAllowed = false;
+
+        while (Time.time < firstLeftClickTime + timeBetweenLeftClick)
+        {
+            if (LeftClickNum == 2)
+            {
+                if (currentElement != null && currentElement.GetComponent<Unit>() && !selectAllSameUnit)
+                {
+                    selectAllSameUnit = true;
+                    SelectAllSameUnit(currentElement.GetComponent<Unit>());
+                }
+
+                break;
+            }
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        LeftClickNum = 0;
+        isTimeCheckAllowed = true;
     }
 
     private void DetectUnit()
@@ -99,6 +147,8 @@ public class SelectionManager : MonoBehaviour
         }
     }
 
+    #region Box
+
     private void UpdateSelectionBox(Vector2 cursorMousePos)
     {
         if (!selectionBox.gameObject.activeInHierarchy)
@@ -129,10 +179,29 @@ public class SelectionManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Unit Selection
+
     private void SelectUnit(Unit unit)
     {
         kingManager.SelectedUnits.Add(unit);
         unit.Selection.SetActive(true);
+    }
+
+    private void SelectAllSameUnit(Unit unit)
+    {
+        for (int i = 0; i < kingManager.Units.Count; i++)
+        {
+            Unit possessedUnit = kingManager.Units[i];
+
+            if (possessedUnit.GetUnitType == unit.GetUnitType)
+            {
+                SelectUnit(possessedUnit);
+            }
+        }
+
+        selectAllSameUnit = false;
     }
 
     private void DeselectUnit(Unit unit)

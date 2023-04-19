@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 5341358545107455105}
   - component: {fileID: 6760722228915296269}
   - component: {fileID: 5079811591603215950}
+  - component: {fileID: 2010180920525854478}
   m_Layer: 0
   m_Name: Broken Bridge
   m_TagString: Untagged
@@ -119,6 +120,7 @@ Transform:
   - {fileID: 2833259863756845894}
   - {fileID: 6850443085427994584}
   - {fileID: 8137857590614772501}
+  - {fileID: 3494036498635258412}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -148,7 +150,7 @@ MeshCollider:
   m_GameObject: {fileID: 7499765849343655928}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
@@ -162,7 +164,7 @@ MeshCollider:
   m_GameObject: {fileID: 7499765849343655928}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
@@ -176,11 +178,24 @@ MeshCollider:
   m_GameObject: {fileID: 7499765849343655928}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2212009239438826721, guid: 879e3447b5434cd44b6080d9004c74f7, type: 3}
+--- !u!65 &2010180920525854478
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7499765849343655928}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 1, z: 15}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8152259167175365323
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,3 +446,69 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &4032963379912646087
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7160536359244637506}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c0f6038a4c8d7314090c92150cb2febc, type: 2}
+    - target: {fileID: 919132149155446097, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_Name
+      value: Navmesh_Pont
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+--- !u!4 &3494036498635258412 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+  m_PrefabInstance: {fileID: 4032963379912646087}
+  m_PrefabAsset: {fileID: 0}

@@ -21,6 +21,12 @@ public class Unit : MonoBehaviour
 
     #region Getters / Setters
 
+    public UnitType GetUnitType
+    {
+        get { return unitType; }
+        set { unitType = value; }
+    }
+
     public GameObject Selection
     {
         get { return selection; }
