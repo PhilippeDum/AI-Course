@@ -15,8 +15,10 @@ public class SelectionManager : MonoBehaviour
     private UIManager uiManager;
 
     // Double click
+    [Header("Double Click")]
+    [SerializeField] private float timeBetweenLeftClick = 0.3f;
+
     private float firstLeftClickTime;
-    private float timeBetweenLeftClick = 0.3f;
     private bool isTimeCheckAllowed = true;
     private int LeftClickNum = 0;
     private bool selectAllSameUnit;
@@ -42,7 +44,7 @@ public class SelectionManager : MonoBehaviour
         {
             startPosition = Input.mousePosition;
 
-            DetectUnit();
+            DetectElement();
         }
 
         if (!Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0))
@@ -51,7 +53,7 @@ public class SelectionManager : MonoBehaviour
 
             DeselectAll();
 
-            DetectUnit();
+            DetectElement();
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -103,7 +105,7 @@ public class SelectionManager : MonoBehaviour
         isTimeCheckAllowed = true;
     }
 
-    private void DetectUnit()
+    private void DetectElement()
     {
         if (EventSystem.current.IsPointerOverGameObject(-1)) return;
 
@@ -123,21 +125,13 @@ public class SelectionManager : MonoBehaviour
                 {
                     currentElement.ElementSelection.SetActive(true);
 
-                    if (currentElement.CompareTag("Unit"))
-                    {
-                        Unit unit = currentElement.GetComponent<Unit>();
-                        SelectUnit(unit);
-                    }
+                    if (currentElement.CompareTag("Unit")) SelectUnit(currentElement.GetComponent<Unit>());
                 }
                 else
                 {
                     currentElement.ElementSelection.SetActive(false);
 
-                    if (currentElement.CompareTag("Unit"))
-                    {
-                        Unit unit = currentElement.GetComponent<Unit>();
-                        DeselectUnit(unit);
-                    }
+                    if (currentElement.CompareTag("Unit")) DeselectUnit(currentElement.GetComponent<Unit>());
                 }
             }
             else
