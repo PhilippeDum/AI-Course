@@ -242,7 +242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8937149654859811341, guid: 55590c5fcd5297a41a917aa70b9a8570, type: 3}
       propertyPath: m_Name
-      value: Tour
+      value: Tower Model
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55590c5fcd5297a41a917aa70b9a8570, type: 3}

@@ -343,9 +343,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6089298749889740636}
   - component: {fileID: 4946990375113744562}
-  - component: {fileID: 7535859663694352308}
-  - component: {fileID: 7016403718932781633}
-  - component: {fileID: 1339846519498627003}
   - component: {fileID: 976426940017073174}
   m_Layer: 0
   m_Name: Bridge
@@ -391,48 +388,6 @@ MonoBehaviour:
   elementFirstButtonName: 
   elementSecondButtonName: 
   elementSelection: {fileID: 6508367265401371401}
---- !u!64 &7535859663694352308
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6902426547380561382}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5495902117074765545, guid: 07bd705f278920449ac3b548fe11f84e, type: 3}
---- !u!64 &7016403718932781633
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6902426547380561382}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4493585093827132993, guid: 07bd705f278920449ac3b548fe11f84e, type: 3}
---- !u!64 &1339846519498627003
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6902426547380561382}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -1550514412580984892, guid: 07bd705f278920449ac3b548fe11f84e, type: 3}
 --- !u!65 &976426940017073174
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -506,8 +461,16 @@ PrefabInstance:
       value: Navmesh_Pont
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 734e7b0cfd107724ea323b0c028fee3c, type: 3}

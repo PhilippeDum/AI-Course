@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4675626447720931090}
   - component: {fileID: 7424146819837537240}
   m_Layer: 0
-  m_Name: Tour
+  m_Name: Tower Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
