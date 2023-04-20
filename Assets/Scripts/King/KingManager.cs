@@ -127,6 +127,8 @@ public class KingManager : MonoBehaviour
 
             units.Add(unit);
 
+            GameManager.instance.CountPawns++;
+
             pawnsToProduct--;
         }
 
@@ -140,6 +142,8 @@ public class KingManager : MonoBehaviour
             unit.MoveToPosition(gathering.position);
 
             units.Add(unit);
+
+            GameManager.instance.CountRiders++;
 
             ridersToProduct--;
         }

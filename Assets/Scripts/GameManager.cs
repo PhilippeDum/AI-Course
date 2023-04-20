@@ -6,6 +6,8 @@ using static Quest;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     [Header("References")]
     [SerializeField] private Transform cameraRoot;
     [SerializeField] private Transform brokenBridgeTarget;
@@ -14,15 +16,27 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<Quest> quests;
     [SerializeField] private Text questName;
     [SerializeField] private Text questDescription;
-    [SerializeField] private QuestType currentQuest;
+    [SerializeField] private QuestType currentQuestType;
+
+    private int countPawns = 0;
+    private int countRiders = 0;
 
     [Header("Camera - Broken Bridge Datas")]
     [SerializeField] private float smoothing = 5f;
+    [SerializeField] private float timeBeforeShowing = 2f;
     [SerializeField] private float timeShowingBrokenBridge = 3f;
     [SerializeField] private bool startShowing = false;
     [SerializeField] private bool stopShowing = false;
 
     private Vector3 lastPosition;
+
+    #region Getters / Setters
+
+    public QuestType CurrentQuestType
+    {
+        get { return currentQuestType; }
+        set { currentQuestType = value; }
+    }
 
     public bool StartShowing
     {
@@ -30,9 +44,28 @@ public class GameManager : MonoBehaviour
         set { startShowing = value; }
     }
 
+    public int CountPawns
+    {
+        get { return countPawns; }
+        set { countPawns = value; }
+    }
+
+    public int CountRiders
+    {
+        get { return countRiders; }
+        set { countRiders = value; }
+    }
+
+    #endregion
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
-        SetQuest(QuestType.Production);
+        currentQuestType = QuestType.Production;
     }
 
     private void Update()
@@ -50,15 +83,18 @@ public class GameManager : MonoBehaviour
 
     private void HandleQuests()
     {
-        switch (currentQuest)
+        switch (currentQuestType)
         {
             case QuestType.Production:
+                SetQuest(currentQuestType);
                 QuestProduction();
                 break;
             case QuestType.Reparation:
+                SetQuest(currentQuestType);
                 QuestReparation();
                 break;
             case QuestType.Attack:
+                SetQuest(currentQuestType);
                 QuestAttack();
                 break;
             default:
@@ -69,7 +105,12 @@ public class GameManager : MonoBehaviour
 
     private void QuestProduction()
     {
+        if (countPawns >= GetCurrentQuest(currentQuestType).requiredAmountPawn && countRiders >= GetCurrentQuest(currentQuestType).requiredAmountRider)
+        {
+            currentQuestType = QuestType.Reparation;
 
+            if (!startShowing) startShowing = true;
+        }
     }
 
     private void QuestReparation()
@@ -95,7 +136,18 @@ public class GameManager : MonoBehaviour
         if (quest == null) return;
 
         questName.text = quest.questName;
-        questDescription.text = quest.questDescription;
+        questDescription.text = $"{quest.questDescription}\npion(s) : {countPawns}/{quest.requiredAmountPawn}\ncavalier(s) : {countRiders}/{quest.requiredAmountRider}";
+    }
+
+    public Quest GetCurrentQuest(QuestType questType)
+    {
+        for (int i = 0; i < quests.Count; i++)
+        {
+            if (quests[i].questType == questType)
+                return quests[i]; 
+        }
+
+        return null;
     }
 
     #endregion
@@ -111,6 +163,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ShowBrokenBridge()
     {
+        yield return new WaitForSeconds(timeBeforeShowing);
+
         lastPosition = cameraRoot.position;
 
         cameraRoot.position = Vector3.Lerp(cameraRoot.position, brokenBridgeTarget.position, Time.deltaTime * smoothing);
