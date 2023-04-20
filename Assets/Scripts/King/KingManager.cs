@@ -5,8 +5,8 @@ using UnityEngine;
 public class KingManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject pawnUnitPrefab;
-    [SerializeField] private GameObject riderUnitPrefab;
+    [SerializeField] private List<GameObject> pawnUnitPrefabs;
+    [SerializeField] private List<GameObject> riderUnitPrefabs;
     [SerializeField] private Transform unitParent;
     [SerializeField] private Transform gathering;
     [SerializeField] private LayerMask floorLayer;
@@ -120,7 +120,8 @@ public class KingManager : MonoBehaviour
         {
             yield return new WaitForSeconds(timeOfProduction);
 
-            Unit unit = Instantiate(pawnUnitPrefab, unitParent).GetComponent<Unit>();
+            int randomPawn = Random.Range(0, pawnUnitPrefabs.Count);
+            Unit unit = Instantiate(pawnUnitPrefabs[randomPawn], unitParent).GetComponent<Unit>();
 
             unit.MoveToPosition(gathering.position);
 
@@ -133,7 +134,8 @@ public class KingManager : MonoBehaviour
         {
             yield return new WaitForSeconds(timeOfProduction);
 
-            Unit unit = Instantiate(riderUnitPrefab, unitParent).GetComponent<Unit>();
+            int randomRider = Random.Range(0, riderUnitPrefabs.Count);
+            Unit unit = Instantiate(riderUnitPrefabs[randomRider], unitParent).GetComponent<Unit>();
 
             unit.MoveToPosition(gathering.position);
 

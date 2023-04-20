@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8734472970468232979}
   - component: {fileID: -2552301956491234223}
   m_Layer: 0
-  m_Name: PawnSoldier
+  m_Name: Pawn Soldier
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,11 +1,20 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using static Quest;
 
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform cameraRoot;
     [SerializeField] private Transform brokenBridgeTarget;
+
+    [Header("Quests")]
+    [SerializeField] private List<Quest> quests;
+    [SerializeField] private Text questName;
+    [SerializeField] private Text questDescription;
+    [SerializeField] private QuestType currentQuest;
 
     [Header("Camera - Broken Bridge Datas")]
     [SerializeField] private float smoothing = 5f;
@@ -21,6 +30,11 @@ public class GameManager : MonoBehaviour
         set { startShowing = value; }
     }
 
+    private void Start()
+    {
+
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !startShowing)
@@ -32,6 +46,16 @@ public class GameManager : MonoBehaviour
 
         if (stopShowing) StartCoroutine(ReturnLastPosition());
     }
+
+    #region Quests
+
+    private void SetQuest(Quest quest)
+    {
+        questName.text = quest.questName;
+        questDescription.text = quest.questDescription;
+    }
+
+    #endregion
 
     #region Handle Camera to Broken Bridge
 
