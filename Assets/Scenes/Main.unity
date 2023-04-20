@@ -692,7 +692,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Pawn
+  m_Text: Pion
 --- !u!222 &109081827
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6740,20 +6740,21 @@ MonoBehaviour:
   cameraRoot: {fileID: 800062062}
   brokenBridgeTarget: {fileID: 1778248064}
   quests:
-  - questName: Soldiers Production
-    questDescription: 
+  - questName: "Cr\xE9ation d'une arm\xE9e"
+    questDescription: Cliquer sur la tour Roi pour produire des soldats (Pion ou
+      Cavalier)
     questType: 0
     requiredAmount: 0
-  - questName: Repair the Path
+  - questName: "R\xE9paration du chemin"
     questDescription: 
     questType: 1
     requiredAmount: 0
-  - questName: Attack Enemy !
+  - questName: Attaquer l'ennemi !
     questDescription: 
     questType: 2
     requiredAmount: 0
-  questName: {fileID: 0}
-  questDescription: {fileID: 0}
+  questName: {fileID: 909081585}
+  questDescription: {fileID: 577703301}
   currentQuest: 0
   smoothing: 1
   timeShowingBrokenBridge: 3
@@ -8469,7 +8470,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Rider
+  m_Text: Cavalier
 --- !u!222 &1856883781
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9630,7 +9631,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Upgrade
+  m_Text: "Am\xE9liorer"
 --- !u!222 &1990596407
 CanvasRenderer:
   m_ObjectHideFlags: 0

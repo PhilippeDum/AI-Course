@@ -7,6 +7,7 @@ public class Quest
     public string questDescription;
     public QuestType questType;
     public int requiredAmount;
+    public int requiredAmount2;
 
     public enum QuestType
     {

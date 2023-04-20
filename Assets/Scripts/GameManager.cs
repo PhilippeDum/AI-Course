@@ -32,25 +32,68 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
+        SetQuest(QuestType.Production);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !startShowing)
-        {
-            startShowing = true;
-        }
+        if (Input.GetKeyDown(KeyCode.Escape) && !startShowing) startShowing = true;
 
         if (startShowing) ActiveCameraShow();
 
         if (stopShowing) StartCoroutine(ReturnLastPosition());
+
+        HandleQuests();
     }
 
     #region Quests
 
-    private void SetQuest(Quest quest)
+    private void HandleQuests()
     {
+        switch (currentQuest)
+        {
+            case QuestType.Production:
+                QuestProduction();
+                break;
+            case QuestType.Reparation:
+                QuestReparation();
+                break;
+            case QuestType.Attack:
+                QuestAttack();
+                break;
+            default:
+                Debug.LogError($"Error : quest switch");
+                break;
+        }
+    }
+
+    private void QuestProduction()
+    {
+
+    }
+
+    private void QuestReparation()
+    {
+
+    }
+
+    private void QuestAttack()
+    {
+
+    }
+
+    private void SetQuest(QuestType questType)
+    {
+        Quest quest = null;
+
+        for (int i = 0; i < quests.Count; i++)
+        {
+            if (quests[i].questType == questType)
+                quest = quests[i];
+        }
+
+        if (quest == null) return;
+
         questName.text = quest.questName;
         questDescription.text = quest.questDescription;
     }
