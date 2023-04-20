@@ -1,7 +1,6 @@
 using System.Collections;
 using Unity.AI.Navigation;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class BridgeReparation : MonoBehaviour
 {

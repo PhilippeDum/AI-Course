@@ -56,7 +56,29 @@ public class GameManager : MonoBehaviour
         set { countRiders = value; }
     }
 
+    public int CountPawnsDetection
+    {
+        get { return countPawnsDetection; }
+        set { countPawnsDetection = value; }
+    }
+
+    public int CountRidersDetection
+    {
+        get { return countRidersDetection; }
+        set { countRidersDetection = value; }
+    }
+
+    public BridgeReparation CurrentBridgeReparation
+    {
+        get { return currentBridgeReparation; }
+        set { currentBridgeReparation = value; }
+    }
+
     #endregion
+
+    private int countPawnsDetection = 0;
+    private int countRidersDetection = 0;
+    private BridgeReparation currentBridgeReparation;
 
     private void Awake()
     {
@@ -86,15 +108,15 @@ public class GameManager : MonoBehaviour
         switch (currentQuestType)
         {
             case QuestType.Production:
-                SetQuest(currentQuestType);
+                SetQuest(currentQuestType, countPawns, countRiders);
                 QuestProduction();
                 break;
             case QuestType.Reparation:
-                SetQuest(currentQuestType);
+                SetQuest(currentQuestType, countPawnsDetection, countRidersDetection);
                 QuestReparation();
                 break;
             case QuestType.Attack:
-                SetQuest(currentQuestType);
+                SetQuest(currentQuestType, countPawns, countRiders);
                 QuestAttack();
                 break;
             default:
@@ -115,7 +137,16 @@ public class GameManager : MonoBehaviour
 
     private void QuestReparation()
     {
+        if (countPawnsDetection >= GetCurrentQuest(currentQuestType).requiredAmountPawn && countRidersDetection >= GetCurrentQuest(currentQuestType).requiredAmountRider)
+        {
+            if (currentBridgeReparation == null) return;
 
+            currentBridgeReparation.Repair();
+
+            currentQuestType = QuestType.Attack;
+
+            if (!startShowing) startShowing = true;
+        }
     }
 
     private void QuestAttack()
@@ -123,7 +154,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void SetQuest(QuestType questType)
+    private void SetQuest(QuestType questType, int countPawns, int countRiders)
     {
         Quest quest = null;
 
