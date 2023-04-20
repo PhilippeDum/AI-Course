@@ -11,8 +11,18 @@ public class CameraMotion : MonoBehaviour
     private Vector3 _targetPosition;
     private Vector3 _input;
 
+    private bool canMove;
+
+    public bool CanMove
+    {
+        get { return canMove; }
+        set { canMove = value; }
+    }
+
     private void Awake()
     {
+        canMove = true;
+
         _targetPosition = transform.position;
     }
 
@@ -73,6 +83,8 @@ public class CameraMotion : MonoBehaviour
     private void Update()
     {
         HandleInput();
+
+        if (!canMove) return;
 
         Move();
         MoveCursor();
