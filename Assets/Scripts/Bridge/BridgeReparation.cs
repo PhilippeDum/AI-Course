@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BridgeReparation : MonoBehaviour
 {
@@ -9,22 +10,24 @@ public class BridgeReparation : MonoBehaviour
     [SerializeField] private GameObject repairedBridge;
     [SerializeField] private float timeOfReparation = 5f;
     [SerializeField] private NavMeshSurface surface;
+    [SerializeField] private Slider reparationSlider;
+    [SerializeField][Range(0, 1)] private float lerp = 0.5f;
 
     private void Start()
     {
+        reparationSlider.transform.parent.gameObject.SetActive(false);
+
         brokenBridge.SetActive(true);
         repairedBridge.SetActive(false);
-
-        /*surface.BuildNavMesh();
-        surface.UpdateNavMesh(surface.navMeshData);*/
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Repair();
-        }
+        if (reparationSlider == null) return;
+
+        reparationSlider.transform.parent.LookAt(Camera.main.transform.position);
+
+        reparationSlider.value = Mathf.Lerp(reparationSlider.value, 0f, lerp * Time.deltaTime);
     }
 
     public void Repair()
@@ -34,6 +37,11 @@ public class BridgeReparation : MonoBehaviour
 
     private IEnumerator Reparation()
     {
+        reparationSlider.maxValue = timeOfReparation;
+        reparationSlider.value = timeOfReparation;
+
+        reparationSlider.transform.parent.gameObject.SetActive(true);
+
         yield return new WaitForSeconds(timeOfReparation);
 
         brokenBridge.SetActive(false);
@@ -41,5 +49,7 @@ public class BridgeReparation : MonoBehaviour
 
         surface.BuildNavMesh();
         surface.UpdateNavMesh(surface.navMeshData);
+
+        GameManager.instance.CurrentBridgeRepaired = true;
     }
 }

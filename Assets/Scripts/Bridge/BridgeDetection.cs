@@ -12,26 +12,10 @@ public class BridgeDetection : MonoBehaviour
             GameManager.instance.CountPawnsDetection = countPawns;
             GameManager.instance.CountRidersDetection = countRiders;
         }
-
-        /*if (GameManager.instance.CurrentQuestType == Quest.QuestType.Reparation)
-        {
-            Quest quest = GameManager.instance.GetCurrentQuest(Quest.QuestType.Reparation);
-
-            if (countPawns >= quest.requiredAmountPawn && countRiders >= quest.requiredAmountRider)
-            {
-                Debug.Log($"Repair");
-
-                GetComponentInParent<BridgeReparation>().Repair();
-
-                GameManager.instance.CurrentQuestType = Quest.QuestType.Attack;
-            }
-        }*/
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"{other.name}");
-
         if (other.CompareTag("Unit"))
         {
             Unit unit = other.GetComponent<Unit>();

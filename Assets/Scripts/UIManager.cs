@@ -72,6 +72,13 @@ public class UIManager : MonoBehaviour
                 HandleUI(true);
             }
 
+            if (currentElement.CompareTag("King") || currentElement.CompareTag("Unit") || currentElement.CompareTag("Enemy"))
+            {
+                Stats stats = currentElement.GetComponent<Stats>();
+
+                optionsDescription.text = $"{stats.Health} / {stats.MaxHealth}";
+            }
+
             showingInfos = false;
         }
     }

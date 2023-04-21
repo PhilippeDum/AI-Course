@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -50,8 +49,11 @@ public class Unit : MonoBehaviour
 
     #region Movement
 
-    public void MoveToPosition(Vector3 position)
+    public void MoveToPosition(Vector3 position, float stoppingDistance = -1)
     {
+        if (stoppingDistance != -1)
+            agent.stoppingDistance = stoppingDistance;
+
         agent.SetDestination(position);
     }
 

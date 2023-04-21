@@ -11,6 +11,13 @@ public class GameManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform cameraRoot;
     [SerializeField] private Transform brokenBridgeTarget;
+    [SerializeField] private GameObject king;
+    [SerializeField] private GameObject kingEnemy;
+    [SerializeField] private GameObject endGameUI;
+    [SerializeField] private GameObject mainUI;
+    [SerializeField] private GameObject questsUI;
+
+    private bool gameFinished;
 
     [Header("Quests")]
     [SerializeField] private List<Quest> quests;
@@ -21,6 +28,11 @@ public class GameManager : MonoBehaviour
     private int countPawns = 0;
     private int countRiders = 0;
 
+    private bool production;
+    private bool reparation;
+
+    private bool changeQuest;
+
     [Header("Camera - Broken Bridge Datas")]
     [SerializeField] private float smoothing = 5f;
     [SerializeField] private float timeBeforeShowing = 2f;
@@ -28,7 +40,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool startShowing = false;
     [SerializeField] private bool stopShowing = false;
 
+    private bool showing;
+
     private Vector3 lastPosition;
+
+    private int countPawnsDetection = 0;
+    private int countRidersDetection = 0;
+    private BridgeReparation currentBridgeReparation;
+    private bool currentBridgeRepaired;
 
     #region Getters / Setters
 
@@ -74,11 +93,13 @@ public class GameManager : MonoBehaviour
         set { currentBridgeReparation = value; }
     }
 
-    #endregion
+    public bool CurrentBridgeRepaired
+    {
+        get { return currentBridgeRepaired; }
+        set { currentBridgeRepaired = value; }
+    }
 
-    private int countPawnsDetection = 0;
-    private int countRidersDetection = 0;
-    private BridgeReparation currentBridgeReparation;
+    #endregion
 
     private void Awake()
     {
@@ -87,16 +108,34 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        gameFinished = false;
+
+        production = false;
+        reparation = false;
+
+        changeQuest = false;
+
+        currentBridgeRepaired = false;
+
         currentQuestType = QuestType.Production;
+
+        showing = false;
+
+        endGameUI.SetActive(false);
     }
 
     private void Update()
     {
+        if (gameFinished) return;
+
+        if (king == null) EndGame(false);
+        if (kingEnemy == null) EndGame(true);
+
         if (Input.GetKeyDown(KeyCode.Escape) && !startShowing) startShowing = true;
 
-        if (startShowing) ActiveCameraShow();
+        if (startShowing && !stopShowing) ActiveCameraShow();
 
-        if (stopShowing) StartCoroutine(ReturnLastPosition());
+        if (stopShowing && !startShowing) DeactiveCameraShow();
 
         HandleQuests();
     }
@@ -117,7 +156,6 @@ public class GameManager : MonoBehaviour
                 break;
             case QuestType.Attack:
                 SetQuest(currentQuestType, countPawns, countRiders);
-                QuestAttack();
                 break;
             default:
                 Debug.LogError($"Error : quest switch");
@@ -127,31 +165,67 @@ public class GameManager : MonoBehaviour
 
     private void QuestProduction()
     {
-        if (countPawns >= GetCurrentQuest(currentQuestType).requiredAmountPawn && countRiders >= GetCurrentQuest(currentQuestType).requiredAmountRider)
+        Quest currentQuest = GetCurrentQuest(currentQuestType);
+
+        if (countPawns >= currentQuest.requiredAmountPawn && countRiders >= currentQuest.requiredAmountRider && !production)
         {
-            currentQuestType = QuestType.Reparation;
+            production = true;
+
+            questDescription.text = "Terminé !";
 
             if (!startShowing) startShowing = true;
+
+            FindObjectOfType<Enemy>().StartProduction();
+
+            currentQuestType = QuestType.Reparation;
         }
     }
 
     private void QuestReparation()
     {
-        if (countPawnsDetection >= GetCurrentQuest(currentQuestType).requiredAmountPawn && countRidersDetection >= GetCurrentQuest(currentQuestType).requiredAmountRider)
+        Quest currentQuest = GetCurrentQuest(currentQuestType);
+
+        if (countPawnsDetection >= currentQuest.requiredAmountPawn && countRidersDetection >= currentQuest.requiredAmountRider && !reparation && !currentBridgeRepaired)
         {
+            reparation = true;
+
             if (currentBridgeReparation == null) return;
 
             currentBridgeReparation.Repair();
+        }
+
+        if (currentBridgeReparation != null && currentBridgeRepaired && !changeQuest && reparation)
+        {
+            changeQuest = true;
+
+            questDescription.text = "Terminé !";
+
+            changeQuest = false;
 
             currentQuestType = QuestType.Attack;
 
-            if (!startShowing) startShowing = true;
+            currentBridgeRepaired = false;
         }
     }
 
-    private void QuestAttack()
+    public void EndGame(bool endGame)
     {
+        gameFinished = true;
 
+        if (endGame)
+        {
+            Debug.Log($"Victory !! Enemy defeat");
+            endGameUI.GetComponentInChildren<Text>().text = $"Victory !! Enemy defeat";
+        }
+        else
+        {
+            Debug.Log($"Defeat !! Enemy victory");
+            endGameUI.GetComponentInChildren<Text>().text = $"Defeat !! Enemy victory";
+        }
+
+        mainUI.SetActive(false);
+        questsUI.SetActive(false);
+        endGameUI.SetActive(true);
     }
 
     private void SetQuest(QuestType questType, int countPawns, int countRiders)
@@ -187,18 +261,28 @@ public class GameManager : MonoBehaviour
 
     private void ActiveCameraShow()
     {
-        cameraRoot.GetComponent<CameraMotion>().CanMove = false;
+        if (!showing)
+        {
+            showing = true;
 
-        StartCoroutine(ShowBrokenBridge());
+            cameraRoot.GetComponent<CameraMotion>().CanMove = false;
+
+            lastPosition = cameraRoot.position;
+
+            StartCoroutine(ShowBrokenBridge());
+        }        
     }
 
     private IEnumerator ShowBrokenBridge()
     {
         yield return new WaitForSeconds(timeBeforeShowing);
+        
+        while (Distance(cameraRoot.position, brokenBridgeTarget.position) > 5)
+        {
+            cameraRoot.position = Vector3.Lerp(cameraRoot.position, brokenBridgeTarget.position, Time.deltaTime * smoothing);
 
-        lastPosition = cameraRoot.position;
-
-        cameraRoot.position = Vector3.Lerp(cameraRoot.position, brokenBridgeTarget.position, Time.deltaTime * smoothing);
+            yield return new WaitForEndOfFrame();
+        }
 
         yield return new WaitForSeconds(timeShowingBrokenBridge);
 
@@ -206,11 +290,21 @@ public class GameManager : MonoBehaviour
         startShowing = false;
     }
 
+    private void DeactiveCameraShow()
+    {
+        StartCoroutine(ReturnLastPosition());
+    }
+
     private IEnumerator ReturnLastPosition()
     {
-        cameraRoot.position = Vector3.Lerp(cameraRoot.position, lastPosition, Time.deltaTime * smoothing);
+        while (Distance(cameraRoot.position, brokenBridgeTarget.position) > 5)
+        {
+            cameraRoot.position = Vector3.Lerp(cameraRoot.position, lastPosition, Time.deltaTime * smoothing);
 
-        yield return new WaitForSeconds(timeShowingBrokenBridge);
+            yield return new WaitForEndOfFrame();
+        }
+
+        yield return new WaitForSeconds(1f);
 
         cameraRoot.GetComponent<CameraMotion>().CanMove = true;
 
@@ -218,4 +312,13 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+    public float Distance(Vector3 pos1, Vector3 pos2)
+    {
+        Vector3 direction = pos1 - pos2;
+
+        float distance = direction.magnitude;
+
+        return distance;
+    }
 }

@@ -91,6 +91,10 @@ public class SelectionManager : MonoBehaviour
             {
                 if (currentElement != null && currentElement.GetComponent<Unit>() && !selectAllSameUnit)
                 {
+                    Stats stats = currentElement.GetComponent<Stats>();
+
+                    if (stats.GetTeam == Team.Enemy) yield break;
+
                     selectAllSameUnit = true;
                     SelectAllSameUnit(currentElement.GetComponent<Unit>());
                 }
@@ -164,6 +168,8 @@ public class SelectionManager : MonoBehaviour
 
         foreach (Unit unit in kingManager.Units)
         {
+            if (unit == null) return;
+
             Vector3 screenPos = Camera.main.WorldToScreenPoint(unit.transform.position);
 
             if (screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y)
@@ -179,6 +185,8 @@ public class SelectionManager : MonoBehaviour
 
     private void SelectUnit(Unit unit)
     {
+        if (unit == null) return;
+
         kingManager.SelectedUnits.Add(unit);
         unit.Selection.SetActive(true);
     }
@@ -208,6 +216,8 @@ public class SelectionManager : MonoBehaviour
     {
         foreach (Unit unit in kingManager.SelectedUnits)
         {
+            if (unit == null) return;
+
             unit.Selection.SetActive(false);
         }
 

@@ -3,22 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class KingManager : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private List<GameObject> pawnUnitPrefabs;
     [SerializeField] private List<GameObject> riderUnitPrefabs;
     [SerializeField] private Transform unitParent;
     [SerializeField] private Transform gathering;
-    [SerializeField] private LayerMask floorLayer;
     [SerializeField] private Vector3 center;
-    [SerializeField] private GameObject canvasWorld;
     [SerializeField] private Slider productionSlider;
-    [SerializeField] [Range(0, 1)] private float lerp = 0.5f;
-
-    private GameObject currentCanvasWorld;
-
-    private UIManager uiManager;
+    [SerializeField][Range(0, 1)] private float lerp = 0.5f;
 
     [Header("Production Properties")]
     [SerializeField] private int pawnsToProduct = 0;
@@ -29,6 +23,7 @@ public class KingManager : MonoBehaviour
     [SerializeField] private List<Unit> selectedUnits;
 
     private bool inProduction;
+    private bool canStartProduction;
 
     // Formation
     private FormationBase _formation;
@@ -45,33 +40,10 @@ public class KingManager : MonoBehaviour
 
     private List<Vector3> points = new List<Vector3>();
 
-    #region Getters / Setters
-
-    public List<Unit> Units
-    {
-        get { return units; }
-        set { units = value; }
-    }
-
-    public List<Unit> SelectedUnits
-    {
-        get { return selectedUnits; }
-        set { selectedUnits = value; }
-    }
-
-    public Vector3 Center
-    {
-        get { return center; }
-        set { center = value; }
-    }
-
-    #endregion
-
     private void Start()
     {
-        uiManager = FindObjectOfType<UIManager>();
-
         inProduction = false;
+        canStartProduction = false;
 
         center = gathering.position;
     }
@@ -80,11 +52,9 @@ public class KingManager : MonoBehaviour
     {
         HandleProduction();
 
-        if (Input.GetMouseButtonDown(1))
+        if (GetComponent<Stats>().IsDead)
         {
-            if (currentCanvasWorld != null) Destroy(currentCanvasWorld);
-
-            HandleMovement();
+            GameManager.instance.EndGame(true);
         }
     }
 
@@ -92,38 +62,24 @@ public class KingManager : MonoBehaviour
 
     private void HandleProduction()
     {
-        if ((pawnsToProduct > 0 || ridersToProduct > 0) && !inProduction)
+        if ((pawnsToProduct > 0 || ridersToProduct > 0) && !inProduction && canStartProduction)
         {
-            StartCoroutine(StartProduction());
+            StartCoroutine(StartingProduction());
         }
 
         productionSlider.value = Mathf.Lerp(productionSlider.value, 0f, lerp * Time.deltaTime);
     }
 
-    public void AddPawnToProduction()
+    public void StartProduction()
     {
-        pawnsToProduct++;
+        Debug.Log($"Enemy starting to produce enemies");
 
-        UpdateKingText();
+        canStartProduction = true;
+
+        StartCoroutine(StartingProduction());
     }
 
-    public void AddRiderToProduction()
-    {
-        ridersToProduct++;
-
-        UpdateKingText();
-    }
-
-    public void UpdateKingText()
-    {
-        Element element = GetComponent<Element>();
-
-        string text = $"{element.ElementDescription}\nIn Production : pawns ({pawnsToProduct}) & riders ({ridersToProduct})";
-
-        uiManager.UpdateText(text);
-    }
-
-    private IEnumerator StartProduction()
+    private IEnumerator StartingProduction()
     {
         inProduction = true;
 
@@ -141,9 +97,9 @@ public class KingManager : MonoBehaviour
 
             units.Add(unit);
 
-            GameManager.instance.CountPawns++;
-
             pawnsToProduct--;
+
+            HandleArmy();
         }
 
         while (ridersToProduct > 0)
@@ -160,44 +116,12 @@ public class KingManager : MonoBehaviour
 
             units.Add(unit);
 
-            GameManager.instance.CountRiders++;
-
             ridersToProduct--;
+
+            HandleArmy();
         }
 
         inProduction = false;
-    }
-
-    #endregion
-
-    #region Movement
-
-    private void HandleMovement()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorLayer))
-        {
-            Vector3 hitPos = hit.point;
-            hitPos.y += 0.1f;
-
-            currentCanvasWorld = Instantiate(canvasWorld, hitPos, canvasWorld.transform.rotation);
-
-            Destroy(currentCanvasWorld, 0.5f);
-
-            center = hit.point;
-            MoveSelectedUnit(hit.point);
-        }
-    }
-
-    private void MoveSelectedUnit(Vector3 position)
-    {
-        for (int i = 0; i < selectedUnits.Count; i++)
-        {
-            selectedUnits[i].MoveToPosition(position);
-        }
-
-        HandleArmy();
     }
 
     #endregion
