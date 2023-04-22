@@ -65,6 +65,8 @@ public class Stats : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.instance.GameFinished) return;
+
         HandleHealth();
 
         HandleEnemies();

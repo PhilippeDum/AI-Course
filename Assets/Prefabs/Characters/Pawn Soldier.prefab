@@ -145,9 +145,9 @@ MonoBehaviour:
   isDead: 0
   timeDeath: 1
   healthSlider: {fileID: 938628529335509822}
-  damage: 25
+  damage: 5
   team: 0
-  timeBetweenAttacks: 1
+  timeBetweenAttacks: 2
   distanceToAttack: 6
   enemies: []
 --- !u!1 &2613911686416596859

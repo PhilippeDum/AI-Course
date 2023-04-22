@@ -51,6 +51,12 @@ public class GameManager : MonoBehaviour
 
     #region Getters / Setters
 
+    public bool GameFinished
+    {
+        get { return gameFinished; }
+        set { gameFinished = value; }
+    }
+
     public QuestType CurrentQuestType
     {
         get { return currentQuestType; }

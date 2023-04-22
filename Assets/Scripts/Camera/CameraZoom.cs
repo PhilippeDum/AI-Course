@@ -17,6 +17,14 @@ public class CameraZoom : MonoBehaviour
         _targetPosition = _cameraHolder.localPosition;
     }
 
+    private void Update()
+    {
+        if (GameManager.instance.GameFinished) return;
+
+        HandleInput();
+        Zoom();
+    }
+
     private void HandleInput()
     {
         _input = Input.GetAxisRaw("Mouse ScrollWheel");
@@ -35,11 +43,5 @@ public class CameraZoom : MonoBehaviour
     private bool IsInBounds(Vector3 position)
     {
         return position.magnitude > _range.x && position.magnitude < _range.y;
-    }
-
-    private void Update()
-    {
-        HandleInput();
-        Zoom();
     }
 }

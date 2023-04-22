@@ -26,6 +26,18 @@ public class CameraMotion : MonoBehaviour
         _targetPosition = transform.position;
     }
 
+    private void Update()
+    {
+        if (GameManager.instance.GameFinished) return;
+
+        HandleInput();
+
+        if (!canMove) return;
+
+        Move();
+        MoveCursor();
+    }
+
     private void HandleInput()
     {
         float x = Input.GetAxisRaw("Horizontal");
@@ -79,21 +91,4 @@ public class CameraMotion : MonoBehaviour
             position.z > -_range.y &&
             position.z < _range.y;
     }
-
-    private void Update()
-    {
-        HandleInput();
-
-        if (!canMove) return;
-
-        Move();
-        MoveCursor();
-    }
-
-    /*private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, 5f);
-        Gizmos.DrawWireCube(Vector3.zero, new Vector3(_range.x * 2f, 5f, _range.y * 2f));
-    }*/
 }

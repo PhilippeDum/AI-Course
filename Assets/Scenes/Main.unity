@@ -257,18 +257,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 26562339}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 533917668}
-  m_Father: {fileID: 1732137323}
-  m_RootOrder: 1
+  m_Father: {fileID: 2104154182}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 325, y: -125}
+  m_AnchoredPosition: {x: -585, y: 365}
   m_SizeDelta: {x: 650, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &26562341
@@ -732,8 +732,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 733596301}
-  m_Father: {fileID: 1315925056}
-  m_RootOrder: 5
+  m_Father: {fileID: 1732137323}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6283,7 +6283,6 @@ RectTransform:
   - {fileID: 1062482814}
   - {fileID: 1584775718}
   - {fileID: 537722225}
-  - {fileID: 138183291}
   m_Father: {fileID: 1732137323}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6867,8 +6866,8 @@ MonoBehaviour:
   king: {fileID: 992956355}
   kingEnemy: {fileID: 6201017100453141986}
   endGameUI: {fileID: 138183290}
-  mainUI: {fileID: 0}
-  questsUI: {fileID: 0}
+  mainUI: {fileID: 1315925055}
+  questsUI: {fileID: 2104154181}
   quests:
   - questName: "Cr\xE9ation d'une arm\xE9e"
     questDescription: Cliquer sur la tour Roi pour produire des soldats (Pion ou
@@ -8273,8 +8272,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1315925056}
-  - {fileID: 26562340}
-  - {fileID: 2138561679}
+  - {fileID: 2104154182}
+  - {fileID: 138183291}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10174,6 +10173,44 @@ Transform:
   m_Father: {fileID: 287774928}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2104154181
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2104154182}
+  m_Layer: 5
+  m_Name: Infos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2104154182
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104154181}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 26562340}
+  - {fileID: 2138561679}
+  m_Father: {fileID: 1732137323}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &2135988645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10261,19 +10298,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2138561678}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 909081584}
   - {fileID: 577703300}
-  m_Father: {fileID: 1732137323}
-  m_RootOrder: 2
+  m_Father: {fileID: 2104154182}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: 0}
+  m_AnchoredPosition: {x: -610, y: 0}
   m_SizeDelta: {x: 600, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2138561680
@@ -10321,14 +10358,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 287774928}
     m_Modifications:
-    - target: {fileID: 3545487660152849334, guid: 7ae11ed0b7322054b9a34d5cfbbd531b, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3545487660152849334, guid: 7ae11ed0b7322054b9a34d5cfbbd531b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6376811680499393048, guid: 7ae11ed0b7322054b9a34d5cfbbd531b, type: 3}
       propertyPath: m_Name
       value: Enemy King

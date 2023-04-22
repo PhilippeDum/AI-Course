@@ -33,8 +33,12 @@ public class SelectionManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.instance.GameFinished) return;
+
         HandleDetectionAndSelection();
     }
+
+    #region Selection & Detection
 
     private void HandleDetectionAndSelection()
     {
@@ -141,6 +145,8 @@ public class SelectionManager : MonoBehaviour
             else
             {
                 uiManager.HandleUI(false);
+
+                DeselectAll();
             }
         }
     }
@@ -229,6 +235,8 @@ public class SelectionManager : MonoBehaviour
 
         kingManager.SelectedUnits.Clear();
     }
+
+    #endregion
 
     #endregion
 }

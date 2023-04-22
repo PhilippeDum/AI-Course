@@ -430,7 +430,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6376811680499393048}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -508,7 +508,7 @@ MonoBehaviour:
   gathering: {fileID: 0}
   center: {x: 0, y: 0, z: 0}
   productionSlider: {fileID: 8768310814254001246}
-  lerp: 0.5
+  lerp: 0.7
   pawnsToProduct: 20
   ridersToProduct: 10
   timeOfPawnProduction: 6
@@ -527,10 +527,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf0ef3c225b72d46ab986f14cc0f4ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  maxHealth: 5000
   health: 0
   isDead: 0
-  timeDeath: 4
+  timeDeath: 2
   healthSlider: {fileID: 481213232261792417}
   damage: 0
   team: 1

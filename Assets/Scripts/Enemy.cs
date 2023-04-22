@@ -50,12 +50,11 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        HandleProduction();
+        if (GameManager.instance.GameFinished) return;
 
-        if (GetComponent<Stats>().IsDead)
-        {
-            GameManager.instance.EndGame(true);
-        }
+        if (GetComponent<Stats>().IsDead) GameManager.instance.EndGame(true);
+
+        HandleProduction();
     }
 
     #region Production

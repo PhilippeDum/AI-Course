@@ -78,6 +78,10 @@ public class KingManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.instance.GameFinished) return;
+
+        if (GetComponent<Stats>().IsDead) GameManager.instance.EndGame(true);
+
         HandleProduction();
 
         if (Input.GetMouseButtonDown(1))
@@ -85,6 +89,16 @@ public class KingManager : MonoBehaviour
             if (currentCanvasWorld != null) Destroy(currentCanvasWorld);
 
             HandleMovement();
+        }
+
+        for (int i = 0; i < units.Count; i++)
+        {
+            if (units[i] == null) units.Remove(units[i]);
+        }
+
+        for (int i = 0; i < selectedUnits.Count; i++)
+        {
+            if (selectedUnits[i] == null) selectedUnits.Remove(selectedUnits[i]);
         }
     }
 
@@ -201,7 +215,6 @@ public class KingManager : MonoBehaviour
     }
 
     #endregion
-
 
     public void HandleArmy()
     {
