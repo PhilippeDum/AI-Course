@@ -30,7 +30,7 @@ public class KingManager : MonoBehaviour
 
     private bool inProduction;
     private float timeRemaining = 0f;
-    private bool canStartProduction = true;
+    private bool canStartProduction = false;
 
     // Formation
     private FormationBase _formation;
@@ -85,6 +85,7 @@ public class KingManager : MonoBehaviour
         if (GetComponent<Stats>().IsDead) GameManager.instance.EndGame(true);
 
         HandleProduction();
+        Producing(timeOfPawnProduction);
 
         Move();
 
@@ -194,8 +195,18 @@ public class KingManager : MonoBehaviour
         inProduction = false;
     }
 
-    private void StartProduction(float specificTime)
+    private void CanProduce()
     {
+        canStartProduction = true;
+    }
+
+    private void Producing(float specificTime)
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            CanProduce();
+        }
+
         if (canStartProduction)
         {
             canStartProduction = false;
@@ -205,17 +216,18 @@ public class KingManager : MonoBehaviour
 
         if (timeRemaining > 0)
         {
+            Debug.Log($"Producing... {timeRemaining}");
+
+            inProduction = true;
+
             timeRemaining -= Time.deltaTime;
         }
         else
         {
             Debug.Log($"Completed");
+
+            inProduction = false;
         }
-    }
-
-    private void Producing()
-    {
-
     }
 
     #endregion
