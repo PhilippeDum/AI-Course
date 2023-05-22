@@ -29,6 +29,8 @@ public class KingManager : MonoBehaviour
     [SerializeField] private List<Unit> selectedUnits;
 
     private bool inProduction;
+    private float timeRemaining = 0f;
+    private bool canStartProduction = true;
 
     // Formation
     private FormationBase _formation;
@@ -84,13 +86,23 @@ public class KingManager : MonoBehaviour
 
         HandleProduction();
 
+        Move();
+
+        Clear();
+    }
+
+    private void Move()
+    {
         if (Input.GetMouseButtonDown(1))
         {
             if (currentCanvasWorld != null) Destroy(currentCanvasWorld);
 
             HandleMovement();
         }
+    }
 
+    private void Clear()
+    {
         for (int i = 0; i < units.Count; i++)
         {
             if (units[i] == null) units.Remove(units[i]);
@@ -180,6 +192,30 @@ public class KingManager : MonoBehaviour
         }
 
         inProduction = false;
+    }
+
+    private void StartProduction(float specificTime)
+    {
+        if (canStartProduction)
+        {
+            canStartProduction = false;
+
+            timeRemaining = specificTime;
+        }
+
+        if (timeRemaining > 0)
+        {
+            timeRemaining -= Time.deltaTime;
+        }
+        else
+        {
+            Debug.Log($"Completed");
+        }
+    }
+
+    private void Producing()
+    {
+
     }
 
     #endregion
