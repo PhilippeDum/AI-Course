@@ -46,8 +46,10 @@ public class GameManager : MonoBehaviour
 
     private int countPawnsDetection = 0;
     private int countRidersDetection = 0;
-    private BridgeReparation currentBridgeReparation;
     private bool currentBridgeRepaired;
+
+    private BridgeReparation currentBridgeReparation;
+    private EnemyManager enemyManager;
 
     #region Getters / Setters
 
@@ -114,6 +116,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        enemyManager = FindObjectOfType<EnemyManager>();
+
         gameFinished = false;
 
         production = false;
@@ -181,7 +185,7 @@ public class GameManager : MonoBehaviour
 
             if (!startShowing) startShowing = true;
 
-            FindObjectOfType<Enemy>().StartProduction();
+            enemyManager.StartProduction();
 
             currentQuestType = QuestType.Reparation;
         }
@@ -220,13 +224,13 @@ public class GameManager : MonoBehaviour
 
         if (endGame)
         {
-            Debug.Log($"Victory !! Enemy defeat");
-            endGameUI.GetComponentInChildren<Text>().text = $"Victory !! Enemy defeat";
+            Debug.Log($"Victory !! EnemyManager defeat");
+            endGameUI.GetComponentInChildren<Text>().text = $"Victory !! EnemyManager defeat";
         }
         else
         {
-            Debug.Log($"Defeat !! Enemy victory");
-            endGameUI.GetComponentInChildren<Text>().text = $"Defeat !! Enemy victory";
+            Debug.Log($"Defeat !! EnemyManager victory");
+            endGameUI.GetComponentInChildren<Text>().text = $"Defeat !! EnemyManager victory";
         }
 
         mainUI.SetActive(false);

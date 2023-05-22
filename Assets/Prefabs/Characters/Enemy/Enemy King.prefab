@@ -496,7 +496,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6376811680499393048}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08c9686e8a56eff499ece7fececb396d, type: 3}
+  m_Script: {fileID: 11500000, guid: dd6c4c4ac2a07d04d9f3f5d9321ec44c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pawnUnitPrefabs:
@@ -508,11 +508,10 @@ MonoBehaviour:
   gathering: {fileID: 0}
   center: {x: 0, y: 0, z: 0}
   productionSlider: {fileID: 8768310814254001246}
-  lerp: 0.7
-  pawnsToProduct: 20
-  ridersToProduct: 10
-  timeOfPawnProduction: 6
-  timeOfRiderProduction: 12
+  pawnsToProduct: 26
+  ridersToProduct: 12
+  timeOfPawnProduction: 4
+  timeOfRiderProduction: 8
   units: []
   selectedUnits: []
 --- !u!114 &6376811680499393034
@@ -817,18 +816,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8596512892908261559, guid: 55590c5fcd5297a41a917aa70b9a8570, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8596512892908261559, guid: 55590c5fcd5297a41a917aa70b9a8570, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8596512892908261559, guid: 55590c5fcd5297a41a917aa70b9a8570, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8596512892908261559, guid: 55590c5fcd5297a41a917aa70b9a8570, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -870,7 +857,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8937149654859811341, guid: 55590c5fcd5297a41a917aa70b9a8570, type: 3}
       propertyPath: m_Name
-      value: Tour
+      value: Tower Model
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55590c5fcd5297a41a917aa70b9a8570, type: 3}

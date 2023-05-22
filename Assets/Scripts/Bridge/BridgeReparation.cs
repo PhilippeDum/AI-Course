@@ -13,6 +13,10 @@ public class BridgeReparation : MonoBehaviour
     [SerializeField] private Slider reparationSlider;
     [SerializeField][Range(0, 1)] private float lerp = 0.5f;
 
+    private float timeRemaining = 0f;
+    private bool canRepair = false;
+    private bool inReparation = false;
+
     private void Start()
     {
         reparationSlider.transform.parent.gameObject.SetActive(false);
@@ -27,12 +31,50 @@ public class BridgeReparation : MonoBehaviour
 
         reparationSlider.transform.parent.LookAt(Camera.main.transform.position);
 
-        reparationSlider.value = Mathf.Lerp(reparationSlider.value, 0f, lerp * Time.deltaTime);
+        //reparationSlider.value = Mathf.Lerp(reparationSlider.value, 0f, lerp * Time.deltaTime);
+
+        if (canRepair)
+        {
+            canRepair = false;
+
+            timeRemaining = timeOfReparation;
+
+            reparationSlider.maxValue = timeRemaining;
+
+            inReparation = true;
+        }
+
+        if (inReparation)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+
+                reparationSlider.value = timeRemaining;
+                
+                reparationSlider.transform.parent.gameObject.SetActive(true);
+            }
+            else
+            {
+                brokenBridge.SetActive(false);
+                repairedBridge.SetActive(true);
+
+                surface.BuildNavMesh();
+                surface.UpdateNavMesh(surface.navMeshData);
+
+                GameManager.instance.CurrentBridgeRepaired = true;
+
+                inReparation = false;
+            }
+        }
     }
+
 
     public void Repair()
     {
-        StartCoroutine(Reparation());
+        //StartCoroutine(Reparation());
+
+        canRepair = true;
     }
 
     private IEnumerator Reparation()

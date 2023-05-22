@@ -72,7 +72,7 @@ public class UIManager : MonoBehaviour
                 HandleUI(true);
             }
 
-            if (currentElement.CompareTag("King") || currentElement.CompareTag("Unit") || currentElement.CompareTag("Enemy"))
+            if (currentElement.CompareTag("King") || currentElement.CompareTag("Unit") || currentElement.CompareTag("EnemyManager"))
             {
                 Stats stats = currentElement.GetComponent<Stats>();
 

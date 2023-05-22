@@ -14,7 +14,6 @@ public class KingManager : MonoBehaviour
     [SerializeField] private Vector3 center;
     [SerializeField] private GameObject canvasWorld;
     [SerializeField] private Slider productionSlider;
-    [SerializeField] [Range(0, 1)] private float lerp = 0.5f;
 
     private GameObject currentCanvasWorld;
 
@@ -28,9 +27,10 @@ public class KingManager : MonoBehaviour
     [SerializeField] private List<Unit> units;
     [SerializeField] private List<Unit> selectedUnits;
 
-    private bool inProduction;
     private float timeRemaining = 0f;
-    private bool canStartProduction = false;
+    private bool inProduction;
+    private bool canStartProduction;
+    private Unit.UnitType unitTypeToProduct;
 
     // Formation
     private FormationBase _formation;
@@ -74,6 +74,7 @@ public class KingManager : MonoBehaviour
         uiManager = FindObjectOfType<UIManager>();
 
         inProduction = false;
+        canStartProduction = false;
 
         center = gathering.position;
     }
@@ -85,7 +86,6 @@ public class KingManager : MonoBehaviour
         if (GetComponent<Stats>().IsDead) GameManager.instance.EndGame(true);
 
         HandleProduction();
-        Producing(timeOfPawnProduction);
 
         Move();
 
@@ -117,16 +117,6 @@ public class KingManager : MonoBehaviour
 
     #region Production
 
-    private void HandleProduction()
-    {
-        if ((pawnsToProduct > 0 || ridersToProduct > 0) && !inProduction)
-        {
-            StartCoroutine(StartProduction());
-        }
-
-        productionSlider.value = Mathf.Lerp(productionSlider.value, 0f, lerp * Time.deltaTime);
-    }
-
     public void AddPawnToProduction()
     {
         pawnsToProduct++;
@@ -150,83 +140,75 @@ public class KingManager : MonoBehaviour
         uiManager.UpdateText(text);
     }
 
-    private IEnumerator StartProduction()
+    private void HandleProduction()
     {
-        inProduction = true;
+        // Active Production
+        if ((pawnsToProduct > 0 || ridersToProduct > 0) && !inProduction) canStartProduction = true;
 
-        while (pawnsToProduct > 0)
-        {
-            productionSlider.maxValue = timeOfPawnProduction;
-            productionSlider.value = timeOfPawnProduction;
-
-            yield return new WaitForSeconds(timeOfPawnProduction);
-
-            int randomPawn = Random.Range(0, pawnUnitPrefabs.Count);
-            Unit unit = Instantiate(pawnUnitPrefabs[randomPawn], unitParent).GetComponent<Unit>();
-
-            unit.MoveToPosition(gathering.position);
-
-            units.Add(unit);
-
-            GameManager.instance.CountPawns++;
-
-            pawnsToProduct--;
-        }
-
-        while (ridersToProduct > 0)
-        {
-            productionSlider.maxValue = timeOfRiderProduction;
-            productionSlider.value = timeOfRiderProduction;
-
-            yield return new WaitForSeconds(timeOfRiderProduction);
-
-            int randomRider = Random.Range(0, riderUnitPrefabs.Count);
-            Unit unit = Instantiate(riderUnitPrefabs[randomRider], unitParent).GetComponent<Unit>();
-
-            unit.MoveToPosition(gathering.position);
-
-            units.Add(unit);
-
-            GameManager.instance.CountRiders++;
-
-            ridersToProduct--;
-        }
-
-        inProduction = false;
-    }
-
-    private void CanProduce()
-    {
-        canStartProduction = true;
-    }
-
-    private void Producing(float specificTime)
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            CanProduce();
-        }
-
+        // Handle Setup Start Production
         if (canStartProduction)
         {
             canStartProduction = false;
 
-            timeRemaining = specificTime;
+            if (pawnsToProduct > 0 && !inProduction)
+            {
+                inProduction = true;
+
+                timeRemaining = timeOfPawnProduction;
+                unitTypeToProduct = Unit.UnitType.Pawn;
+            }
+
+            if (ridersToProduct > 0 && !inProduction)
+            {
+                inProduction = true;
+
+                timeRemaining = timeOfRiderProduction;
+                unitTypeToProduct = Unit.UnitType.Rider;
+            }
+
+            productionSlider.maxValue = timeRemaining;
         }
 
-        if (timeRemaining > 0)
+        // Handle Timer + Unit produced
+        if (inProduction)
         {
-            Debug.Log($"Producing... {timeRemaining}");
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
 
-            inProduction = true;
+                productionSlider.value = timeRemaining;
+            }
+            else
+            {
+                if (unitTypeToProduct == Unit.UnitType.Pawn)
+                {
+                    int randomPawn = Random.Range(0, pawnUnitPrefabs.Count);
+                    Unit unit = Instantiate(pawnUnitPrefabs[randomPawn], unitParent).GetComponent<Unit>();
 
-            timeRemaining -= Time.deltaTime;
-        }
-        else
-        {
-            Debug.Log($"Completed");
+                    unit.MoveToPosition(gathering.position);
 
-            inProduction = false;
+                    units.Add(unit);
+
+                    GameManager.instance.CountPawns++;
+
+                    pawnsToProduct--;
+                }
+                else if (unitTypeToProduct == Unit.UnitType.Rider)
+                {
+                    int randomRider = Random.Range(0, riderUnitPrefabs.Count);
+                    Unit unit = Instantiate(riderUnitPrefabs[randomRider], unitParent).GetComponent<Unit>();
+
+                    unit.MoveToPosition(gathering.position);
+
+                    units.Add(unit);
+
+                    GameManager.instance.CountRiders++;
+
+                    ridersToProduct--;
+                }
+
+                inProduction = false;
+            }
         }
     }
 

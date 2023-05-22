@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour
+public class EnemyManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private List<GameObject> pawnUnitPrefabs;
@@ -12,7 +11,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform gathering;
     [SerializeField] private Vector3 center;
     [SerializeField] private Slider productionSlider;
-    [SerializeField][Range(0, 1)] private float lerp = 0.5f;
 
     [Header("Production Properties")]
     [SerializeField] private int pawnsToProduct = 0;
@@ -22,8 +20,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] private List<Unit> units;
     [SerializeField] private List<Unit> selectedUnits;
 
+    private float timeRemaining = 0f;
     private bool inProduction;
     private bool canStartProduction;
+    private bool canProduce;
+    private Unit.UnitType unitTypeToProduct;
 
     // Formation
     private FormationBase _formation;
@@ -44,6 +45,7 @@ public class Enemy : MonoBehaviour
     {
         inProduction = false;
         canStartProduction = false;
+        canProduce = false;
 
         center = gathering.position;
     }
@@ -59,7 +61,87 @@ public class Enemy : MonoBehaviour
 
     #region Production
 
+    public void StartProduction()
+    {
+        // Active Production
+        canProduce = true;
+    }
+
     private void HandleProduction()
+    {
+        if (!canProduce) return;
+
+        // Active Unit Production
+        if ((pawnsToProduct > 0 || ridersToProduct > 0) && !inProduction) canStartProduction = true;
+
+        // Handle Setup Start Production
+        if (canStartProduction)
+        {
+            canStartProduction = false;
+
+            if (pawnsToProduct > 0 && !inProduction)
+            {
+                inProduction = true;
+
+                timeRemaining = timeOfPawnProduction;
+                unitTypeToProduct = Unit.UnitType.Pawn;
+            }
+
+            if (ridersToProduct > 0 && !inProduction)
+            {
+                inProduction = true;
+
+                timeRemaining = timeOfRiderProduction;
+                unitTypeToProduct = Unit.UnitType.Rider;
+            }
+
+            productionSlider.maxValue = timeRemaining;
+        }
+
+        // Handle Timer + Unit produced
+        if (inProduction)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+
+                productionSlider.value = timeRemaining;
+            }
+            else
+            {
+                if (unitTypeToProduct == Unit.UnitType.Pawn)
+                {
+                    int randomPawn = Random.Range(0, pawnUnitPrefabs.Count);
+                    Unit unit = Instantiate(pawnUnitPrefabs[randomPawn], unitParent).GetComponent<Unit>();
+
+                    unit.MoveToPosition(gathering.position);
+
+                    units.Add(unit);
+
+                    pawnsToProduct--;
+
+                    HandleArmy();
+                }
+                else if (unitTypeToProduct == Unit.UnitType.Rider)
+                {
+                    int randomRider = Random.Range(0, riderUnitPrefabs.Count);
+                    Unit unit = Instantiate(riderUnitPrefabs[randomRider], unitParent).GetComponent<Unit>();
+
+                    unit.MoveToPosition(gathering.position);
+
+                    units.Add(unit);
+
+                    ridersToProduct--;
+
+                    HandleArmy();
+                }
+
+                inProduction = false;
+            }
+        }
+    }
+
+    /*private void HandleProduction()
     {
         if ((pawnsToProduct > 0 || ridersToProduct > 0) && !inProduction && canStartProduction)
         {
@@ -71,7 +153,7 @@ public class Enemy : MonoBehaviour
 
     public void StartProduction()
     {
-        Debug.Log($"Enemy starting to produce enemies");
+        Debug.Log($"EnemyManager starting to produce enemies");
 
         canStartProduction = true;
 
@@ -121,10 +203,9 @@ public class Enemy : MonoBehaviour
         }
 
         inProduction = false;
-    }
+    }*/
 
     #endregion
-
 
     public void HandleArmy()
     {
