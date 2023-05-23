@@ -6,26 +6,26 @@ public class EnemyDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Stats>())
+        if (other.GetComponent<UnitStats>())
         {
-            Stats stats = other.GetComponent<Stats>();
+            UnitStats unitStats = other.GetComponent<UnitStats>();
 
-            if (stats.GetTeam == teamEnemy)
+            if (unitStats.GetTeam == teamEnemy)
             {
-                GetComponentInParent<Stats>().Enemies.Add(stats);
+                GetComponentInParent<UnitStats>().Enemies.Add(unitStats);
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<Stats>())
+        if (other.GetComponent<UnitStats>())
         {
-            Stats stats = other.GetComponent<Stats>();
+            UnitStats unitStats = other.GetComponent<UnitStats>();
 
-            if (stats.GetTeam == teamEnemy)
+            if (unitStats.GetTeam == teamEnemy)
             {
-                GetComponentInParent<Stats>().Enemies.Remove(stats);
+                GetComponentInParent<UnitStats>().Enemies.Remove(unitStats);
             }
         }
     }

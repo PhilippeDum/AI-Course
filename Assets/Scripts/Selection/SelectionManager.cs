@@ -95,9 +95,9 @@ public class SelectionManager : MonoBehaviour
             {
                 if (currentElement != null && currentElement.GetComponent<Unit>() && !selectAllSameUnit)
                 {
-                    Stats stats = currentElement.GetComponent<Stats>();
+                    UnitStats unitStats = currentElement.GetComponent<UnitStats>();
 
-                    if (stats.GetTeam == Team.Enemy) yield break;
+                    if (unitStats.GetTeam == Team.Enemy) yield break;
 
                     selectAllSameUnit = true;
                     SelectAllSameUnit(currentElement.GetComponent<Unit>());

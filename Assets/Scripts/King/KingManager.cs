@@ -83,7 +83,7 @@ public class KingManager : MonoBehaviour
     {
         if (GameManager.instance.GameFinished) return;
 
-        if (GetComponent<Stats>().IsDead) GameManager.instance.EndGame(true);
+        if (GetComponent<UnitStats>().IsDead) GameManager.instance.EndGame(true);
 
         HandleProduction();
 

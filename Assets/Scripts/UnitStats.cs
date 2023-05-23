@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Stats : MonoBehaviour
+public class UnitStats : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField] private int maxHealth;
@@ -19,11 +19,15 @@ public class Stats : MonoBehaviour
     [SerializeField] private Team team;
     [SerializeField] private float timeBetweenAttacks = 3f;
     [SerializeField] private float distanceToAttack = 2f;
-    [SerializeField] private List<Stats> enemies;
+    [SerializeField] private List<UnitStats> enemies;
+
+    private float timeRemaining = 0;
+    private bool canAttack = false;
+    private bool inAttack = false;
 
     #region Getters / Setters
 
-    public List<Stats> Enemies
+    public List<UnitStats> Enemies
     {
         get { return enemies; }
         set { enemies = value; }
@@ -81,7 +85,7 @@ public class Stats : MonoBehaviour
     {
         if (enemies.Count > 0)
         {
-            Stats enemy = enemies[0];
+            UnitStats enemy = enemies[0];
 
             Unit unit = GetComponent<Unit>();
 
@@ -93,7 +97,7 @@ public class Stats : MonoBehaviour
         }
     }
 
-    private IEnumerator Attack(Stats enemy)
+    private IEnumerator Attack(UnitStats enemy)
     {
         while (!enemy.IsDead)
         {
@@ -103,7 +107,12 @@ public class Stats : MonoBehaviour
         }
     }
 
-    #region Handle Stats
+    private void AttackV2()
+    {
+
+    }
+
+    #region Handle Unit Stats
 
     private void HandleHealth()
     {
