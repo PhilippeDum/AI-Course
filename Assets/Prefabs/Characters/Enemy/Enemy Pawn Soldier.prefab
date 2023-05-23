@@ -213,18 +213,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 2038762459636269224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcf0ef3c225b72d46ab986f14cc0f4ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 706dce79d834bf24085dc0a1136ea2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 0
   health: 0
   isDead: 0
-  timeDeath: 1
+  timeDeath: 4
   healthSlider: {fileID: 8824639857177433896}
-  damage: 5
-  team: 1
-  timeBetweenAttacks: 2
-  distanceToAttack: 6
+  damage: 0
+  team: 0
+  timeBetweenAttacks: 3
+  distanceToAttack: 2
   enemies: []
 --- !u!1 &2360079573480422284
 GameObject:

@@ -2288,7 +2288,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5399d9450c27fcc46920b23d7affdc02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generator: {fileID: 888593635899021533, guid: 24342a8add5ccbe4ba962fbefb5a3391, type: 3}
+  building: {fileID: 888593635899021533, guid: 24342a8add5ccbe4ba962fbefb5a3391, type: 3}
+  invalidMaterial: {fileID: 2100000, guid: 6b004d6ed8ad3e84cbf5471806ae5620, type: 2}
+  rotationSpeed: 10
 --- !u!4 &1016170881
 Transform:
   m_ObjectHideFlags: 0
@@ -5522,6 +5524,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1069776823}
     m_Modifications:
+    - target: {fileID: 677710318229833350, guid: 5d5d8eab7b522a54f9ef13fbf1f7f1b1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2734350800901300759, guid: 5d5d8eab7b522a54f9ef13fbf1f7f1b1, type: 3}
       propertyPath: m_Name
       value: P1
@@ -5570,5 +5576,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5053626728040645061, guid: 5d5d8eab7b522a54f9ef13fbf1f7f1b1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5d5d8eab7b522a54f9ef13fbf1f7f1b1, type: 3}
