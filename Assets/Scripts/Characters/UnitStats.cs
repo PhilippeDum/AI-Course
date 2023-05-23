@@ -9,7 +9,7 @@ public class UnitStats : MonoBehaviour
     [SerializeField] private int maxHealth;
     [SerializeField] private int health;
     [SerializeField] private bool isDead;
-    [SerializeField] private float timeDeath = 4f;
+    [SerializeField] private float timeDeath = 1f;
     [SerializeField] private Slider healthSlider;
 
     [Header("Damage")]
@@ -17,13 +17,15 @@ public class UnitStats : MonoBehaviour
 
     [Header("Attack")]
     [SerializeField] private Team team;
-    [SerializeField] private float timeBetweenAttacks = 3f;
+    [SerializeField] private Vector2 rangeTimeBetweenAttacks = new Vector2(1f, 3f);
     [SerializeField] private float distanceToAttack = 2f;
     [SerializeField] private List<UnitStats> enemies;
 
     private float timeRemaining = 0;
     private bool canAttack = false;
     private bool inAttack = false;
+
+    private Unit unit;
 
     #region Getters / Setters
 
@@ -65,6 +67,8 @@ public class UnitStats : MonoBehaviour
 
         healthSlider.maxValue = health;
         healthSlider.value = health;
+
+        unit = GetComponent<Unit>();
     }
 
     private void Update()
@@ -73,14 +77,14 @@ public class UnitStats : MonoBehaviour
 
         HandleHealth();
 
-        HandleEnemies();
-
-        for (int i = 0; i < enemies.Count; i++)
+        if (!isDead)
         {
-            if (enemies[i] == null) enemies.RemoveAt(i);
-        }
+            HandleEnemies();
 
-        AttackV2();
+            Clean();
+
+            HandleAttack();
+        }        
     }
 
     private void HandleEnemies()
@@ -89,51 +93,51 @@ public class UnitStats : MonoBehaviour
         {
             UnitStats enemy = enemies[0];
 
-            Unit unit = GetComponent<Unit>();
-
             if (enemy == null || enemy.isDead) return;
 
-            unit.MoveToPosition(enemies[0].transform.position, distanceToAttack);
-
-            //StartCoroutine(Attack(enemies[0]));
+            unit.MoveToPosition(enemy.transform.position, distanceToAttack);
 
             canAttack = true;
-        }
+        }        
     }
 
-    private IEnumerator Attack(UnitStats enemy)
+    private void Clean()
     {
-        while (!enemy.IsDead)
+        for (int i = 0; i < enemies.Count; i++)
         {
-            enemy.TakeDamage(damage);
-
-            yield return new WaitForSeconds(timeBetweenAttacks);
+            if (enemies[i] == null) enemies.RemoveAt(i);
         }
     }
 
-    private void AttackV2()
+    private void HandleAttack()
     {
-        if (canAttack)
+        if (canAttack && !inAttack)
         {
             canAttack = false;
 
-            timeRemaining = timeBetweenAttacks;
-
-            healthSlider.maxValue = timeRemaining;
+            timeRemaining = Random.Range(rangeTimeBetweenAttacks.x, rangeTimeBetweenAttacks.y);
 
             inAttack = true;
         }
 
         if (inAttack)
         {
+            if (enemies.Count <= 0) return;
+
+            UnitStats enemy = enemies[0];
+
+            if (enemy == null || enemy.isDead) return;
+
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
-
-                healthSlider.value = timeRemaining;
             }
             else
             {
+                transform.LookAt(enemy.transform.position);
+
+                enemy.TakeDamage();
+
                 inAttack = false;
             }
         }
@@ -147,13 +151,15 @@ public class UnitStats : MonoBehaviour
         {
             health = 0;
 
+            isDead = false;
+
             Destroy(gameObject, timeDeath);
         }
 
         healthSlider.transform.parent.LookAt(Camera.main.transform.position);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage()
     {
         health -= damage;
 

@@ -140,14 +140,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 706dce79d834bf24085dc0a1136ea2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 100
   health: 0
   isDead: 0
-  timeDeath: 4
+  timeDeath: 1
   healthSlider: {fileID: 938628529335509822}
-  damage: 0
+  damage: 10
   team: 0
-  timeBetweenAttacks: 3
+  rangeTimeBetweenAttacks: {x: 0.5, y: 1}
   distanceToAttack: 2
   enemies: []
 --- !u!1 &2613911686416596859

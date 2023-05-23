@@ -51,6 +51,8 @@ public class Unit : MonoBehaviour
 
     public void MoveToPosition(Vector3 position, float stoppingDistance = -1)
     {
+        if (agent == null) return;
+
         if (stoppingDistance != -1)
             agent.stoppingDistance = stoppingDistance;
 
