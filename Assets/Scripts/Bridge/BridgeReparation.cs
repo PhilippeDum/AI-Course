@@ -11,7 +11,6 @@ public class BridgeReparation : MonoBehaviour
     [SerializeField] private float timeOfReparation = 5f;
     [SerializeField] private NavMeshSurface surface;
     [SerializeField] private Slider reparationSlider;
-    [SerializeField][Range(0, 1)] private float lerp = 0.5f;
 
     private float timeRemaining = 0f;
     private bool canRepair = false;
