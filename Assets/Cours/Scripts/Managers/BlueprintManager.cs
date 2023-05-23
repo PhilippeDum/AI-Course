@@ -5,11 +5,18 @@ public class BlueprintManager : MonoBehaviour
     [SerializeField] private GameObject building;
     [SerializeField] private Material invalidMaterial;
     [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private int defoggerRadius = 1000;
 
     private GameObject blueprintGO;
     private BlueprintController blueprint;
     private Material defaultMaterial;
     private int layerMaskTerrain = 1 << 9;
+    private Fog fog;
+
+    private void Start()
+    {
+        fog = Fog.instance;
+    }
 
     private void Update()
     {
@@ -57,6 +64,8 @@ public class BlueprintManager : MonoBehaviour
 
     private void PlaceBlueprint()
     {
+        fog.UnhideUnit(blueprintGO.transform, defoggerRadius);
+
         blueprintGO = null;
 
         Destroy(blueprint);

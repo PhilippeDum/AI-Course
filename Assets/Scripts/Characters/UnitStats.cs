@@ -79,6 +79,8 @@ public class UnitStats : MonoBehaviour
         {
             if (enemies[i] == null) enemies.RemoveAt(i);
         }
+
+        AttackV2();
     }
 
     private void HandleEnemies()
@@ -93,7 +95,9 @@ public class UnitStats : MonoBehaviour
 
             unit.MoveToPosition(enemies[0].transform.position, distanceToAttack);
 
-            StartCoroutine(Attack(enemies[0]));
+            //StartCoroutine(Attack(enemies[0]));
+
+            canAttack = true;
         }
     }
 
@@ -109,7 +113,30 @@ public class UnitStats : MonoBehaviour
 
     private void AttackV2()
     {
+        if (canAttack)
+        {
+            canAttack = false;
 
+            timeRemaining = timeBetweenAttacks;
+
+            healthSlider.maxValue = timeRemaining;
+
+            inAttack = true;
+        }
+
+        if (inAttack)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+
+                healthSlider.value = timeRemaining;
+            }
+            else
+            {
+                inAttack = false;
+            }
+        }
     }
 
     #region Handle Unit Stats
