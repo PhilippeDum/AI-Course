@@ -9,7 +9,7 @@ public class Ability : MonoBehaviour
     [SerializeField] private Role role;
     [SerializeField] private Slider slider;
     [SerializeField] private float timeOfAbility = 5f;
-    [SerializeField] private int value = 10;
+    [SerializeField] private float value = 10;
 
     private bool abilityInUse = false;
     private bool canUseAbility = false;
@@ -30,7 +30,20 @@ public class Ability : MonoBehaviour
 
     private void Update()
     {
-        HandleAbility();
+        switch (role)
+        {
+            case Role.Heal:
+                HandleAbility();
+                break;
+            case Role.Boost:
+                HandleBoost();
+                break;
+            default:
+                Debug.Log($"Error : switch role");
+                break;
+        }
+
+        //HandleAbility();
     }
 
     private void HandleAbility()
@@ -61,28 +74,46 @@ public class Ability : MonoBehaviour
             }
             else
             {
-                switch (role)
+                for (int i = 0; i < units.Count; i++)
+                {
+                    Debug.Log($"Ability Heal {units[i]} + {value}");
+                    units[i].Health += (int)value;
+                }
+
+                /*switch (role)
                 {
                     case Role.Heal:
                         for (int i = 0; i < units.Count; i++)
                         {
                             Debug.Log($"Ability Heal {units[i]} + {value}");
-                            units[i].Health += value;
+                            units[i].Health += (int)value;
                         }
                         break;
                     case Role.Boost:
                         for (int i = 0; i < units.Count; i++)
                         {
                             Debug.Log($"Ability Boost {units[i]} + {value}");
-                            // Boost speed
+                            units[i].Boost(value);
                         }
                         break;
                     default:
                         break;
-                }
+                }*/
 
                 abilityInUse = false;
             }
+        }
+    }
+
+    private void HandleBoost()
+    {
+        if (units.Count <= 0) return;
+
+        abilityInUse = true;
+
+        for (int i = 0; i < units.Count; i++)
+        {
+            units[i].Boost(value);
         }
     }
 
@@ -93,6 +124,11 @@ public class Ability : MonoBehaviour
 
     public void RemoveUnit(UnitStats unit)
     {
-        if (unit.GetTeam == unitStats.GetTeam && units.Contains(unit)) units.Remove(unit);
+        if (unit.GetTeam == unitStats.GetTeam && units.Contains(unit))
+        {
+            if (role == Role.Boost) unit.Boost(-1);
+
+            units.Remove(unit);
+        }
     }
 }

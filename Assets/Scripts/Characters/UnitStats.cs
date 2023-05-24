@@ -20,6 +20,10 @@ public class UnitStats : MonoBehaviour
     [SerializeField] private float distanceToAttack = 2f;
     [SerializeField] private List<UnitStats> enemies;
 
+    private Vector2 defaultRangeAttacks;
+    private float defaultSpeed;
+    private bool boostActive = false;
+
     private float timeRemaining = 0;
     private bool canAttack = false;
     private bool inAttack = false;
@@ -58,21 +62,30 @@ public class UnitStats : MonoBehaviour
         set { health = value; }
     }
 
+    public bool BoostActive
+    {
+        get { return boostActive; }
+        set { boostActive = value; }
+    }
+
     #endregion
 
     private void Start()
     {
+        unit = GetComponent<Unit>();
+
         health = maxHealth;
 
         healthSlider.maxValue = health;
         healthSlider.value = health;
 
-        unit = GetComponent<Unit>();
+        defaultRangeAttacks = rangeTimeBetweenAttacks;
+        defaultSpeed = unit.Speed;
     }
 
     private void Update()
     {
-        if (GameManager.instance.GameFinished) return;
+        //if (GameManager.instance.GameFinished) return;
 
         HandleHealth();
 
@@ -167,6 +180,27 @@ public class UnitStats : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
+    }
+
+    public void Boost(float value)
+    {
+        // Reset Boost
+        if (value == -1 && boostActive)
+        {
+            unit.Speed = defaultSpeed;
+            rangeTimeBetweenAttacks = defaultRangeAttacks;
+
+            boostActive = false;
+
+            return;
+        }
+        else if (!boostActive)
+        {
+            boostActive = true;
+
+            unit.Speed *= value;
+            rangeTimeBetweenAttacks /= 2;
+        }
     }
 
     #endregion

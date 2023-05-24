@@ -647,6 +647,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pegu Dirt Model
       objectReference: {fileID: 0}
+    - target: {fileID: 5007865540220536053, guid: 9a200d15da7713948b82d875a8e061a8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5635220849770602063, guid: 9a200d15da7713948b82d875a8e061a8, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -18,7 +18,7 @@ public class Detection : MonoBehaviour
         {
             UnitStats unitDetected = other.GetComponent<UnitStats>();
 
-            GetComponentInParent<Ability>().AddUnit(unitDetected);
+            GetComponentInParent<Ability>().RemoveUnit(unitDetected);
         }
     }
 }

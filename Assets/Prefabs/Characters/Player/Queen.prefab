@@ -611,7 +611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 706dce79d834bf24085dc0a1136ea2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 50
   health: 0
   isDead: 0
   timeDeath: 1
@@ -637,7 +637,7 @@ MonoBehaviour:
   role: 1
   slider: {fileID: 5111505923207296149}
   timeOfAbility: 5
-  value: 10
+  value: 1.5
 --- !u!1 &8800236669679723059
 GameObject:
   m_ObjectHideFlags: 0
