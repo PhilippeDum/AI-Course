@@ -1,11 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BlueprintManager : MonoBehaviour
 {
-    [SerializeField] private GameObject building;
     [SerializeField] private Material invalidMaterial;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private int defoggerRadius = 1000;
+    [SerializeField] private List<BuildingDatas> datas = new List<BuildingDatas>();
 
     private GameObject blueprintGO;
     private BlueprintController blueprint;
@@ -28,7 +29,18 @@ public class BlueprintManager : MonoBehaviour
         }
     }
 
-    public void InstantiateBuilding()
+    public void FindBuilding(string name)
+    {
+        foreach (var data in datas)
+        {
+            if (data.Name == name)
+            {
+                InstantiateBuilding(data.Prefab);
+            }
+        }
+    }
+
+    private void InstantiateBuilding(GameObject building)
     {
         blueprintGO = Instantiate(building, Vector3.zero, Quaternion.identity);
         blueprint = blueprintGO.GetComponent<BlueprintController>();

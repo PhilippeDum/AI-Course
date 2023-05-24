@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2179501834948742527}
   - component: {fileID: 8276841275338635711}
   m_Layer: 0
-  m_Name: Generator
+  m_Name: Structure 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,7 +100,7 @@ PrefabInstance:
     - target: {fileID: 6322778059167154904, guid: 46b00250374a19f4a97bacbf63d87648, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 57b5074004893944192be01314086b04, type: 2}
+      objectReference: {fileID: 2100000, guid: b786f201f737859498cfacb4c366045a, type: 2}
     - target: {fileID: 7240508097397712215, guid: 46b00250374a19f4a97bacbf63d87648, type: 3}
       propertyPath: m_RootOrder
       value: 0

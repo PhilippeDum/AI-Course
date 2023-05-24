@@ -926,7 +926,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 245761335}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1016170880}
+        m_TargetAssemblyTypeName: BlueprintManager, Assembly-CSharp
+        m_MethodName: FindBuilding
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Structure 4
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &245761335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2269,10 +2281,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5399d9450c27fcc46920b23d7affdc02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  building: {fileID: 888593635899021533, guid: 24342a8add5ccbe4ba962fbefb5a3391, type: 3}
   invalidMaterial: {fileID: 2100000, guid: 6b004d6ed8ad3e84cbf5471806ae5620, type: 2}
   rotationSpeed: 10
   defoggerRadius: 1000
+  datas:
+  - name: Generator
+    prefab: {fileID: 888593635899021533, guid: 24342a8add5ccbe4ba962fbefb5a3391, type: 3}
+    tiberiumCost: 0
+    energyGain: 0
+    energyCost: 0
+    healthPoint: 0
+  - name: Structure 2
+    prefab: {fileID: 888593635899021533, guid: 24587c5042d069d469bf70d2c26e5362, type: 3}
+    tiberiumCost: 0
+    energyGain: 0
+    energyCost: 0
+    healthPoint: 0
+  - name: Structure 3
+    prefab: {fileID: 888593635899021533, guid: 43389cf437deb4543b6be27ebae1f9c3, type: 3}
+    tiberiumCost: 0
+    energyGain: 0
+    energyCost: 0
+    healthPoint: 0
+  - name: Structure 4
+    prefab: {fileID: 888593635899021533, guid: 50339312a2e55754e88c073695d7a7fe, type: 3}
+    tiberiumCost: 0
+    energyGain: 0
+    energyCost: 0
+    healthPoint: 0
 --- !u!4 &1016170881
 Transform:
   m_ObjectHideFlags: 0
@@ -2437,7 +2473,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 297.4895}
+  m_SizeDelta: {x: 0, y: 358.3125}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1140008274
 MonoBehaviour:
@@ -2988,7 +3024,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1317470791}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1016170880}
+        m_TargetAssemblyTypeName: BlueprintManager, Assembly-CSharp
+        m_MethodName: FindBuilding
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Structure 3
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1317470791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3875,14 +3923,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1016170880}
         m_TargetAssemblyTypeName: BlueprintManager, Assembly-CSharp
-        m_MethodName: InstantiateBuilding
-        m_Mode: 1
+        m_MethodName: FindBuilding
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Generator
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1546290261
@@ -3936,7 +3984,7 @@ GameObject:
   - component: {fileID: 1564706118}
   - component: {fileID: 1564706117}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Panel Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5051,7 +5099,7 @@ GameObject:
   - component: {fileID: 2043822685}
   - component: {fileID: 2043822684}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Panel Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5232,7 +5280,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2121229430}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1016170880}
+        m_TargetAssemblyTypeName: BlueprintManager, Assembly-CSharp
+        m_MethodName: FindBuilding
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Structure 2
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2121229430
 MonoBehaviour:
   m_ObjectHideFlags: 0
