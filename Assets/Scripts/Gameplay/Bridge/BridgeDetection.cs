@@ -16,25 +16,25 @@ public class BridgeDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Unit"))
+        if (other.CompareTag("UnitMovement"))
         {
-            Unit unit = other.GetComponent<Unit>();
+            UnitMovement unit = other.GetComponent<UnitMovement>();
 
             GameManager.instance.CurrentBridgeReparation = GetComponentInParent<BridgeReparation>();
 
-            if (unit.GetUnitType == Unit.UnitType.Pawn) countPawns++;
-            if (unit.GetUnitType == Unit.UnitType.Rider) countRiders++;
+            if (unit.GetUnitType == UnitMovement.UnitType.Pawn) countPawns++;
+            if (unit.GetUnitType == UnitMovement.UnitType.Rider) countRiders++;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Unit"))
+        if (other.CompareTag("UnitMovement"))
         {
-            Unit unit = other.GetComponent<Unit>();
+            UnitMovement unit = other.GetComponent<UnitMovement>();
 
-            if (unit.GetUnitType == Unit.UnitType.Pawn) countPawns--;
-            if (unit.GetUnitType == Unit.UnitType.Rider) countRiders--;
+            if (unit.GetUnitType == UnitMovement.UnitType.Pawn) countPawns--;
+            if (unit.GetUnitType == UnitMovement.UnitType.Rider) countRiders--;
 
             if (countPawns == 0 && countRiders == 0) GameManager.instance.CurrentBridgeReparation = null;
         }

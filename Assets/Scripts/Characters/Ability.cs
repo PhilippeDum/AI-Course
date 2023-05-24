@@ -117,12 +117,12 @@ public class Ability : MonoBehaviour
         }
     }
 
-    public void AddUnit(UnitStats unit)
+    public void AddUnitMovement(UnitStats unit)
     {
         if (unit.GetTeam == unitStats.GetTeam && !units.Contains(unit)) units.Add(unit);
     }
 
-    public void RemoveUnit(UnitStats unit)
+    public void RemoveUnitMovement(UnitStats unit)
     {
         if (unit.GetTeam == unitStats.GetTeam && units.Contains(unit))
         {

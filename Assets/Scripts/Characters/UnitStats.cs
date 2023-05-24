@@ -28,7 +28,7 @@ public class UnitStats : MonoBehaviour
     private bool canAttack = false;
     private bool inAttack = false;
 
-    private Unit unit;
+    private UnitMovement unit;
 
     #region Getters / Setters
 
@@ -72,7 +72,7 @@ public class UnitStats : MonoBehaviour
 
     private void Start()
     {
-        unit = GetComponent<Unit>();
+        unit = GetComponent<UnitMovement>();
 
         health = maxHealth;
 
@@ -155,7 +155,7 @@ public class UnitStats : MonoBehaviour
         }
     }
 
-    #region Handle Unit Stats
+    #region Handle UnitMovement Stats
 
     private void HandleHealth()
     {

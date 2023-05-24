@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class EnemyManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private List<GameObject> pawnUnitPrefabs;
-    [SerializeField] private List<GameObject> riderUnitPrefabs;
+    [SerializeField] private List<GameObject> pawnUnitMovementPrefabs;
+    [SerializeField] private List<GameObject> riderUnitMovementPrefabs;
     [SerializeField] private Transform unitParent;
     [SerializeField] private Transform gathering;
     [SerializeField] private Vector3 center;
@@ -17,14 +17,14 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private int ridersToProduct = 0;
     [SerializeField] private float timeOfPawnProduction = 3f;
     [SerializeField] private float timeOfRiderProduction = 3f;
-    [SerializeField] private List<Unit> units;
-    [SerializeField] private List<Unit> selectedUnits;
+    [SerializeField] private List<UnitMovement> units;
+    [SerializeField] private List<UnitMovement> selectedUnitMovements;
 
     private float timeRemaining = 0f;
     private bool inProduction;
     private bool canStartProduction;
     private bool canProduce;
-    private Unit.UnitType unitTypeToProduct;
+    private UnitMovement.UnitType unitTypeToProduct;
 
     // Formation
     private FormationBase _formation;
@@ -71,7 +71,7 @@ public class EnemyManager : MonoBehaviour
     {
         if (!canProduce) return;
 
-        // Active Unit Production
+        // Active UnitMovement Production
         if ((pawnsToProduct > 0 || ridersToProduct > 0) && !inProduction) canStartProduction = true;
 
         // Handle Setup Start Production
@@ -84,7 +84,7 @@ public class EnemyManager : MonoBehaviour
                 inProduction = true;
 
                 timeRemaining = timeOfPawnProduction;
-                unitTypeToProduct = Unit.UnitType.Pawn;
+                unitTypeToProduct = UnitMovement.UnitType.Pawn;
             }
 
             if (ridersToProduct > 0 && !inProduction)
@@ -92,13 +92,13 @@ public class EnemyManager : MonoBehaviour
                 inProduction = true;
 
                 timeRemaining = timeOfRiderProduction;
-                unitTypeToProduct = Unit.UnitType.Rider;
+                unitTypeToProduct = UnitMovement.UnitType.Rider;
             }
 
             productionSlider.maxValue = timeRemaining;
         }
 
-        // Handle Timer + Unit produced
+        // Handle Timer + UnitMovement produced
         if (inProduction)
         {
             if (timeRemaining > 0)
@@ -109,10 +109,10 @@ public class EnemyManager : MonoBehaviour
             }
             else
             {
-                if (unitTypeToProduct == Unit.UnitType.Pawn)
+                if (unitTypeToProduct == UnitMovement.UnitType.Pawn)
                 {
-                    int randomPawn = Random.Range(0, pawnUnitPrefabs.Count);
-                    Unit unit = Instantiate(pawnUnitPrefabs[randomPawn], unitParent).GetComponent<Unit>();
+                    int randomPawn = Random.Range(0, pawnUnitMovementPrefabs.Count);
+                    UnitMovement unit = Instantiate(pawnUnitMovementPrefabs[randomPawn], unitParent).GetComponent<UnitMovement>();
 
                     unit.MoveToPosition(gathering.position);
 
@@ -122,10 +122,10 @@ public class EnemyManager : MonoBehaviour
 
                     HandleArmy();
                 }
-                else if (unitTypeToProduct == Unit.UnitType.Rider)
+                else if (unitTypeToProduct == UnitMovement.UnitType.Rider)
                 {
-                    int randomRider = Random.Range(0, riderUnitPrefabs.Count);
-                    Unit unit = Instantiate(riderUnitPrefabs[randomRider], unitParent).GetComponent<Unit>();
+                    int randomRider = Random.Range(0, riderUnitMovementPrefabs.Count);
+                    UnitMovement unit = Instantiate(riderUnitMovementPrefabs[randomRider], unitParent).GetComponent<UnitMovement>();
 
                     unit.MoveToPosition(gathering.position);
 
@@ -171,8 +171,8 @@ public class EnemyManager : MonoBehaviour
 
             yield return new WaitForSeconds(timeOfPawnProduction);
 
-            int randomPawn = Random.Range(0, pawnUnitPrefabs.Count);
-            Unit unit = Instantiate(pawnUnitPrefabs[randomPawn], unitParent).GetComponent<Unit>();
+            int randomPawn = Random.Range(0, pawnUnitMovementPrefabs.Count);
+            UnitMovement unit = Instantiate(pawnUnitMovementPrefabs[randomPawn], unitParent).GetComponent<UnitMovement>();
 
             unit.MoveToPosition(gathering.position);
 
@@ -190,8 +190,8 @@ public class EnemyManager : MonoBehaviour
 
             yield return new WaitForSeconds(timeOfRiderProduction);
 
-            int randomRider = Random.Range(0, riderUnitPrefabs.Count);
-            Unit unit = Instantiate(riderUnitPrefabs[randomRider], unitParent).GetComponent<Unit>();
+            int randomRider = Random.Range(0, riderUnitMovementPrefabs.Count);
+            UnitMovement unit = Instantiate(riderUnitMovementPrefabs[randomRider], unitParent).GetComponent<UnitMovement>();
 
             unit.MoveToPosition(gathering.position);
 
@@ -209,16 +209,16 @@ public class EnemyManager : MonoBehaviour
 
     public void HandleArmy()
     {
-        int totalUnits = selectedUnits.Count;
+        int totalUnitMovements = selectedUnitMovements.Count;
 
-        if (totalUnits == 0) return;
+        if (totalUnitMovements == 0) return;
 
-        points = Formation.EvaluatePoints(totalUnits, center);
+        points = Formation.EvaluatePoints(totalUnitMovements, center);
 
-        for (int i = 0; i < selectedUnits.Count; i++)
+        for (int i = 0; i < selectedUnitMovements.Count; i++)
         {
-            if (selectedUnits[i] != null)
-                selectedUnits[i].MoveToPosition(points[i]);
+            if (selectedUnitMovements[i] != null)
+                selectedUnitMovements[i].MoveToPosition(points[i]);
         }
     }
 }

@@ -2,30 +2,30 @@ using UnityEngine;
 
 public class EnemyDetection : MonoBehaviour
 {
-    [SerializeField] private Team teamEnemy;
+    [SerializeField] private Unit.UnitTeam teamEnemy;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<UnitStats>())
+        if (other.GetComponent<UnitManager>())
         {
-            UnitStats unitStats = other.GetComponent<UnitStats>();
+            UnitManager unitStats = other.GetComponent<UnitManager>();
 
-            if (unitStats.GetTeam == teamEnemy)
+            if (unitStats.UnitData.TeamUnit == teamEnemy)
             {
-                GetComponentInParent<UnitStats>().Enemies.Add(unitStats);
+                GetComponentInParent<UnitManager>().Enemies.Add(unitStats);
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<UnitStats>())
+        if (other.GetComponent<UnitManager>())
         {
-            UnitStats unitStats = other.GetComponent<UnitStats>();
+            UnitManager unitStats = other.GetComponent<UnitManager>();
 
-            if (unitStats.GetTeam == teamEnemy)
+            if (unitStats.UnitData.TeamUnit == teamEnemy)
             {
-                GetComponentInParent<UnitStats>().Enemies.Remove(unitStats);
+                GetComponentInParent<UnitManager>().Enemies.Remove(unitStats);
             }
         }
     }

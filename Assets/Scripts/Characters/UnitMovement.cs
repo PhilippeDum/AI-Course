@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Unit : MonoBehaviour
+public class UnitMovement : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private UnityEngine.AI.NavMeshAgent agent;
     [SerializeField] private GameObject selection;
     [SerializeField] private UnitType unitType;
 
@@ -42,7 +42,7 @@ public class Unit : MonoBehaviour
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.speed = speed;
         agent.stoppingDistance = stoppingDistance;
     }

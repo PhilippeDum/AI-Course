@@ -40,6 +40,6 @@ public class Spawner : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
-        fog.UnhideUnit(transform, defoggerRadius);
+        fog.UnhideUnitMovement(transform, defoggerRadius);
     }
 }

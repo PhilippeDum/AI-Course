@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class KingManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private List<GameObject> pawnUnitPrefabs;
-    [SerializeField] private List<GameObject> riderUnitPrefabs;
+    [SerializeField] private List<GameObject> pawnUnitMovementPrefabs;
+    [SerializeField] private List<GameObject> riderUnitMovementPrefabs;
     [SerializeField] private Transform unitParent;
     [SerializeField] private Transform gathering;
     [SerializeField] private LayerMask floorLayer;
@@ -24,13 +24,13 @@ public class KingManager : MonoBehaviour
     [SerializeField] private int ridersToProduct = 0;
     [SerializeField] private float timeOfPawnProduction = 3f;
     [SerializeField] private float timeOfRiderProduction = 3f;
-    [SerializeField] private List<Unit> units;
-    [SerializeField] private List<Unit> selectedUnits;
+    [SerializeField] private List<UnitMovement> units;
+    [SerializeField] private List<UnitMovement> selectedUnitMovements;
 
     private float timeRemaining = 0f;
     private bool inProduction;
     private bool canStartProduction;
-    private Unit.UnitType unitTypeToProduct;
+    private UnitMovement.UnitType unitTypeToProduct;
 
     // Formation
     private FormationBase _formation;
@@ -49,16 +49,16 @@ public class KingManager : MonoBehaviour
 
     #region Getters / Setters
 
-    public List<Unit> Units
+    public List<UnitMovement> UnitMovements
     {
         get { return units; }
         set { units = value; }
     }
 
-    public List<Unit> SelectedUnits
+    public List<UnitMovement> SelectedUnitMovements
     {
-        get { return selectedUnits; }
-        set { selectedUnits = value; }
+        get { return selectedUnitMovements; }
+        set { selectedUnitMovements = value; }
     }
 
     public Vector3 Center
@@ -109,9 +109,9 @@ public class KingManager : MonoBehaviour
             if (units[i] == null) units.Remove(units[i]);
         }
 
-        for (int i = 0; i < selectedUnits.Count; i++)
+        for (int i = 0; i < selectedUnitMovements.Count; i++)
         {
-            if (selectedUnits[i] == null) selectedUnits.Remove(selectedUnits[i]);
+            if (selectedUnitMovements[i] == null) selectedUnitMovements.Remove(selectedUnitMovements[i]);
         }
     }
 
@@ -155,7 +155,7 @@ public class KingManager : MonoBehaviour
                 inProduction = true;
 
                 timeRemaining = timeOfPawnProduction;
-                unitTypeToProduct = Unit.UnitType.Pawn;
+                unitTypeToProduct = UnitMovement.UnitType.Pawn;
             }
 
             if (ridersToProduct > 0 && !inProduction)
@@ -163,13 +163,13 @@ public class KingManager : MonoBehaviour
                 inProduction = true;
 
                 timeRemaining = timeOfRiderProduction;
-                unitTypeToProduct = Unit.UnitType.Rider;
+                unitTypeToProduct = UnitMovement.UnitType.Rider;
             }
 
             productionSlider.maxValue = timeRemaining;
         }
 
-        // Handle Timer + Unit produced
+        // Handle Timer + UnitMovement produced
         if (inProduction)
         {
             if (timeRemaining > 0)
@@ -180,10 +180,10 @@ public class KingManager : MonoBehaviour
             }
             else
             {
-                if (unitTypeToProduct == Unit.UnitType.Pawn)
+                if (unitTypeToProduct == UnitMovement.UnitType.Pawn)
                 {
-                    int randomPawn = Random.Range(0, pawnUnitPrefabs.Count);
-                    Unit unit = Instantiate(pawnUnitPrefabs[randomPawn], unitParent).GetComponent<Unit>();
+                    int randomPawn = Random.Range(0, pawnUnitMovementPrefabs.Count);
+                    UnitMovement unit = Instantiate(pawnUnitMovementPrefabs[randomPawn], unitParent).GetComponent<UnitMovement>();
 
                     unit.MoveToPosition(gathering.position);
 
@@ -193,10 +193,10 @@ public class KingManager : MonoBehaviour
 
                     pawnsToProduct--;
                 }
-                else if (unitTypeToProduct == Unit.UnitType.Rider)
+                else if (unitTypeToProduct == UnitMovement.UnitType.Rider)
                 {
-                    int randomRider = Random.Range(0, riderUnitPrefabs.Count);
-                    Unit unit = Instantiate(riderUnitPrefabs[randomRider], unitParent).GetComponent<Unit>();
+                    int randomRider = Random.Range(0, riderUnitMovementPrefabs.Count);
+                    UnitMovement unit = Instantiate(riderUnitMovementPrefabs[randomRider], unitParent).GetComponent<UnitMovement>();
 
                     unit.MoveToPosition(gathering.position);
 
@@ -230,15 +230,15 @@ public class KingManager : MonoBehaviour
             Destroy(currentCanvasWorld, 0.5f);
 
             center = hit.point;
-            MoveSelectedUnit(hit.point);
+            MoveSelectedUnitMovement(hit.point);
         }
     }
 
-    private void MoveSelectedUnit(Vector3 position)
+    private void MoveSelectedUnitMovement(Vector3 position)
     {
-        for (int i = 0; i < selectedUnits.Count; i++)
+        for (int i = 0; i < selectedUnitMovements.Count; i++)
         {
-            selectedUnits[i].MoveToPosition(position);
+            selectedUnitMovements[i].MoveToPosition(position);
         }
 
         HandleArmy();
@@ -248,16 +248,16 @@ public class KingManager : MonoBehaviour
 
     public void HandleArmy()
     {
-        int totalUnits = selectedUnits.Count;
+        int totalUnitMovements = selectedUnitMovements.Count;
 
-        if (totalUnits == 0) return;
+        if (totalUnitMovements == 0) return;
 
-        points = Formation.EvaluatePoints(totalUnits, center);
+        points = Formation.EvaluatePoints(totalUnitMovements, center);
 
-        for (int i = 0; i < selectedUnits.Count; i++)
+        for (int i = 0; i < selectedUnitMovements.Count; i++)
         {
-            if (selectedUnits[i] != null)
-                selectedUnits[i].MoveToPosition(points[i]);
+            if (selectedUnitMovements[i] != null)
+                selectedUnitMovements[i].MoveToPosition(points[i]);
         }
     }
 }

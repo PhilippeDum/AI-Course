@@ -92,8 +92,8 @@ SubShader {
 		#pragma multi_compile __ UNITY_UI_CLIP_RECT
 		#pragma multi_compile __ UNITY_UI_ALPHACLIP
 
-		#include "UnityCG.cginc"
-		#include "UnityUI.cginc"
+		#include "UnitMovementyCG.cginc"
+		#include "UnitMovementyUI.cginc"
 		#include "TMPro_Properties.cginc"
 
 		#include "TMPro_Mobile.cginc"

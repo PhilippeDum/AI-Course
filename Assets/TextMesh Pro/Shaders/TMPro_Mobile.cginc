@@ -41,7 +41,7 @@ pixel_t VertShader(vertex_t input)
     vert.x += _VertexOffsetX;
     vert.y += _VertexOffsetY;
 
-    float4 vPosition = UnityObjectToClipPos(vert);
+    float4 vPosition = UnitMovementyObjectToClipPos(vert);
 
     float weight = lerp(_WeightNormal, _WeightBold, bold) / 4.0;
     weight = (weight + _FaceDilate) * _ScaleRatioA * 0.5;
@@ -138,7 +138,7 @@ float4 PixShader(pixel_t input) : SV_Target
     faceColor *= a;
     #endif
 
-    // Alternative implementation to UnityGet2DClipping with support for softness
+    // Alternative implementation to UnitMovementyGet2DClipping with support for softness
     #if UNITY_UI_CLIP_RECT
     float2 maskZW = 0.25 / (0.25 * half2(_MaskSoftnessX, _MaskSoftnessY) + (1 / scale));
     float2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(input.mask.xy)) * maskZW);

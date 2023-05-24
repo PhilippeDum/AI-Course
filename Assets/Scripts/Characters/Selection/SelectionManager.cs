@@ -21,11 +21,11 @@ public class SelectionManager : MonoBehaviour
     private float firstLeftClickTime;
     private bool isTimeCheckAllowed = true;
     private int LeftClickNum = 0;
-    private bool selectAllSameUnit;
+    private bool selectAllSameUnitMovement;
 
     private void Start()
     {
-        selectAllSameUnit = false;
+        selectAllSameUnitMovement = false;
 
         kingManager = FindObjectOfType<KingManager>();
         uiManager = FindObjectOfType<UIManager>();
@@ -93,14 +93,14 @@ public class SelectionManager : MonoBehaviour
         {
             if (LeftClickNum == 2)
             {
-                if (currentElement != null && currentElement.GetComponent<Unit>() && !selectAllSameUnit)
+                if (currentElement != null && currentElement.GetComponent<UnitMovement>() && !selectAllSameUnitMovement)
                 {
                     UnitStats unitStats = currentElement.GetComponent<UnitStats>();
 
                     if (unitStats.GetTeam == Team.Enemy) yield break;
 
-                    selectAllSameUnit = true;
-                    SelectAllSameUnit(currentElement.GetComponent<Unit>());
+                    selectAllSameUnitMovement = true;
+                    SelectAllSameUnitMovement(currentElement.GetComponent<UnitMovement>());
                 }
 
                 break;
@@ -133,13 +133,13 @@ public class SelectionManager : MonoBehaviour
                 {
                     currentElement.ElementSelection.SetActive(true);
 
-                    if (currentElement.CompareTag("Unit")) SelectUnit(currentElement.GetComponent<Unit>());
+                    if (currentElement.CompareTag("UnitMovement")) SelectUnitMovement(currentElement.GetComponent<UnitMovement>());
                 }
                 else
                 {
                     currentElement.ElementSelection.SetActive(false);
 
-                    if (currentElement.CompareTag("Unit")) DeselectUnit(currentElement.GetComponent<Unit>());
+                    if (currentElement.CompareTag("UnitMovement")) DeselectUnitMovement(currentElement.GetComponent<UnitMovement>());
                 }
             }
             else
@@ -172,7 +172,7 @@ public class SelectionManager : MonoBehaviour
         Vector2 min = selectionBox.anchoredPosition - (selectionBox.sizeDelta / 2);
         Vector2 max = selectionBox.anchoredPosition + (selectionBox.sizeDelta / 2);
 
-        foreach (Unit unit in kingManager.Units)
+        foreach (UnitMovement unit in kingManager.UnitMovements)
         {
             if (unit == null) return;
 
@@ -180,47 +180,47 @@ public class SelectionManager : MonoBehaviour
 
             if (screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y)
             {
-                SelectUnit(unit);
+                SelectUnitMovement(unit);
             }
         }
     }
 
     #endregion
 
-    #region Unit Selection
+    #region UnitMovement Selection
 
-    private void SelectUnit(Unit unit)
+    private void SelectUnitMovement(UnitMovement unit)
     {
         if (unit == null) return;
 
-        kingManager.SelectedUnits.Add(unit);
+        kingManager.SelectedUnitMovements.Add(unit);
         unit.Selection.SetActive(true);
     }
 
-    private void SelectAllSameUnit(Unit unit)
+    private void SelectAllSameUnitMovement(UnitMovement unit)
     {
-        for (int i = 0; i < kingManager.Units.Count; i++)
+        for (int i = 0; i < kingManager.UnitMovements.Count; i++)
         {
-            Unit possessedUnit = kingManager.Units[i];
+            UnitMovement possessedUnitMovement = kingManager.UnitMovements[i];
 
-            if (possessedUnit.GetUnitType == unit.GetUnitType)
+            if (possessedUnitMovement.GetUnitType == unit.GetUnitType)
             {
-                SelectUnit(possessedUnit);
+                SelectUnitMovement(possessedUnitMovement);
             }
         }
 
-        selectAllSameUnit = false;
+        selectAllSameUnitMovement = false;
     }
 
-    private void DeselectUnit(Unit unit)
+    private void DeselectUnitMovement(UnitMovement unit)
     {
-        kingManager.SelectedUnits.Remove(unit);
+        kingManager.SelectedUnitMovements.Remove(unit);
         unit.Selection.SetActive(false);
     }
 
     private void DeselectAll()
     {
-        foreach (Unit unit in kingManager.SelectedUnits)
+        foreach (UnitMovement unit in kingManager.SelectedUnitMovements)
         {
             if (unit == null) return;
 
@@ -233,7 +233,7 @@ public class SelectionManager : MonoBehaviour
             currentElement = null;
         }
 
-        kingManager.SelectedUnits.Clear();
+        kingManager.SelectedUnitMovements.Clear();
     }
 
     #endregion

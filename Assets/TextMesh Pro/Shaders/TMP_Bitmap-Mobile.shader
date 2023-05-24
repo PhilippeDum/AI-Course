@@ -54,7 +54,7 @@ SubShader {
 		#pragma multi_compile __ UNITY_UI_ALPHACLIP
 
 
-		#include "UnityCG.cginc"
+		#include "UnitMovementyCG.cginc"
 
 		struct appdata_t {
 			float4 vertex : POSITION;
@@ -89,7 +89,7 @@ SubShader {
 
 			vert.xy += (vert.w * 0.5) / _ScreenParams.xy;
 
-			OUT.vertex = UnityPixelSnap(UnityObjectToClipPos(vert));
+			OUT.vertex = UnitMovementyPixelSnap(UnitMovementyObjectToClipPos(vert));
 			OUT.color = v.color;
 			OUT.color *= _Color;
 			OUT.color.rgb *= _DiffusePower;
@@ -109,7 +109,7 @@ SubShader {
 		{
 			fixed4 color = fixed4(IN.color.rgb, IN.color.a * tex2D(_MainTex, IN.texcoord0).a);
 
-			// Alternative implementation to UnityGet2DClipping with support for softness.
+			// Alternative implementation to UnitMovementyGet2DClipping with support for softness.
 			#if UNITY_UI_CLIP_RECT
 				half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(IN.mask.xy)) * IN.mask.zw);
 				color *= m.x * m.y;
