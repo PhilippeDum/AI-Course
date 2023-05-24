@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -36,11 +35,6 @@ public class Fog : MonoBehaviour
         Initialize();
     }
 
-    private void Update()
-    {
-        
-    }
-
     #region Methods
 
     private void Initialize()
@@ -53,6 +47,7 @@ public class Fog : MonoBehaviour
 
         for (int i = 0; i < colors.Length; i++)
         {
+            
             colors[i] = Color.black * Random.Range(0.995f, 1.000f);
         }
 

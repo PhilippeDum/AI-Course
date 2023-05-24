@@ -69,6 +69,6 @@ public class FogPlaneGenerator : MonoBehaviour
 
         transform.position = new Vector3(-size.x / 2, transform.position.y, -size.y / 2);
 
-        BoxCollider collider = gameObject.AddComponent<BoxCollider>();
+        gameObject.AddComponent<BoxCollider>();
     }
 }

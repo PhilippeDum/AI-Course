@@ -4,7 +4,6 @@ public class BlueprintController : MonoBehaviour
 {
     [SerializeField] private float marge = 0.1f;
 
-    private BuildingDatas datas;
     private int nbCollision = 0;
     private BoxCollider boxCollider;
     private int layerMaskTerrain = 1 << 6;

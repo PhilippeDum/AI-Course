@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -136,7 +135,7 @@ public class UnitStats : MonoBehaviour
             {
                 transform.LookAt(enemy.transform.position);
 
-                enemy.TakeDamage();
+                enemy.TakeDamage(enemy.damage);
 
                 inAttack = false;
             }
@@ -157,13 +156,17 @@ public class UnitStats : MonoBehaviour
         }
 
         healthSlider.transform.parent.LookAt(Camera.main.transform.position);
+        healthSlider.value = health;
     }
 
-    public void TakeDamage()
+    public void Heal(int value)
+    {
+        health += value;
+    }
+
+    public void TakeDamage(int damage)
     {
         health -= damage;
-
-        healthSlider.value = health;
     }
 
     #endregion
