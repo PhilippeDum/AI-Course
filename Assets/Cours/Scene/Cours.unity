@@ -2288,7 +2288,7 @@ MonoBehaviour:
   - name: Generator
     prefab: {fileID: 888593635899021533, guid: 24342a8add5ccbe4ba962fbefb5a3391, type: 3}
     tiberiumCost: 0
-    energyGain: 0
+    energyGain: 55
     energyCost: 0
     healthPoint: 0
   - name: Structure 2
@@ -2473,7 +2473,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 358.3125}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1140008274
 MonoBehaviour:

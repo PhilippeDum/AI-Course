@@ -12,4 +12,8 @@ public class BuildingDatas
 
     public string Name => name;
     public GameObject Prefab => prefab;
+    public int TiberiumCost => tiberiumCost;
+    public int EnergyGain => energyGain;
+    public int EnergyCost => energyCost;
+    public int HealthPoint => healthPoint;
 }

@@ -7,7 +7,7 @@ public class BlueprintController : MonoBehaviour
     private BuildingDatas datas;
     private int nbCollision = 0;
     private BoxCollider boxCollider;
-    private int layerMaskTerrain = 1 << 9;
+    private int layerMaskTerrain = 1 << 6;
     private float previousDistance = 0;
 
     private void OnEnable()

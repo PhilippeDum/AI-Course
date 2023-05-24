@@ -11,8 +11,9 @@ public class BlueprintManager : MonoBehaviour
     private GameObject blueprintGO;
     private BlueprintController blueprint;
     private Material defaultMaterial;
-    private int layerMaskTerrain = 1 << 9;
+    private int layerMaskTerrain = 1 << 6;
     private Fog fog;
+    private int dataIndex;
 
     private void Start()
     {
@@ -31,11 +32,13 @@ public class BlueprintManager : MonoBehaviour
 
     public void FindBuilding(string name)
     {
-        foreach (var data in datas)
+        for (int i = 0; i < datas.Count; i++)
         {
-            if (data.Name == name)
+            if (datas[i].Name == name)
             {
-                InstantiateBuilding(data.Prefab);
+                dataIndex = i;
+
+                InstantiateBuilding(datas[i].Prefab);
             }
         }
     }
@@ -77,6 +80,10 @@ public class BlueprintManager : MonoBehaviour
     private void PlaceBlueprint()
     {
         fog.UnhideUnit(blueprintGO.transform, defoggerRadius);
+
+        blueprintGO.GetComponent<Building>().Datas = datas[dataIndex];
+
+        blueprintGO.GetComponent<Building>().enabled = true;
 
         blueprintGO = null;
 

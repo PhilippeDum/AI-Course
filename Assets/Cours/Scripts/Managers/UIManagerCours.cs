@@ -4,12 +4,19 @@ using UnityEngine.UI;
 
 public class UIManagerCours : MonoBehaviour
 {
+    public static UIManagerCours instance;
+
     [SerializeField] private TMP_Text tiberium;
     [SerializeField] private Slider energy;
     [SerializeField] private Slider energyUsed;
 
     private void Awake()
     {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+
         UpdateTiberium(0);
         UpdateMaxEnergy(100);
         UpdateEnergyUI(25);
