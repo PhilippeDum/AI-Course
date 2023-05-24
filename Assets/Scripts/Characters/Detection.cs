@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 public class Detection : MonoBehaviour
@@ -9,7 +8,7 @@ public class Detection : MonoBehaviour
         {
             UnitStats unitDetected = other.GetComponent<UnitStats>();
 
-            GetComponentInParent<OutpostTower>().AddUnit(unitDetected);
+            GetComponentInParent<Ability>().AddUnit(unitDetected);
         }
     }
 
@@ -19,7 +18,7 @@ public class Detection : MonoBehaviour
         {
             UnitStats unitDetected = other.GetComponent<UnitStats>();
 
-            GetComponentInParent<OutpostTower>().RemoveUnit(unitDetected);
+            GetComponentInParent<Ability>().AddUnit(unitDetected);
         }
     }
 }
