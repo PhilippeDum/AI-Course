@@ -49,7 +49,6 @@ public class GameManager : MonoBehaviour
     private bool currentBridgeRepaired;
 
     private BridgeReparation currentBridgeReparation;
-    private EnemyManager enemyManager;
 
     #region Getters / Setters
 
@@ -107,6 +106,12 @@ public class GameManager : MonoBehaviour
         set { currentBridgeRepaired = value; }
     }
 
+    public GameObject KingPlayer
+    {
+        get { return king; }
+        set { king = value; }
+    }
+
     #endregion
 
     private void Awake()
@@ -116,8 +121,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        enemyManager = FindObjectOfType<EnemyManager>();
-
         gameFinished = false;
 
         production = false;
@@ -185,7 +188,7 @@ public class GameManager : MonoBehaviour
 
             if (!startShowing) startShowing = true;
 
-            enemyManager.StartProduction();
+            kingEnemy.GetComponent<Production>().ForceProduction = true;
 
             currentQuestType = QuestType.Reparation;
         }

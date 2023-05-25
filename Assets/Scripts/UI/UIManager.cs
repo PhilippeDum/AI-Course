@@ -17,18 +17,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text optionsDescription;
 
     private UnitManager currentUnit;
-    private Production production;
     private bool showingInfos;
 
     private void Start()
     {
-        production = FindObjectOfType<Production>();
-
         showingInfos = false;
 
         HandleUI(false);
-
-        SetupKingButtons();
     }
 
     #region UI
@@ -54,16 +49,17 @@ public class UIManager : MonoBehaviour
 
             currentUnit = unit;
 
-
             infosTitle.text = $"Infos '{currentUnit.UnitData.Name}'";
             infosDescription.text = currentUnit.UnitData.Description;
 
             //if (currentUnit.CompareTag("King"))
             if (currentUnit.UnitData.TypeUnit == Unit.UnitType.King)
-                {
+            {
                 HandleUI(true, true);
 
-                production.UpdateKingText();
+                SetupKingButtons(currentUnit.GetComponent<Production>());
+
+                currentUnit.GetComponent<Production>().UpdateKingText();
             }
             else if (currentUnit.CompareTag("Upgrade")) // Building
             {
@@ -86,14 +82,20 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void SetupKingButtons()
+    private void SetupKingButtons(Production production)
     {
+        Debug.Log($"SetupKingButtons");
+
         Button firstButton = kingOptions.transform.GetChild(0).GetComponent<Button>();
         firstButton.name = "Pawn";
+
+        firstButton.onClick.RemoveAllListeners();
         firstButton.onClick.AddListener(delegate { production.AddPawnToProduction(); });
 
         Button secondButton = kingOptions.transform.GetChild(1).GetComponent<Button>();
         secondButton.name = "Rider";
+
+        secondButton.onClick.RemoveAllListeners();
         secondButton.onClick.AddListener(delegate { production.AddRiderToProduction(); });
     }
 

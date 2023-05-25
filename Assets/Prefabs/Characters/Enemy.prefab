@@ -113,7 +113,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2673365143085735716, guid: 6ca1de7dc08499b46a268e72bb9a0b8b, type: 3}
       propertyPath: m_Name
-      value: NEW Enemy King
+      value: Enemy King
       objectReference: {fileID: 0}
     - target: {fileID: 2673365143085735717, guid: 6ca1de7dc08499b46a268e72bb9a0b8b, type: 3}
       propertyPath: m_RootOrder

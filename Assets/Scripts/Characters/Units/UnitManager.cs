@@ -5,13 +5,17 @@ using UnityEngine.AI;
 
 public class UnitManager : MonoBehaviour
 {
-    [Header("References")]
+    [Header("Datas")]
     [SerializeField] private Unit unitData;
+
+    [Header("References")]
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private GameObject selection;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Slider otherSlider;
     [SerializeField] private bool isDead;
+
+    [Header("Enemies Detected")]
     [SerializeField] private List<UnitManager> enemies;
 
     private Vector2 defaultRangeAttacks;

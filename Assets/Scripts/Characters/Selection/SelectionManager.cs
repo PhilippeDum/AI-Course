@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,9 +11,10 @@ public class SelectionManager : MonoBehaviour
     [SerializeField] private CanvasScaler canvasScaler;
 
     private Vector2 startPosition;
+    private GameManager gameManager;
     private UnitManager currentUnit;
-    private Production production;
     private UIManager uiManager;
+    private Production productionPlayer;
 
     // Double click
     [Header("Double Click")]
@@ -27,8 +29,10 @@ public class SelectionManager : MonoBehaviour
     {
         selectAllSameUnit = false;
 
-        production = FindObjectOfType<Production>();
+        gameManager = FindObjectOfType<GameManager>();
         uiManager = FindObjectOfType<UIManager>();
+
+        productionPlayer = gameManager.KingPlayer.GetComponent<Production>();
     }
 
     private void Update()
@@ -131,13 +135,13 @@ public class SelectionManager : MonoBehaviour
                 {
                     currentUnit.Selection.SetActive(true);
 
-                    if (currentUnit.CompareTag("Unit")) SelectUnit(currentUnit.GetComponent<UnitManager>());
+                    SelectUnit(currentUnit);
                 }
                 else
                 {
                     currentUnit.Selection.SetActive(false);
 
-                    if (currentUnit.CompareTag("Unit")) DeselectUnit(currentUnit.GetComponent<UnitManager>());
+                    DeselectUnit(currentUnit);
                 }
             }
             else
@@ -170,7 +174,7 @@ public class SelectionManager : MonoBehaviour
         Vector2 min = selectionBox.anchoredPosition - (selectionBox.sizeDelta / 2);
         Vector2 max = selectionBox.anchoredPosition + (selectionBox.sizeDelta / 2);
 
-        foreach (UnitManager unit in production.Units)
+        foreach (UnitManager unit in productionPlayer.Units)
         {
             if (unit == null) return;
 
@@ -191,15 +195,15 @@ public class SelectionManager : MonoBehaviour
     {
         if (unit == null) return;
 
-        production.SelectedUnits.Add(unit);
+        productionPlayer.SelectedUnits.Add(unit);
         unit.Selection.SetActive(true);
     }
 
     private void SelectAllSameUnit(UnitManager unit)
     {
-        for (int i = 0; i < production.Units.Count; i++)
+        for (int i = 0; i < productionPlayer.Units.Count; i++)
         {
-            UnitManager possessedUnit = production.Units[i];
+            UnitManager possessedUnit = productionPlayer.Units[i];
 
             if (possessedUnit.UnitData.TypeUnit == unit.UnitData.TypeUnit)
             {
@@ -212,13 +216,13 @@ public class SelectionManager : MonoBehaviour
 
     private void DeselectUnit(UnitManager unit)
     {
-        production.SelectedUnits.Remove(unit);
+        productionPlayer.SelectedUnits.Remove(unit);
         unit.Selection.SetActive(false);
     }
 
     private void DeselectAll()
     {
-        foreach (UnitManager unit in production.SelectedUnits)
+        foreach (UnitManager unit in productionPlayer.SelectedUnits)
         {
             if (unit == null) return;
 
@@ -231,7 +235,7 @@ public class SelectionManager : MonoBehaviour
             currentUnit = null;
         }
 
-        production.SelectedUnits.Clear();
+        productionPlayer.SelectedUnits.Clear();
     }
 
     #endregion

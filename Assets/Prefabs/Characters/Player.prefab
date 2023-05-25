@@ -121,7 +121,7 @@ PrefabInstance:
       objectReference: {fileID: 2984472674100239820}
     - target: {fileID: 5720448359828392462, guid: 2e88a8c3b56af0745bf1f26ebb8f1cde, type: 3}
       propertyPath: m_Name
-      value: NEW King
+      value: King
       objectReference: {fileID: 0}
     - target: {fileID: 5720448359828392463, guid: 2e88a8c3b56af0745bf1f26ebb8f1cde, type: 3}
       propertyPath: m_RootOrder
