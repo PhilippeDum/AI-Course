@@ -316,7 +316,6 @@ MonoBehaviour:
   timeOfReparation: 5
   surface: {fileID: 0}
   reparationSlider: {fileID: 2744233359292715593}
-  lerp: 0.5
 --- !u!1 &4760916947238374952
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,6 +519,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7160536359244637506, guid: 6281c6f604f20ac4190bfea0b62b5ca3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160536359244637506, guid: 6281c6f604f20ac4190bfea0b62b5ca3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160536359244637506, guid: 6281c6f604f20ac4190bfea0b62b5ca3, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160536359244637506, guid: 6281c6f604f20ac4190bfea0b62b5ca3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -593,6 +604,18 @@ PrefabInstance:
     - target: {fileID: 6089298749889740636, guid: b82e3bf6ad0be1a46abccf649ce761c3, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6089298749889740636, guid: b82e3bf6ad0be1a46abccf649ce761c3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6089298749889740636, guid: b82e3bf6ad0be1a46abccf649ce761c3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6089298749889740636, guid: b82e3bf6ad0be1a46abccf649ce761c3, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6089298749889740636, guid: b82e3bf6ad0be1a46abccf649ce761c3, type: 3}
       propertyPath: m_LocalPosition.x
