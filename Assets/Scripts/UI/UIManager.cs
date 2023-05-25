@@ -16,13 +16,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text optionsTitle;
     [SerializeField] private Text optionsDescription;
 
-    private Element currentElement;
-    private KingManager kingManager;
+    private UnitManager currentUnit;
+    private Production production;
     private bool showingInfos;
 
     private void Start()
     {
-        kingManager = FindObjectOfType<KingManager>();
+        production = FindObjectOfType<Production>();
 
         showingInfos = false;
 
@@ -46,24 +46,26 @@ public class UIManager : MonoBehaviour
         upgradeOptions.SetActive(isUpgrade);
     }
 
-    public void ShowInfos(Element element)
+    public void ShowInfos(UnitManager unit)
     {
         if (!showingInfos)
         {
             showingInfos = true;
 
-            currentElement = element;
+            currentUnit = unit;
 
-            infosTitle.text = $"Infos '{currentElement.ElementName}'";
-            infosDescription.text = currentElement.ElementDescription;
 
-            if (currentElement.CompareTag("King"))
-            {
+            infosTitle.text = $"Infos '{currentUnit.UnitData.Name}'";
+            infosDescription.text = currentUnit.UnitData.Description;
+
+            //if (currentUnit.CompareTag("King"))
+            if (currentUnit.UnitData.TypeUnit == Unit.UnitType.King)
+                {
                 HandleUI(true, true);
 
-                kingManager.UpdateKingText();
+                production.UpdateKingText();
             }
-            else if (currentElement.CompareTag("Upgrade"))
+            else if (currentUnit.CompareTag("Upgrade")) // Building
             {
                 HandleUI(true, false, true);
             }
@@ -72,11 +74,12 @@ public class UIManager : MonoBehaviour
                 HandleUI(true);
             }
 
-            if (currentElement.CompareTag("King") || currentElement.CompareTag("UnitMovement") || currentElement.CompareTag("Enemy"))
+            //if (currentUnit.CompareTag("King") || currentUnit.CompareTag("Unit") || currentUnit.CompareTag("Enemy"))
+            if (currentUnit != null)
             {
-                UnitStats unitStats = currentElement.GetComponent<UnitStats>();
+                UnitManager unitManager = currentUnit.GetComponent<UnitManager>();
 
-                optionsDescription.text = $"{unitStats.Health} / {unitStats.MaxHealth}";
+                optionsDescription.text = $"{unitManager.UnitData.Health} / {unitManager.UnitData.MaxHealth}";
             }
 
             showingInfos = false;
@@ -87,17 +90,17 @@ public class UIManager : MonoBehaviour
     {
         Button firstButton = kingOptions.transform.GetChild(0).GetComponent<Button>();
         firstButton.name = "Pawn";
-        firstButton.onClick.AddListener(delegate { kingManager.AddPawnToProduction(); });
+        firstButton.onClick.AddListener(delegate { production.AddPawnToProduction(); });
 
         Button secondButton = kingOptions.transform.GetChild(1).GetComponent<Button>();
         secondButton.name = "Rider";
-        secondButton.onClick.AddListener(delegate { kingManager.AddRiderToProduction(); });
+        secondButton.onClick.AddListener(delegate { production.AddRiderToProduction(); });
     }
 
     private void SetupUpgradeButton()
     {
         Button firstButton = upgradeOptions.transform.GetChild(0).GetComponent<Button>();
-        //firstButton.onClick.AddListener(delegate { kingManager.AddPawnToProduction(); });
+        //firstButton.onClick.AddListener(delegate { production.AddPawnToProduction(); });
         // Add upgrade function to onClick
     }
 

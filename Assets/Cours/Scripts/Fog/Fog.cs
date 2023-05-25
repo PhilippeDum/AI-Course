@@ -56,7 +56,7 @@ public class Fog : MonoBehaviour
         OnCompleteInitialize?.Invoke();
     }
 
-    public void UnhideUnitMovement(Transform unit, int radius)
+    public void UnhideUnit(Transform unit, int radius)
     {
         if (fog == null) return;
 

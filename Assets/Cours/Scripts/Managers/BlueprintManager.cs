@@ -79,7 +79,7 @@ public class BlueprintManager : MonoBehaviour
 
     private void PlaceBlueprint()
     {
-        fog.UnhideUnitMovement(blueprintGO.transform, defoggerRadius);
+        fog.UnhideUnit(blueprintGO.transform, defoggerRadius);
 
         blueprintGO.GetComponent<Building>().Datas = datas[dataIndex];
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Ability : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private List<UnitStats> units = new List<UnitStats>();
+    [SerializeField] private List<UnitManager> units = new List<UnitManager>();
     [SerializeField] private Role role;
     [SerializeField] private Slider slider;
     [SerializeField] private float timeOfAbility = 5f;
@@ -15,17 +15,17 @@ public class Ability : MonoBehaviour
     private bool canUseAbility = false;
     private float timeRemaining;
 
-    private UnitStats unitStats;
+    private UnitManager unitManager;
+
+    private void Start()
+    {
+        unitManager = GetComponent<UnitManager>();
+    }
 
     public enum Role
     {
         Heal,
         Boost
-    }
-
-    private void Start()
-    {
-        unitStats = GetComponent<UnitStats>();
     }
 
     private void Update()
@@ -77,28 +77,8 @@ public class Ability : MonoBehaviour
                 for (int i = 0; i < units.Count; i++)
                 {
                     Debug.Log($"Ability Heal {units[i]} + {value}");
-                    units[i].Health += (int)value;
+                    units[i].UnitData.Health += (int)value;
                 }
-
-                /*switch (role)
-                {
-                    case Role.Heal:
-                        for (int i = 0; i < units.Count; i++)
-                        {
-                            Debug.Log($"Ability Heal {units[i]} + {value}");
-                            units[i].Health += (int)value;
-                        }
-                        break;
-                    case Role.Boost:
-                        for (int i = 0; i < units.Count; i++)
-                        {
-                            Debug.Log($"Ability Boost {units[i]} + {value}");
-                            units[i].Boost(value);
-                        }
-                        break;
-                    default:
-                        break;
-                }*/
 
                 abilityInUse = false;
             }
@@ -117,14 +97,14 @@ public class Ability : MonoBehaviour
         }
     }
 
-    public void AddUnitMovement(UnitStats unit)
+    public void AddUnit(UnitManager unit)
     {
-        if (unit.GetTeam == unitStats.GetTeam && !units.Contains(unit)) units.Add(unit);
+        if (unit.UnitData.TeamUnit == unitManager.UnitData.TeamUnit && !units.Contains(unit)) units.Add(unit);
     }
 
-    public void RemoveUnitMovement(UnitStats unit)
+    public void RemoveUnit(UnitManager unit)
     {
-        if (unit.GetTeam == unitStats.GetTeam && units.Contains(unit))
+        if (unit.UnitData.TeamUnit == unitManager.UnitData.TeamUnit && units.Contains(unit))
         {
             if (role == Role.Boost) unit.Boost(-1);
 

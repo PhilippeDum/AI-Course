@@ -4,21 +4,21 @@ public class Detection : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("UnitMovement"))
+        if (other.CompareTag("Unit"))
         {
-            UnitStats unitDetected = other.GetComponent<UnitStats>();
+            UnitManager unitDetected = other.GetComponent<UnitManager>();
 
-            GetComponentInParent<Ability>().AddUnitMovement(unitDetected);
+            GetComponentInParent<Ability>().AddUnit(unitDetected);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("UnitMovement"))
+        if (other.CompareTag("Unit"))
         {
-            UnitStats unitDetected = other.GetComponent<UnitStats>();
+            UnitManager unitDetected = other.GetComponent<UnitManager>();
 
-            GetComponentInParent<Ability>().RemoveUnitMovement(unitDetected);
+            GetComponentInParent<Ability>().RemoveUnit(unitDetected);
         }
     }
 }

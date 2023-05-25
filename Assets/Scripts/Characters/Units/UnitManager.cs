@@ -29,6 +29,18 @@ public class UnitManager : MonoBehaviour
         set { unitData = value; }
     }
 
+    public GameObject Selection
+    {
+        get { return selection; }
+        set { selection = value; }
+    }
+
+    public bool IsDead
+    {
+        get { return isDead; }
+        set { isDead = value; }
+    }
+
     public List<UnitManager> Enemies
     {
         get { return enemies; }
@@ -39,7 +51,10 @@ public class UnitManager : MonoBehaviour
 
     private void Start()
     {
-        InitializeMovement();
+        if (UnitData.TypeUnit != Unit.UnitType.King && UnitData.TypeUnit != Unit.UnitType.Tower)
+        {
+            InitializeMovement();
+        }
 
         InitializeStats();
     }
@@ -62,7 +77,7 @@ public class UnitManager : MonoBehaviour
         agent.stoppingDistance = unitData.StoppingDistance;
     }
 
-    private void MoveToPosition(Vector3 position, float stoppingDistance = -1)
+    public void MoveToPosition(Vector3 position, float stoppingDistance = -1)
     {
         if (agent == null) return;
 
@@ -78,7 +93,7 @@ public class UnitManager : MonoBehaviour
 
     private void InitializeStats()
     {
-        //unit = GetComponent<UnitMovement>();
+        //unit = GetComponent<UnitManager>();
 
         unitData.Health = unitData.MaxHealth;
 
@@ -159,7 +174,7 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    #region Handle UnitMovement Stats
+    #region Handle Unit Stats
 
     private void HandleHealth()
     {

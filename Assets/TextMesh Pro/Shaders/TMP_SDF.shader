@@ -122,8 +122,8 @@ SubShader {
 		#pragma multi_compile __ UNITY_UI_CLIP_RECT
 		#pragma multi_compile __ UNITY_UI_ALPHACLIP
 
-		#include "UnitMovementyCG.cginc"
-		#include "UnitMovementyUI.cginc"
+		#include "UnityCG.cginc"
+		#include "UnityUI.cginc"
 		#include "TMPro_Properties.cginc"
 		#include "TMPro.cginc"
 
@@ -154,7 +154,7 @@ SubShader {
 			float4 textures			: TEXCOORD5;
 		};
 
-		// Used by UnitMovementy internally to handle Texture Tiling and Offset.
+		// Used by Unity internally to handle Texture Tiling and Offset.
 		float4 _FaceTex_ST;
 		float4 _OutlineTex_ST;
 
@@ -173,13 +173,13 @@ SubShader {
 			vert.x += _VertexOffsetX;
 			vert.y += _VertexOffsetY;
 
-			float4 vPosition = UnitMovementyObjectToClipPos(vert);
+			float4 vPosition = UnityObjectToClipPos(vert);
 
 			float2 pixelSize = vPosition.w;
 			pixelSize /= float2(_ScaleX, _ScaleY) * abs(mul((float2x2)UNITY_MATRIX_P, _ScreenParams.xy));
 			float scale = rsqrt(dot(pixelSize, pixelSize));
 			scale *= abs(input.texcoord1.y) * _GradientScale * (_Sharpness + 1);
-			if (UNITY_MATRIX_P[3][3] == 0) scale = lerp(abs(scale) * (1 - _PerspectiveFilter), scale, abs(dot(UnitMovementyObjectToWorldNormal(input.normal.xyz), normalize(WorldSpaceViewDir(vert)))));
+			if (UNITY_MATRIX_P[3][3] == 0) scale = lerp(abs(scale) * (1 - _PerspectiveFilter), scale, abs(dot(UnityObjectToWorldNormal(input.normal.xyz), normalize(WorldSpaceViewDir(vert)))));
 
 			float weight = lerp(_WeightNormal, _WeightBold, bold) / 4.0;
 			weight = (weight + _FaceDilate) * _ScaleRatioA * 0.5;
@@ -295,7 +295,7 @@ SubShader {
 			faceColor.rgb += glowColor.rgb * glowColor.a;
 		#endif
 
-		// Alternative implementation to UnitMovementyGet2DClipping with support for softness.
+		// Alternative implementation to UnityGet2DClipping with support for softness.
 		#if UNITY_UI_CLIP_RECT
 			half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(input.mask.xy)) * input.mask.zw);
 			faceColor *= m.x * m.y;

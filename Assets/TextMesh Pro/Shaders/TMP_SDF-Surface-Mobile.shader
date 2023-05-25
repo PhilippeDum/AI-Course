@@ -97,7 +97,7 @@ SubShader {
 		#pragma vertex vert
 		#pragma fragment frag
 		#pragma multi_compile_shadowcaster
-		#include "UnitMovementyCG.cginc"
+		#include "UnityCG.cginc"
 
 		struct v2f {
 			V2F_SHADOW_CASTER;

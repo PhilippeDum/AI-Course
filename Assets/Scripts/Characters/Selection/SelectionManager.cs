@@ -10,8 +10,8 @@ public class SelectionManager : MonoBehaviour
     [SerializeField] private CanvasScaler canvasScaler;
 
     private Vector2 startPosition;
-    private Element currentElement;
-    private KingManager kingManager;
+    private UnitManager currentUnit;
+    private Production production;
     private UIManager uiManager;
 
     // Double click
@@ -21,13 +21,13 @@ public class SelectionManager : MonoBehaviour
     private float firstLeftClickTime;
     private bool isTimeCheckAllowed = true;
     private int LeftClickNum = 0;
-    private bool selectAllSameUnitMovement;
+    private bool selectAllSameUnit;
 
     private void Start()
     {
-        selectAllSameUnitMovement = false;
+        selectAllSameUnit = false;
 
-        kingManager = FindObjectOfType<KingManager>();
+        production = FindObjectOfType<Production>();
         uiManager = FindObjectOfType<UIManager>();
     }
 
@@ -93,14 +93,12 @@ public class SelectionManager : MonoBehaviour
         {
             if (LeftClickNum == 2)
             {
-                if (currentElement != null && currentElement.GetComponent<UnitMovement>() && !selectAllSameUnitMovement)
+                if (currentUnit != null && currentUnit && !selectAllSameUnit)
                 {
-                    UnitStats unitStats = currentElement.GetComponent<UnitStats>();
+                    if (currentUnit.UnitData.TeamUnit == Unit.UnitTeam.Enemy) yield break;
 
-                    if (unitStats.GetTeam == Team.Enemy) yield break;
-
-                    selectAllSameUnitMovement = true;
-                    SelectAllSameUnitMovement(currentElement.GetComponent<UnitMovement>());
+                    selectAllSameUnit = true;
+                    SelectAllSameUnit(currentUnit.GetComponent<UnitManager>());
                 }
 
                 break;
@@ -121,25 +119,25 @@ public class SelectionManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            if (hit.transform.GetComponent<Element>())
+            if (hit.transform.GetComponent<UnitManager>())
             {
-                currentElement = hit.transform.GetComponent<Element>();
+                currentUnit = hit.transform.GetComponent<UnitManager>();
 
-                uiManager.ShowInfos(currentElement);
+                uiManager.ShowInfos(currentUnit);
 
-                if (currentElement.ElementSelection == null) return;
+                if (currentUnit.Selection == null) return;
 
-                if (!currentElement.ElementSelection.activeSelf)
+                if (!currentUnit.Selection.activeSelf)
                 {
-                    currentElement.ElementSelection.SetActive(true);
+                    currentUnit.Selection.SetActive(true);
 
-                    if (currentElement.CompareTag("UnitMovement")) SelectUnitMovement(currentElement.GetComponent<UnitMovement>());
+                    if (currentUnit.CompareTag("Unit")) SelectUnit(currentUnit.GetComponent<UnitManager>());
                 }
                 else
                 {
-                    currentElement.ElementSelection.SetActive(false);
+                    currentUnit.Selection.SetActive(false);
 
-                    if (currentElement.CompareTag("UnitMovement")) DeselectUnitMovement(currentElement.GetComponent<UnitMovement>());
+                    if (currentUnit.CompareTag("Unit")) DeselectUnit(currentUnit.GetComponent<UnitManager>());
                 }
             }
             else
@@ -172,7 +170,7 @@ public class SelectionManager : MonoBehaviour
         Vector2 min = selectionBox.anchoredPosition - (selectionBox.sizeDelta / 2);
         Vector2 max = selectionBox.anchoredPosition + (selectionBox.sizeDelta / 2);
 
-        foreach (UnitMovement unit in kingManager.UnitMovements)
+        foreach (UnitManager unit in production.Units)
         {
             if (unit == null) return;
 
@@ -180,60 +178,60 @@ public class SelectionManager : MonoBehaviour
 
             if (screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y)
             {
-                SelectUnitMovement(unit);
+                SelectUnit(unit);
             }
         }
     }
 
     #endregion
 
-    #region UnitMovement Selection
+    #region Unit Selection
 
-    private void SelectUnitMovement(UnitMovement unit)
+    private void SelectUnit(UnitManager unit)
     {
         if (unit == null) return;
 
-        kingManager.SelectedUnitMovements.Add(unit);
+        production.SelectedUnits.Add(unit);
         unit.Selection.SetActive(true);
     }
 
-    private void SelectAllSameUnitMovement(UnitMovement unit)
+    private void SelectAllSameUnit(UnitManager unit)
     {
-        for (int i = 0; i < kingManager.UnitMovements.Count; i++)
+        for (int i = 0; i < production.Units.Count; i++)
         {
-            UnitMovement possessedUnitMovement = kingManager.UnitMovements[i];
+            UnitManager possessedUnit = production.Units[i];
 
-            if (possessedUnitMovement.GetUnitType == unit.GetUnitType)
+            if (possessedUnit.UnitData.TypeUnit == unit.UnitData.TypeUnit)
             {
-                SelectUnitMovement(possessedUnitMovement);
+                SelectUnit(possessedUnit);
             }
         }
 
-        selectAllSameUnitMovement = false;
+        selectAllSameUnit = false;
     }
 
-    private void DeselectUnitMovement(UnitMovement unit)
+    private void DeselectUnit(UnitManager unit)
     {
-        kingManager.SelectedUnitMovements.Remove(unit);
+        production.SelectedUnits.Remove(unit);
         unit.Selection.SetActive(false);
     }
 
     private void DeselectAll()
     {
-        foreach (UnitMovement unit in kingManager.SelectedUnitMovements)
+        foreach (UnitManager unit in production.SelectedUnits)
         {
             if (unit == null) return;
 
             unit.Selection.SetActive(false);
         }
 
-        if (currentElement != null)
+        if (currentUnit != null)
         {
-            currentElement.ElementSelection.SetActive(false);
-            currentElement = null;
+            currentUnit.Selection.SetActive(false);
+            currentUnit = null;
         }
 
-        kingManager.SelectedUnitMovements.Clear();
+        production.SelectedUnits.Clear();
     }
 
     #endregion

@@ -53,8 +53,8 @@ Shader "TextMeshPro/Sprite"
 			#pragma fragment frag
             #pragma target 2.0
 
-			#include "UnitMovementyCG.cginc"
-			#include "UnitMovementyUI.cginc"
+			#include "UnityCG.cginc"
+			#include "UnityUI.cginc"
 
             #pragma multi_compile __ UNITY_UI_CLIP_RECT
             #pragma multi_compile __ UNITY_UI_ALPHACLIP
@@ -88,7 +88,7 @@ Shader "TextMeshPro/Sprite"
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
                 OUT.worldPosition = v.vertex;
-				OUT.vertex = UnitMovementyObjectToClipPos(OUT.worldPosition);
+				OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);
 
                 OUT.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
 				
@@ -101,7 +101,7 @@ Shader "TextMeshPro/Sprite"
 				half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
 				
                 #ifdef UNITY_UI_CLIP_RECT
-					color.a *= UnitMovementyGet2DClipping(IN.worldPosition.xy, _ClipRect);
+					color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
 				#endif
 
 				#ifdef UNITY_UI_ALPHACLIP

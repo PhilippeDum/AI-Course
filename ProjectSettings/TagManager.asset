@@ -5,9 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Unit
-  - King
   - Upgrade
-  - Enemy
   layers:
   - Default
   - TransparentFX
