@@ -729,7 +729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &192055658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -744,7 +744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 500, y: 500}
   resolution: 100
-  material: {fileID: 2100000, guid: bd5dc619b537d95459fe374bfe9e0038, type: 2}
+  material: {fileID: 2100000, guid: 0091cd14ac5e2c94d9f271dd74fc4068, type: 2}
 --- !u!33 &192055659
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2292,19 +2292,19 @@ MonoBehaviour:
     energyCost: 0
     healthPoint: 0
   - name: Structure 2
-    prefab: {fileID: 888593635899021533, guid: 24587c5042d069d469bf70d2c26e5362, type: 3}
+    prefab: {fileID: 888593635899021533, guid: 43e7a3cc999ea514f867fd94bc94810e, type: 3}
     tiberiumCost: 0
     energyGain: 0
     energyCost: 0
     healthPoint: 0
   - name: Structure 3
-    prefab: {fileID: 888593635899021533, guid: 43389cf437deb4543b6be27ebae1f9c3, type: 3}
+    prefab: {fileID: 888593635899021533, guid: 4223df2f02e60654b9863d49a2255427, type: 3}
     tiberiumCost: 0
     energyGain: 0
     energyCost: 0
     healthPoint: 0
   - name: Structure 4
-    prefab: {fileID: 888593635899021533, guid: 50339312a2e55754e88c073695d7a7fe, type: 3}
+    prefab: {fileID: 888593635899021533, guid: 304252dc65e0c424fb242c90c6fca15d, type: 3}
     tiberiumCost: 0
     energyGain: 0
     energyCost: 0
@@ -2473,7 +2473,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 358.3125}
+  m_SizeDelta: {x: 358.3125, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1140008274
 MonoBehaviour:
