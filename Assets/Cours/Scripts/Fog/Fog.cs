@@ -45,10 +45,12 @@ public class Fog : MonoBehaviour
         vertices = mesh.vertices;
         colors = new Color[vertices.Length];
 
+        Color mainColor = fog.GetComponent<MeshRenderer>().sharedMaterial.color;
+
         for (int i = 0; i < colors.Length; i++)
         {
-            
-            colors[i] = Color.black * Random.Range(0.995f, 1.000f);
+            //colors[i] = Color.black * Random.Range(0.995f, 1.000f);
+            colors[i] = mainColor;
         }
 
         mesh.colors = colors;

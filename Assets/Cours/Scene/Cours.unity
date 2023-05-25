@@ -729,7 +729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &192055658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -744,7 +744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 500, y: 500}
   resolution: 100
-  material: {fileID: 2100000, guid: 0091cd14ac5e2c94d9f271dd74fc4068, type: 2}
+  material: {fileID: 2100000, guid: bd5dc619b537d95459fe374bfe9e0038, type: 2}
 --- !u!33 &192055659
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2473,7 +2473,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 358.3125, y: 0}
+  m_SizeDelta: {x: 0, y: 358.3125}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1140008274
 MonoBehaviour:
