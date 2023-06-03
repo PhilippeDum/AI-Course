@@ -83,7 +83,8 @@ public class UnitManager : MonoBehaviour
 
     private void InitializeMovement()
     {
-        agent = GetComponent<NavMeshAgent>();
+        if (agent == null) return;
+
         agent.speed = unitData.Speed;
         agent.stoppingDistance = unitData.StoppingDistance;
     }

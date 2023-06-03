@@ -30,6 +30,11 @@ public class GameManager : MonoBehaviour
 
     private bool changeQuest;
 
+    [Header("Resources")]
+    [SerializeField] private int wood = 0;
+    [SerializeField] private int silver = 0;
+    [SerializeField] private int gold = 0;
+
     [Header("Camera - Broken Bridge Datas")]
     [SerializeField] private float smoothing = 5f;
     [SerializeField] private float timeBeforeShowing = 2f;
@@ -185,7 +190,7 @@ public class GameManager : MonoBehaviour
     {
         Quest currentQuest = GetCurrentQuest(currentQuestType);
 
-        if (countPawns >= currentQuest.requiredAmountPawn && countRiders >= currentQuest.requiredAmountRider && !production)
+        if (countPawns >= currentQuest.requiredAmount && countRiders >= currentQuest.requiredAmount2 && !production)
         {
             production = true;
 
@@ -203,7 +208,7 @@ public class GameManager : MonoBehaviour
     {
         Quest currentQuest = GetCurrentQuest(currentQuestType);
 
-        if (countPawnsDetection >= currentQuest.requiredAmountPawn && countRidersDetection >= currentQuest.requiredAmountRider && !reparation && !currentBridgeRepaired)
+        if (countPawnsDetection >= currentQuest.requiredAmount && countRidersDetection >= currentQuest.requiredAmount2 && !reparation && !currentBridgeRepaired)
         {
             reparation = true;
 
@@ -246,7 +251,7 @@ public class GameManager : MonoBehaviour
         if (quest == null) return;
 
         questName.text = quest.questName;
-        questDescription.text = $"{quest.questDescription}\npion(s) : {countPawns}/{quest.requiredAmountPawn}\ncavalier(s) : {countRiders}/{quest.requiredAmountRider}";
+        questDescription.text = $"{quest.questDescription}\npion(s) : {countPawns}/{quest.requiredAmount}\ncavalier(s) : {countRiders}/{quest.requiredAmount2}";
     }
 
     public Quest GetCurrentQuest(QuestType questType)

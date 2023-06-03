@@ -144,7 +144,7 @@ public class Production : MonoBehaviour
     {
         string text = $"{unitManager.UnitData.Description}\nIn Production : pawns ({pawnsToProduct}) & riders ({ridersToProduct})";
 
-        uiManager.UpdateText(text);
+        uiManager.UpdateText(text, pawnsToProduct, ridersToProduct);
     }
 
     private void HandleProduction()
@@ -215,9 +215,15 @@ public class Production : MonoBehaviour
 
                 units.Add(unit);
 
+                unit.MoveToPosition(gathering.transform.position);
+
+                HandleArmy();
+
                 inProduction = false;
             }
         }
+
+        UpdateKingText();
     }
 
     #endregion

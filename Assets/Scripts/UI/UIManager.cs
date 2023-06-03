@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,13 +17,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject mainUI;
     [SerializeField] private GameObject questsUI;
     [SerializeField] private GameObject endGameUI;
-    [SerializeField] private Text infosTitle;
-    [SerializeField] private Text infosDescription;
-    [SerializeField] private Text optionsTitle;
-    [SerializeField] private Text optionsDescription;
 
     private UnitManager currentUnit;
     private bool showingInfos;
+
+    private Button pawnProductButton;
+    private string pawnButtonText = "Pion";
+    private Button riderProductButton;
+    private string riderButtonText = "Cavalier";
 
     #region Getters / Setters
 
@@ -62,7 +64,7 @@ public class UIManager : MonoBehaviour
     {
         showingInfos = false;
 
-        HandleUI(true);
+        HandleUI(false);
 
         endGameUI.SetActive(false);
     }
@@ -93,8 +95,12 @@ public class UIManager : MonoBehaviour
         infos.SetActive(state);
         options.SetActive(state);
 
-        if (isKing || isUpgrade) optionsDescription.gameObject.SetActive(false);
-        else optionsDescription.gameObject.SetActive(true);
+        if (isKing || isUpgrade) mainUI.GetComponent<InterfaceRefs>().OptionsDescription.gameObject.SetActive(false);
+        else
+        {
+            mainUI.GetComponent<InterfaceRefs>().OptionsDescription.gameObject.SetActive(true);
+            mainUI.GetComponent<InterfaceRefs>().BuildingsButtons.SetActive(false);
+        }
 
         kingOptions.SetActive(isKing);
         upgradeOptions.SetActive(isUpgrade);
@@ -108,19 +114,21 @@ public class UIManager : MonoBehaviour
 
             currentUnit = unit;
 
-            infosTitle.text = $"Infos '{currentUnit.UnitData.Name}'";
-            infosDescription.text = currentUnit.UnitData.Description;
+            mainUI.GetComponent<InterfaceRefs>().InfosTitle.text = $"{currentUnit.UnitData.Name}'";
+            mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = currentUnit.UnitData.Description;
 
             //if (currentUnit.CompareTag("King"))
-            if (currentUnit.UnitData.TypeUnit == Unit.UnitType.King)
+            if (currentUnit.UnitData.TypeUnit == Unit.UnitType.King && currentUnit.UnitData.TeamUnit == Unit.UnitTeam.Player)
             {
                 HandleUI(true, true);
+
+                SetupBuildingsButtons();
 
                 SetupKingButtons(currentUnit.GetComponent<Production>());
 
                 currentUnit.GetComponent<Production>().UpdateKingText();
             }
-            else if (currentUnit.CompareTag("Upgrade")) // Building
+            else if (currentUnit.CompareTag("Upgrade") && currentUnit.UnitData.TeamUnit == Unit.UnitTeam.Player) // Building
             {
                 HandleUI(true, false, true);
             }
@@ -134,26 +142,31 @@ public class UIManager : MonoBehaviour
             {
                 UnitManager unitManager = currentUnit.GetComponent<UnitManager>();
 
-                optionsDescription.text = $"{unitManager.UnitData.Health} / {unitManager.UnitData.MaxHealth}";
+                mainUI.GetComponent<InterfaceRefs>().OptionsDescription.text = $"{unitManager.UnitData.Health} / {unitManager.UnitData.MaxHealth}";
             }
 
             showingInfos = false;
         }
     }
 
+    private void SetupBuildingsButtons()
+    {
+        mainUI.GetComponent<InterfaceRefs>().BuildingsButtons.SetActive(true);
+    }
+
     private void SetupKingButtons(Production production)
     {
-        Button firstButton = kingOptions.transform.GetChild(0).GetComponent<Button>();
-        firstButton.name = "Pawn";
+        pawnProductButton = kingOptions.transform.GetChild(0).GetComponent<Button>();
+        pawnProductButton.name = pawnButtonText;
 
-        firstButton.onClick.RemoveAllListeners();
-        firstButton.onClick.AddListener(delegate { production.AddPawnToProduction(); });
+        pawnProductButton.onClick.RemoveAllListeners();
+        pawnProductButton.onClick.AddListener(delegate { production.AddPawnToProduction(); });
 
-        Button secondButton = kingOptions.transform.GetChild(1).GetComponent<Button>();
-        secondButton.name = "Rider";
+        riderProductButton = kingOptions.transform.GetChild(1).GetComponent<Button>();
+        riderProductButton.name = riderButtonText;
 
-        secondButton.onClick.RemoveAllListeners();
-        secondButton.onClick.AddListener(delegate { production.AddRiderToProduction(); });
+        riderProductButton.onClick.RemoveAllListeners();
+        riderProductButton.onClick.AddListener(delegate { production.AddRiderToProduction(); });
     }
 
     private void SetupUpgradeButton()
@@ -163,9 +176,15 @@ public class UIManager : MonoBehaviour
         // Add upgrade function to onClick
     }
 
-    public void UpdateText(string text)
+    public void UpdateText(string text, int pawnsCount, int ridersCount)
     {
-        infosDescription.text = text;
+        if (pawnProductButton != null)
+            pawnProductButton.GetComponentInChildren<Text>().text = $"{pawnButtonText} ({pawnsCount})";
+
+        if (riderProductButton != null)
+            riderProductButton.GetComponentInChildren<Text>().text = $"{riderButtonText} ({ridersCount})";
+
+        //mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = text;
     }
 
     #endregion
