@@ -499,7 +499,7 @@ GameObject:
   - component: {fileID: 4068902681182309780}
   - component: {fileID: 3984639243746932240}
   - component: {fileID: 4855632109643964206}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Rider Spear
   m_TagString: Unit
   m_Icon: {fileID: 0}

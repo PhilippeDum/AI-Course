@@ -16,5 +16,5 @@ MonoBehaviour:
   questDescription: "Cliquez sur la tour du Roi pour afficher les b\xE2timents disponibles
     et placez un moulin"
   questType: 3
-  requiredAmount: 0
+  requiredAmount: 1
   requiredAmount2: 0

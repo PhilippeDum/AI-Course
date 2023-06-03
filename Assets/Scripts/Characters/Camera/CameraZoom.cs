@@ -6,18 +6,11 @@ public class CameraZoom : MonoBehaviour
     [SerializeField] private float _smoothing = 5f;
     [SerializeField] private Vector2 _range = new (30f, 70f);
     [SerializeField] private Transform _cameraHolder;
-    [SerializeField] private bool canZoom = true;
 
     private Vector3 _cameraDirection => transform.InverseTransformDirection(_cameraHolder.forward);
 
     private Vector3 _targetPosition;
     private float _input;
-
-    public bool CanZoom
-    {
-        get { return canZoom; }
-        set { canZoom = value; }
-    }
 
     private void Awake()
     {
@@ -26,7 +19,7 @@ public class CameraZoom : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.instance.GameFinished || !canZoom) return;
+        if (GameManager.instance.GameFinished || FindObjectOfType<BlueprintManager>().PlaceBuilding) return;
 
         HandleInput();
         Zoom();

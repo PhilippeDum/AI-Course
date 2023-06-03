@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 1463325836663555649}
   - component: {fileID: 1978534003604979141}
   - component: {fileID: 5502245590360343113}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy Rider Sword
   m_TagString: Unit
   m_Icon: {fileID: 0}

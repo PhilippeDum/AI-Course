@@ -17,6 +17,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject mainUI;
     [SerializeField] private GameObject questsUI;
     [SerializeField] private GameObject endGameUI;
+    [SerializeField] private Text woodUI;
+    [SerializeField] private Text silverUI;
+    [SerializeField] private Text goldUI;
 
     private UnitManager currentUnit;
     private bool showingInfos;
@@ -114,7 +117,7 @@ public class UIManager : MonoBehaviour
 
             currentUnit = unit;
 
-            mainUI.GetComponent<InterfaceRefs>().InfosTitle.text = $"{currentUnit.UnitData.Name}'";
+            mainUI.GetComponent<InterfaceRefs>().InfosTitle.text = $"{currentUnit.UnitData.Name}";
             mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = currentUnit.UnitData.Description;
 
             //if (currentUnit.CompareTag("King"))
@@ -185,6 +188,13 @@ public class UIManager : MonoBehaviour
             riderProductButton.GetComponentInChildren<Text>().text = $"{riderButtonText} ({ridersCount})";
 
         //mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = text;
+    }
+
+    public void HandleResourcesUI(int wood, int silver, int gold)
+    {
+        /*woodUI.text = $"{wood}";
+        silverUI.text = $"{silver}";
+        goldUI.text = $"{gold}";*/
     }
 
     #endregion

@@ -5,15 +5,26 @@ public class BuildingDatas
 {
     [SerializeField] private string name;
     [SerializeField] private GameObject prefab;
-    [SerializeField] private int tiberiumCost;
+    [SerializeField] private int cost;
+    [SerializeField] private Resources costType;
     [SerializeField] private int energyGain;
     [SerializeField] private int energyCost;
     [SerializeField] private int healthPoint;
+    [SerializeField] private int countBuildings = 0;
+    [SerializeField] private int maxCountBuildings = 2;
 
     public string Name => name;
     public GameObject Prefab => prefab;
-    public int TiberiumCost => tiberiumCost;
+    public int Cost => cost;
+    public Resources CostType => costType;
     public int EnergyGain => energyGain;
     public int EnergyCost => energyCost;
     public int HealthPoint => healthPoint;
+    public int CountBuildings => countBuildings;
+    public int MaxCountBuildings => maxCountBuildings;
+
+    public void AddBuildingCount()
+    {
+        countBuildings++;
+    }
 }

@@ -16,6 +16,6 @@ public class Quest : ScriptableObject
         Production,
         Reparation,
         Attack,
-        Placement
+        BuildingPlacement
     }
 }

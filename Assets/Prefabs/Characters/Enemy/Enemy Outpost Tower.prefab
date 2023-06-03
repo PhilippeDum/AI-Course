@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 3266299781734545079}
   - component: {fileID: 6113287733458903200}
   - component: {fileID: 2605465547766052625}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy Outpost Tower
   m_TagString: Unit
   m_Icon: {fileID: 0}

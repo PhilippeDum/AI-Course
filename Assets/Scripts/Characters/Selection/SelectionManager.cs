@@ -37,7 +37,7 @@ public class SelectionManager : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.instance.GameFinished) return;
+        if (GameManager.instance.GameFinished || BlueprintManager.instance.PlaceBuilding) return;
 
         HandleDetectionAndSelection();
     }

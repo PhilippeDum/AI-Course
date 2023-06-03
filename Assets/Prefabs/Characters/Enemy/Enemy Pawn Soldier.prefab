@@ -499,7 +499,7 @@ GameObject:
   - component: {fileID: 3688861400660523912}
   - component: {fileID: 4326440608644808716}
   - component: {fileID: 4433149210884781719}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy Pawn Soldier
   m_TagString: Unit
   m_Icon: {fileID: 0}

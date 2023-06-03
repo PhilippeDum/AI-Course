@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 3826458356559676970}
   - component: {fileID: 8614036883335451759}
   - component: {fileID: 4125468026585980770}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Queen
   m_TagString: Unit
   m_Icon: {fileID: 0}

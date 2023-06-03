@@ -4,6 +4,7 @@ public class Building : MonoBehaviour
 {
     private BuildingDatas datas;
     public GameManager gameManager;
+    public BlueprintManager blueprintManager;
 
     public BuildingDatas Datas
     {
@@ -14,16 +15,26 @@ public class Building : MonoBehaviour
     public virtual void OnEnable()
     {
         gameManager = GameManager.instance;
+        blueprintManager = BlueprintManager.instance;
 
-        CostTiberium();
+        Cost();
         PlayPlacementAnimation();
         PlayPlacementSound();
         SetParameters();
+
+        blueprintManager.OnBuildingPlaced += BuildingPlacementComplete;
     }
 
-    private void CostTiberium()
+    private void OnDisable()
     {
-        Debug.Log($"CostTiberium");
+        blueprintManager.OnBuildingPlaced -= BuildingPlacementComplete;
+    }
+
+    private void Cost()
+    {
+        Debug.Log($"Cost");
+
+        gameManager.ApplyCost(datas.CostType, datas.Cost);
     }
 
     private void PlayPlacementAnimation()
@@ -39,5 +50,10 @@ public class Building : MonoBehaviour
     private void SetParameters()
     {
 
+    }
+
+    public virtual void BuildingPlacementComplete()
+    {
+        Debug.Log($"{name} placed on terrain");
     }
 }

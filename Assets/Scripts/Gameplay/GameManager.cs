@@ -10,26 +10,28 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Transform cameraRoot;
-    [SerializeField] private Transform brokenBridgeTarget;
+    [SerializeField] private Vector3 brokenBridgePosition = Vector3.zero;
     [SerializeField] private GameObject king;
     [SerializeField] private GameObject kingEnemy;
 
-    private bool gameFinished;
+    private bool gameFinished = false;
 
     [Header("Quests")]
     [SerializeField] private List<Quest> quests;
     [SerializeField] private Text questName;
     [SerializeField] private Text questDescription;
     [SerializeField] private QuestType currentQuestType;
+    [SerializeField] private float timeChangingQuest = 2f;
 
     private int countPawns = 0;
     private int countRiders = 0;
     private int countBuildings = 0;
 
-    private bool production;
-    private bool reparation;
+    private bool buildingPlacement = false;
+    private bool production = false;
+    private bool reparation = false;
 
-    private bool changeQuest;
+    private bool endingQuest = false;
 
     [Header("Resources")]
     [SerializeField] private int wood = 0;
@@ -43,15 +45,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool startShowing = false;
     [SerializeField] private bool stopShowing = false;
 
-    private bool showing;
+    private bool showing = false;
 
     private Vector3 lastPosition;
 
     private int countPawnsDetection = 0;
     private int countRidersDetection = 0;
-    private bool currentBridgeRepaired;
+    private bool currentBridgeRepaired = false;
 
     private BridgeReparation currentBridgeReparation;
+    private UIManager uiManager;
 
     #region Getters / Setters
 
@@ -83,6 +86,12 @@ public class GameManager : MonoBehaviour
     {
         get { return countRiders; }
         set { countRiders = value; }
+    }
+
+    public int CountBuildings
+    {
+        get { return countBuildings; }
+        set { countBuildings = value; }
     }
 
     public int CountPawnsDetection
@@ -131,19 +140,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        gameFinished = false;
-
-        production = false;
-        reparation = false;
-
-        changeQuest = false;
-
-        currentBridgeRepaired = false;
-
         //currentQuestType = QuestType.Production;
-        currentQuestType = QuestType.Placement;
+        currentQuestType = QuestType.BuildingPlacement;
 
-        showing = false;
+        uiManager = UIManager.instance;
+        uiManager.HandleResourcesUI(wood, silver, gold);
 
         //StartCoroutine(king.GetComponent<UnitManager>().Defogger.Unhide());
         //StartCoroutine(kingEnemy.GetComponent<UnitManager>().Defogger.Unhide());
@@ -163,6 +164,8 @@ public class GameManager : MonoBehaviour
         if (stopShowing && !startShowing) DeactiveCameraShow();
 
         HandleQuests();
+
+        uiManager.HandleResourcesUI(wood, silver, gold);
     }
 
     #region Quests
@@ -182,9 +185,9 @@ public class GameManager : MonoBehaviour
             case QuestType.Attack:
                 SetQuest(currentQuestType, true, countPawns, countRiders);
                 break;
-            case QuestType.Placement:
+            case QuestType.BuildingPlacement:
                 SetQuest(currentQuestType, false, countBuildings);
-                QuestPlacement();
+                QuestBuildingPlacement();
                 break;
             default:
                 Debug.LogError($"Error : quest switch");
@@ -192,9 +195,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void QuestPlacement()
+    private void QuestBuildingPlacement()
     {
-        Debug.Log($"QuestPlacement");
+        Quest currentQuest = GetCurrentQuest(currentQuestType);
+
+        if (countBuildings >= currentQuest.requiredAmount && !buildingPlacement)
+        {
+            buildingPlacement = true;
+
+            StartCoroutine(EndingQuest(QuestType.Production));
+        }
     }
 
     private void QuestProduction()
@@ -205,13 +215,11 @@ public class GameManager : MonoBehaviour
         {
             production = true;
 
-            questDescription.text = "Terminé !";
-
             if (!startShowing) startShowing = true;
 
             kingEnemy.GetComponent<Production>().ForceProduction = true;
 
-            currentQuestType = QuestType.Reparation;
+            StartCoroutine(EndingQuest(QuestType.Reparation));
         }
     }
 
@@ -228,18 +236,29 @@ public class GameManager : MonoBehaviour
             currentBridgeReparation.Repair();
         }
 
-        if (currentBridgeReparation != null && currentBridgeRepaired && !changeQuest && reparation)
+        if (currentBridgeReparation != null && currentBridgeRepaired && reparation)
         {
-            changeQuest = true;
+            reparation = false;
 
-            questDescription.text = "Terminé !";
-
-            changeQuest = false;
-
-            currentQuestType = QuestType.Attack;
+            StartCoroutine(EndingQuest(QuestType.Attack));
 
             currentBridgeRepaired = false;
         }
+    }
+
+    private IEnumerator EndingQuest(QuestType newQuest)
+    {
+        yield return new WaitForSeconds(1f);
+
+        endingQuest = true;
+
+        questDescription.text = "Terminé !";
+
+        yield return new WaitForSeconds(timeChangingQuest);
+
+        currentQuestType = newQuest;
+
+        endingQuest = false;
     }
 
     public void EndGame(bool endGame)
@@ -265,6 +284,8 @@ public class GameManager : MonoBehaviour
 
         if (count == -1) return;
 
+        if (endingQuest) return;
+
         if (unit)
         {
             questDescription.text = $"{quest.questDescription}\n\npion(s) : {count}/{quest.requiredAmount}";
@@ -274,7 +295,7 @@ public class GameManager : MonoBehaviour
             questDescription.text += $"\ncavalier(s) : {count2}/{quest.requiredAmount2}";
         }
         else
-            questDescription.text = $"{quest.questDescription}\n\nbâtiment(s) : {count}";
+            questDescription.text = $"{quest.questDescription}\n\nbâtiment(s) : {count}/{quest.requiredAmount}";
     }
 
     public Quest GetCurrentQuest(QuestType questType)
@@ -310,9 +331,9 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBeforeShowing);
         
-        while (Distance(cameraRoot.position, brokenBridgeTarget.position) > 5)
+        while (Distance(cameraRoot.position, brokenBridgePosition) > 5)
         {
-            cameraRoot.position = Vector3.Lerp(cameraRoot.position, brokenBridgeTarget.position, Time.deltaTime * smoothing);
+            cameraRoot.position = Vector3.Lerp(cameraRoot.position, brokenBridgePosition, Time.deltaTime * smoothing);
 
             yield return new WaitForEndOfFrame();
         }
@@ -330,7 +351,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ReturnLastPosition()
     {
-        while (Distance(cameraRoot.position, brokenBridgeTarget.position) > 5)
+        while (Distance(cameraRoot.position, brokenBridgePosition) > 5)
         {
             cameraRoot.position = Vector3.Lerp(cameraRoot.position, lastPosition, Time.deltaTime * smoothing);
 
@@ -356,6 +377,44 @@ public class GameManager : MonoBehaviour
     }
 
     #region Buildings
+
+    public void ApplyCost(Resources costType, int cost)
+    {
+        switch (costType)
+        {
+            case Resources.Wood:
+                wood -= cost;
+                break;
+            case Resources.Silver:
+                silver -= cost;
+                break;
+            case Resources.Gold:
+                gold -= cost;
+                break;
+            default:
+                Debug.Log($"Error ApplyCost costType={costType}");
+                break;
+        }
+    }
+
+    public void AddResouce(Resources resource, int amount)
+    {
+        switch (resource)
+        {
+            case Resources.Wood:
+                wood += amount;
+                break;
+            case Resources.Silver:
+                silver += amount;
+                break;
+            case Resources.Gold:
+                gold += amount;
+                break;
+            default:
+                Debug.Log($"Error ApplyCost costType={resource}");
+                break;
+        }
+    }
 
     public void AddFreeEnergy(int energyToAdd)
     {

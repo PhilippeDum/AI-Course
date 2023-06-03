@@ -1,12 +1,18 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BlueprintManager : MonoBehaviour
 {
+    public static BlueprintManager instance;
+
+    [Header("References")]
+    [SerializeField] private Transform playerBuildings;
     [SerializeField] private Material invalidMaterial;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private int defoggerRadius = 1000;
     [SerializeField] private List<BuildingDatas> datas = new List<BuildingDatas>();
+    [SerializeField] private bool placeBuilding = false;
 
     private GameObject blueprintGO;
     private BlueprintController blueprint;
@@ -14,6 +20,26 @@ public class BlueprintManager : MonoBehaviour
     private int layerMaskTerrain = 1 << 6;
     private Fog fog;
     private int dataIndex;
+
+    public event Action OnBuildingPlaced;
+
+    public bool PlaceBuilding
+    {
+        get { return placeBuilding; }
+        set { placeBuilding = value; }
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -38,11 +64,18 @@ public class BlueprintManager : MonoBehaviour
         {
             if (datas[i].Name == name)
             {
-                dataIndex = i;
+                if (datas[i].CountBuildings < datas[i].MaxCountBuildings)
+                {
+                    datas[i].AddBuildingCount();
 
-                FindObjectOfType<CameraZoom>().CanZoom = false;
+                    dataIndex = i;
 
-                InstantiateBuilding(datas[i].Prefab);
+                    placeBuilding = true;
+
+                    InstantiateBuilding(datas[i].Prefab);
+                }
+                else
+                    Debug.Log($"{datas[i].CountBuildings}/{datas[i].MaxCountBuildings} ==> limit reached for {datas[i].Name}");
             }
         }
     }
@@ -50,8 +83,13 @@ public class BlueprintManager : MonoBehaviour
     private void InstantiateBuilding(GameObject building)
     {
         blueprintGO = Instantiate(building, Vector3.zero, Quaternion.identity);
+        blueprintGO.transform.SetParent(playerBuildings);
         blueprint = blueprintGO.GetComponent<BlueprintController>();
-        defaultMaterial = blueprintGO.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial;
+
+        if (blueprintGO.transform.GetChild(0).GetComponent<Renderer>())
+            defaultMaterial = blueprintGO.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial;
+        else
+            defaultMaterial = blueprintGO.transform.GetChild(0).GetComponentInChildren<Renderer>().sharedMaterial;
     }
 
     private void CursorControls()
@@ -93,7 +131,9 @@ public class BlueprintManager : MonoBehaviour
 
         Destroy(blueprint);
 
-        FindObjectOfType<CameraZoom>().CanZoom = true;
+        placeBuilding = false;
+
+        OnBuildingPlaced?.Invoke();
     }
 
     private void SetMaterial()

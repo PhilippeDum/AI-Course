@@ -341,7 +341,7 @@ GameObject:
   - component: {fileID: 4753036567173022760}
   - component: {fileID: 2673365143085735722}
   - component: {fileID: 2673365143085735720}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy King
   m_TagString: Unit
   m_Icon: {fileID: 0}

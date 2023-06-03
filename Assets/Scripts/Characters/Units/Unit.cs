@@ -9,7 +9,8 @@ public class Unit
         Rider,
         Tower,
         Queen,
-        King
+        King,
+        Worker
     }
 
     public enum UnitTeam

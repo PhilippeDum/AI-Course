@@ -107,6 +107,8 @@ public class Production : MonoBehaviour
         {
             if (currentCanvasWorld != null) Destroy(currentCanvasWorld);
 
+            if (BlueprintManager.instance.PlaceBuilding) return;
+
             HandleMovement();
         }
     }
