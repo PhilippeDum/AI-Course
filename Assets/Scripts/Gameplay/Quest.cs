@@ -8,13 +8,14 @@ public class Quest : ScriptableObject
     public string questName;
     public string questDescription;
     public QuestType questType;
-    public int requiredAmountPawn;
-    public int requiredAmountRider;
+    public int requiredAmount;
+    public int requiredAmount2;
 
     public enum QuestType
     {
         Production,
         Reparation,
-        Attack
+        Attack,
+        Placement
     }
 }

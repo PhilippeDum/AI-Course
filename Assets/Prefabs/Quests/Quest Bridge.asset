@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4f9625066538d04fa24097c08bd981c, type: 3}
-  m_Name: Quest 2
+  m_Name: Quest Bridge
   m_EditorClassIdentifier: 
   questName: "R\xE9paration du chemin"
   questDescription: "Le chemin pour arriver jusqu'\xE0 l'ennemi est d\xE9truit, placez
     un nombre sp\xE9cifique de soldat dans la zone de s\xE9lection pour le r\xE9parer
     !"
   questType: 1
-  requiredAmountPawn: 3
-  requiredAmountRider: 2
+  requiredAmount: 2
+  requiredAmount2: 1
