@@ -64,12 +64,9 @@ public class Fog : MonoBehaviour
         Mesh unitMesh = unit.GetComponent<MeshFilter>().mesh;
         Vector3[] unitVertices = unitMesh.vertices;
 
-        Debug.Log($"{unit.position}");
-
         foreach (var vertice in unitVertices)
         {
             Vector3 verticePos = unit.TransformPoint(vertice);
-            Debug.Log($"{verticePos}");
             Ray ray = new Ray(transform.position, verticePos - transform.position);
             RaycastHit hit;
 

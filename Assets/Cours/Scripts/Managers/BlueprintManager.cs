@@ -32,11 +32,15 @@ public class BlueprintManager : MonoBehaviour
 
     public void FindBuilding(string name)
     {
+        if (name == string.Empty) return;
+
         for (int i = 0; i < datas.Count; i++)
         {
             if (datas[i].Name == name)
             {
                 dataIndex = i;
+
+                FindObjectOfType<CameraZoom>().CanZoom = false;
 
                 InstantiateBuilding(datas[i].Prefab);
             }
@@ -88,6 +92,8 @@ public class BlueprintManager : MonoBehaviour
         blueprintGO = null;
 
         Destroy(blueprint);
+
+        FindObjectOfType<CameraZoom>().CanZoom = true;
     }
 
     private void SetMaterial()

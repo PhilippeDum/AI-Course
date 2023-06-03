@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     private int countPawns = 0;
     private int countRiders = 0;
+    private int countBuildings = 0;
 
     private bool production;
     private bool reparation;
@@ -139,7 +140,8 @@ public class GameManager : MonoBehaviour
 
         currentBridgeRepaired = false;
 
-        currentQuestType = QuestType.Production;
+        //currentQuestType = QuestType.Production;
+        currentQuestType = QuestType.Placement;
 
         showing = false;
 
@@ -170,20 +172,29 @@ public class GameManager : MonoBehaviour
         switch (currentQuestType)
         {
             case QuestType.Production:
-                SetQuest(currentQuestType, countPawns, countRiders);
+                SetQuest(currentQuestType, true, countPawns, countRiders);
                 QuestProduction();
                 break;
             case QuestType.Reparation:
-                SetQuest(currentQuestType, countPawnsDetection, countRidersDetection);
+                SetQuest(currentQuestType, true, countPawnsDetection, countRidersDetection);
                 QuestReparation();
                 break;
             case QuestType.Attack:
-                SetQuest(currentQuestType, countPawns, countRiders);
+                SetQuest(currentQuestType, true, countPawns, countRiders);
+                break;
+            case QuestType.Placement:
+                SetQuest(currentQuestType, false, countBuildings);
+                QuestPlacement();
                 break;
             default:
                 Debug.LogError($"Error : quest switch");
                 break;
         }
+    }
+
+    private void QuestPlacement()
+    {
+        Debug.Log($"QuestPlacement");
     }
 
     private void QuestProduction()
@@ -238,7 +249,7 @@ public class GameManager : MonoBehaviour
         UIManager.instance.HandleEndGameUI(endGame);
     }
 
-    private void SetQuest(QuestType questType, int countPawns, int countRiders)
+    private void SetQuest(QuestType questType, bool unit, int count = -1, int count2 = -1)
     {
         Quest quest = null;
 
@@ -251,7 +262,19 @@ public class GameManager : MonoBehaviour
         if (quest == null) return;
 
         questName.text = quest.questName;
-        questDescription.text = $"{quest.questDescription}\npion(s) : {countPawns}/{quest.requiredAmount}\ncavalier(s) : {countRiders}/{quest.requiredAmount2}";
+
+        if (count == -1) return;
+
+        if (unit)
+        {
+            questDescription.text = $"{quest.questDescription}\n\npion(s) : {count}/{quest.requiredAmount}";
+
+            if (count2 == -1) return;
+
+            questDescription.text += $"\ncavalier(s) : {count2}/{quest.requiredAmount2}";
+        }
+        else
+            questDescription.text = $"{quest.questDescription}\n\nbâtiment(s) : {count}";
     }
 
     public Quest GetCurrentQuest(QuestType questType)
@@ -331,4 +354,13 @@ public class GameManager : MonoBehaviour
 
         return distance;
     }
+
+    #region Buildings
+
+    public void AddFreeEnergy(int energyToAdd)
+    {
+        Debug.Log($"Add free energy {energyToAdd}");
+    }
+
+    #endregion
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Building : MonoBehaviour
 {
     private BuildingDatas datas;
-    public GameManagerCours gameManager;
+    public GameManager gameManager;
 
     public BuildingDatas Datas
     {
@@ -13,7 +13,7 @@ public class Building : MonoBehaviour
 
     public virtual void OnEnable()
     {
-        gameManager = GameManagerCours.instance;
+        gameManager = GameManager.instance;
 
         CostTiberium();
         PlayPlacementAnimation();
