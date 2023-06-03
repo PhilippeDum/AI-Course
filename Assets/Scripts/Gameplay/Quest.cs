@@ -1,7 +1,9 @@
 using System;
+using UnityEngine;
 
 [Serializable]
-public class Quest
+[CreateAssetMenu(fileName = "Quest", menuName = "ScriptableObject/Quest")]
+public class Quest : ScriptableObject
 {
     public string questName;
     public string questDescription;

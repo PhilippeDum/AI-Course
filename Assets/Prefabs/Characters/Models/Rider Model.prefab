@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 3127536452269419652}
   - component: {fileID: 5756575493536853572}
   - component: {fileID: 1496628705127306991}
+  - component: {fileID: 8438139384406203842}
   m_Layer: 0
-  m_Name: Cylinder.001
+  m_Name: socle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,6 +84,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8438139384406203842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55091527046307686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1f363575f319ed4e8064716b286283f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defoggerRadius: 3000
 --- !u!1 &448172148491266536
 GameObject:
   m_ObjectHideFlags: 0

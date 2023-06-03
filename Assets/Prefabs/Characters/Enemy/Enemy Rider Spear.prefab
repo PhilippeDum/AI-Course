@@ -301,6 +301,7 @@ MonoBehaviour:
     damage: 30
     rangeTimeBetweenAttacks: {x: 1, y: 3}
     distanceToAttack: 2
+  defogger: {fileID: 4150683148406258385}
   agent: {fileID: 0}
   selection: {fileID: 796471547477618502}
   healthSlider: {fileID: 1735316000849819888}
@@ -840,6 +841,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}
+--- !u!114 &4150683148406258385 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8438139384406203842, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}
+  m_PrefabInstance: {fileID: 5512541480573970195}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1f363575f319ed4e8064716b286283f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4462564313424215725 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8173555982753569214, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}

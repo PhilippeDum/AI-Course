@@ -46,11 +46,23 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         showingInfos = false;
 
-        HandleUI(false);
+        HandleUI(true);
 
         endGameUI.SetActive(false);
     }
@@ -131,8 +143,6 @@ public class UIManager : MonoBehaviour
 
     private void SetupKingButtons(Production production)
     {
-        Debug.Log($"SetupKingButtons");
-
         Button firstButton = kingOptions.transform.GetChild(0).GetComponent<Button>();
         firstButton.name = "Pawn";
 

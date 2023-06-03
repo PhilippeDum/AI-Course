@@ -9,6 +9,7 @@ public class UnitManager : MonoBehaviour
     [SerializeField] private Unit unitData;
 
     [Header("References")]
+    [SerializeField] private Defogger defogger;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private GameObject selection;
     [SerializeField] private Slider healthSlider;
@@ -31,6 +32,12 @@ public class UnitManager : MonoBehaviour
     { 
         get { return unitData; }
         set { unitData = value; }
+    }
+
+    public Defogger Defogger
+    {
+        get { return defogger; }
+        set { defogger = value; }
     }
 
     public GameObject Selection

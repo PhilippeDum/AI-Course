@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f9625066538d04fa24097c08bd981c, type: 3}
+  m_Name: Quest 1
+  m_EditorClassIdentifier: 
+  questName: "Cr\xE9ation d'une arm\xE9e"
+  questDescription: Cliquez sur la tour du Roi pour entrainer des soldats (Pion ou
+    Cavalier))
+  questType: 0
+  requiredAmountPawn: 5
+  requiredAmountRider: 2

@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Fog : MonoBehaviour
 {
+    [SerializeField] private GameObject fog;
+
     private Mesh mesh;
     private Vector3[] vertices;
     private Color[] colors;
     private LayerMask fogLayer;
-    private GameObject fog;
 
     public static event Action OnCompleteInitialize;
 
@@ -57,7 +57,6 @@ public class Fog : MonoBehaviour
 
         OnCompleteInitialize?.Invoke();
     }
-
     public void UnhideUnit(Transform unit, int radius)
     {
         if (fog == null) return;
@@ -65,13 +64,16 @@ public class Fog : MonoBehaviour
         Mesh unitMesh = unit.GetComponent<MeshFilter>().mesh;
         Vector3[] unitVertices = unitMesh.vertices;
 
+        Debug.Log($"{unit.position}");
+
         foreach (var vertice in unitVertices)
         {
             Vector3 verticePos = unit.TransformPoint(vertice);
+            Debug.Log($"{verticePos}");
             Ray ray = new Ray(transform.position, verticePos - transform.position);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 1500, fogLayer, QueryTriggerInteraction.Collide))
+            if (Physics.Raycast(ray, out hit, 10000, fogLayer, QueryTriggerInteraction.Collide))
             {
                 for (int i = 0; i < vertices.Length; i++)
                 {

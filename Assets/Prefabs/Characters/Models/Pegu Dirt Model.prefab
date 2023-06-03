@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5635220849770602063}
   - component: {fileID: 8762747123008311786}
   - component: {fileID: 6809301199979570464}
+  - component: {fileID: 9055604186973967305}
   m_Layer: 0
   m_Name: Pegu Dirt Model
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &9055604186973967305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5007865540220536053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1f363575f319ed4e8064716b286283f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defoggerRadius: 3000

@@ -1,3 +1,5 @@
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class CameraMotion : MonoBehaviour
@@ -35,7 +37,7 @@ public class CameraMotion : MonoBehaviour
         if (!canMove) return;
 
         Move();
-        MoveCursor();
+        //MoveCursor();
     }
 
     private void HandleInput()

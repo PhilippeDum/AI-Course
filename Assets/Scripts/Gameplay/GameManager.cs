@@ -113,7 +113,14 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
@@ -130,6 +137,9 @@ public class GameManager : MonoBehaviour
         currentQuestType = QuestType.Production;
 
         showing = false;
+
+        //StartCoroutine(king.GetComponent<UnitManager>().Defogger.Unhide());
+        //StartCoroutine(kingEnemy.GetComponent<UnitManager>().Defogger.Unhide());
     }
 
     private void Update()
