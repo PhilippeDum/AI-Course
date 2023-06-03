@@ -13,9 +13,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform brokenBridgeTarget;
     [SerializeField] private GameObject king;
     [SerializeField] private GameObject kingEnemy;
-    [SerializeField] private GameObject endGameUI;
-    [SerializeField] private GameObject mainUI;
-    [SerializeField] private GameObject questsUI;
 
     private bool gameFinished;
 
@@ -133,8 +130,6 @@ public class GameManager : MonoBehaviour
         currentQuestType = QuestType.Production;
 
         showing = false;
-
-        endGameUI.SetActive(false);
     }
 
     private void Update()
@@ -225,20 +220,7 @@ public class GameManager : MonoBehaviour
     {
         gameFinished = true;
 
-        if (endGame)
-        {
-            Debug.Log($"Victory !! EnemyManager defeat");
-            endGameUI.GetComponentInChildren<Text>().text = $"Victory !! EnemyManager defeat";
-        }
-        else
-        {
-            Debug.Log($"Defeat !! EnemyManager victory");
-            endGameUI.GetComponentInChildren<Text>().text = $"Defeat !! EnemyManager victory";
-        }
-
-        mainUI.SetActive(false);
-        questsUI.SetActive(false);
-        endGameUI.SetActive(true);
+        UIManager.instance.HandleEndGameUI(endGame);
     }
 
     private void SetQuest(QuestType questType, int countPawns, int countRiders)

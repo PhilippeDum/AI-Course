@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance;
+
     [Header("References")]
     [SerializeField] private GameObject resources;
     [SerializeField] private GameObject infos;
@@ -11,6 +13,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject upgradeOptions;
 
     [Header("UI")]
+    [SerializeField] private GameObject mainUI;
+    [SerializeField] private GameObject questsUI;
+    [SerializeField] private GameObject endGameUI;
     [SerializeField] private Text infosTitle;
     [SerializeField] private Text infosDescription;
     [SerializeField] private Text optionsTitle;
@@ -19,11 +24,53 @@ public class UIManager : MonoBehaviour
     private UnitManager currentUnit;
     private bool showingInfos;
 
+    #region Getters / Setters
+
+    public GameObject MainUI
+    {
+        get { return mainUI; }
+        set { mainUI = value; }
+    }
+
+    public GameObject QuestsUI
+    {
+        get { return questsUI; }
+        set { questsUI = value; }
+    }
+
+    public GameObject EndGameUI
+    {
+        get { return endGameUI; }
+        set { endGameUI = value; }
+    }
+
+    #endregion
+
     private void Start()
     {
         showingInfos = false;
 
         HandleUI(false);
+
+        endGameUI.SetActive(false);
+    }
+
+    public void HandleEndGameUI(bool endGame)
+    {
+        if (endGame)
+        {
+            Debug.Log($"Victory !! EnemyManager defeat");
+            endGameUI.GetComponentInChildren<Text>().text = $"Victory !! EnemyManager defeat";
+        }
+        else
+        {
+            Debug.Log($"Defeat !! EnemyManager victory");
+            endGameUI.GetComponentInChildren<Text>().text = $"Defeat !! EnemyManager victory";
+        }
+
+        mainUI.SetActive(false);
+        questsUI.SetActive(false);
+        endGameUI.SetActive(true);
     }
 
     #region UI
