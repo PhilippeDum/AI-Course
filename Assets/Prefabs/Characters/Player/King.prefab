@@ -484,8 +484,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitData:
-    name: King
-    description: 'Important figure: Main Base'
+    name: Tour du Roi
+    description: "Pi\xE8ce principale - Objectif de l'ennemi"
     unitType: 4
     unitTeam: 0
     speed: 0

@@ -591,8 +591,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitData:
-    name: Pawn Soldier Enemy
-    description: 1st Unit, simple attack and low resistance
+    name: Pion Ennemi
+    description: "1\xE8re unit\xE9"
     unitType: 0
     unitTeam: 1
     speed: 3.5
@@ -603,7 +603,7 @@ MonoBehaviour:
     rangeTimeBetweenAttacks: {x: 1, y: 3}
     distanceToAttack: 2
   defogger: {fileID: 9051939806660657285}
-  agent: {fileID: 0}
+  agent: {fileID: 4326440608644808716}
   selection: {fileID: 6658823661547662094}
   healthSlider: {fileID: 7863883718311376636}
   otherSlider: {fileID: 0}

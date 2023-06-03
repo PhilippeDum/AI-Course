@@ -668,8 +668,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitData:
-    name: Queen
-    description: 'Important figure: low health but strong speed''s boost'
+    name: Reine
+    description: "Pi\xE8ce importante"
     unitType: 3
     unitTeam: 0
     speed: 0
@@ -680,7 +680,7 @@ MonoBehaviour:
     rangeTimeBetweenAttacks: {x: 1, y: 3}
     distanceToAttack: 2
   defogger: {fileID: 7918297927057504127}
-  agent: {fileID: 0}
+  agent: {fileID: 3826458356559676970}
   selection: {fileID: 7894065462460497772}
   healthSlider: {fileID: 4972029947413207126}
   otherSlider: {fileID: 5087363048715460715}

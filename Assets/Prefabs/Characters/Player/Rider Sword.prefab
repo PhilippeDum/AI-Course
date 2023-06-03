@@ -330,8 +330,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitData:
-    name: Rider
-    description: 2nd Unit, faster and stronger
+    name: "Cavalier Ep\xE9e"
+    description: "2\xE8me unit\xE9"
     unitType: 1
     unitTeam: 0
     speed: 5
@@ -342,7 +342,7 @@ MonoBehaviour:
     rangeTimeBetweenAttacks: {x: 1, y: 3}
     distanceToAttack: 2
   defogger: {fileID: 5287126678734322610}
-  agent: {fileID: 0}
+  agent: {fileID: 1993486431833965863}
   selection: {fileID: 8919439817383390757}
   healthSlider: {fileID: 8426408328207265089}
   otherSlider: {fileID: 0}

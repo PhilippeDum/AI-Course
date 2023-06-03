@@ -810,8 +810,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitData:
-    name: Outpost Tower
-    description: Can heal units in area
+    name: Tour Avant-Poste
+    description: "Peut soigner les unit\xE9s dans la zone"
     unitType: 2
     unitTeam: 0
     speed: 0

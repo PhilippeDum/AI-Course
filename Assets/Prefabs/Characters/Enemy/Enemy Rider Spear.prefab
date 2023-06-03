@@ -290,8 +290,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitData:
-    name: Rider (Spear) Enemy
-    description: 2nd Unit, faster and stronger
+    name: Cavalier Lance Ennemi
+    description: "2\xE8me unit\xE9"
     unitType: 1
     unitTeam: 1
     speed: 5
@@ -302,7 +302,7 @@ MonoBehaviour:
     rangeTimeBetweenAttacks: {x: 1, y: 3}
     distanceToAttack: 2
   defogger: {fileID: 4150683148406258385}
-  agent: {fileID: 0}
+  agent: {fileID: 7741649000348058692}
   selection: {fileID: 796471547477618502}
   healthSlider: {fileID: 1735316000849819888}
   otherSlider: {fileID: 0}
