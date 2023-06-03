@@ -29,8 +29,8 @@ public class SelectionManager : MonoBehaviour
     {
         selectAllSameUnit = false;
 
-        gameManager = FindObjectOfType<GameManager>();
-        uiManager = FindObjectOfType<UIManager>();
+        gameManager = GameManager.instance;
+        uiManager = UIManager.instance;
 
         productionPlayer = gameManager.KingPlayer.GetComponent<Production>();
     }

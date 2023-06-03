@@ -79,7 +79,7 @@ public class Production : MonoBehaviour
     private void Start()
     {
         unitManager = GetComponent<UnitManager>();
-        uiManager = FindObjectOfType<UIManager>();
+        uiManager = UIManager.instance;
 
         inProduction = false;
         canStartProduction = false;
