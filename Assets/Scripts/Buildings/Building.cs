@@ -54,6 +54,8 @@ public class Building : MonoBehaviour
 
     public virtual void BuildingPlacementComplete()
     {
+        datas.AddBuildingCount();
+
         Debug.Log($"{name} placed on terrain");
     }
 }

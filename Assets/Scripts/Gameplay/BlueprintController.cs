@@ -37,8 +37,29 @@ public class BlueprintController : MonoBehaviour
 
     #region Custom Methods
 
+    private bool CheckInteractionArea()
+    {
+        GameObject playerInteractionArea = BlueprintManager.instance.PlayerInteractionArea;
+
+        if (playerInteractionArea == null) return false;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        bool inInteractionArea = false;
+
+        if (Physics.Raycast(ray, out hit, 150, layerMaskTerrain))
+        {
+            if (hit.transform == playerInteractionArea.transform) inInteractionArea = true;
+        }
+
+        return inInteractionArea;
+    }
+
     public bool CheckValidPlacement()
     {
+        if (!CheckInteractionArea()) return false;
+
         if (nbCollision > 0)
         {
             return false;

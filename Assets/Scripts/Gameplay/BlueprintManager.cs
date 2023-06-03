@@ -8,6 +8,7 @@ public class BlueprintManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Transform playerBuildings;
+    [SerializeField] private GameObject playerInteractionArea;
     [SerializeField] private Material invalidMaterial;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private int defoggerRadius = 1000;
@@ -22,6 +23,12 @@ public class BlueprintManager : MonoBehaviour
     private int dataIndex;
 
     public event Action OnBuildingPlaced;
+
+    public GameObject PlayerInteractionArea
+    {
+        get { return playerInteractionArea; }
+        set { playerInteractionArea = value; }
+    }
 
     public bool PlaceBuilding
     {
@@ -58,6 +65,14 @@ public class BlueprintManager : MonoBehaviour
 
     public void FindBuilding(string name)
     {
+        if (blueprintGO != null)
+        {
+            Destroy(blueprintGO);
+
+            blueprintGO = null;
+            blueprint = null;
+        }
+
         if (name == string.Empty) return;
 
         for (int i = 0; i < datas.Count; i++)
@@ -66,8 +81,6 @@ public class BlueprintManager : MonoBehaviour
             {
                 if (datas[i].CountBuildings < datas[i].MaxCountBuildings)
                 {
-                    datas[i].AddBuildingCount();
-
                     dataIndex = i;
 
                     placeBuilding = true;
@@ -117,10 +130,20 @@ public class BlueprintManager : MonoBehaviour
         {
             if (blueprint.CheckValidPlacement()) PlaceBlueprint();
         }
+
+        if (Input.GetMouseButtonDown(1) && blueprintGO != null)
+        {
+            Destroy(blueprintGO);
+
+            blueprintGO = null;
+            blueprint = null;
+        }
     }
 
     private void PlaceBlueprint()
     {
+        if (blueprintGO == null) return;
+
         fog.UnhideUnit(blueprintGO.transform, defoggerRadius);
 
         blueprintGO.GetComponent<Building>().Datas = datas[dataIndex];
