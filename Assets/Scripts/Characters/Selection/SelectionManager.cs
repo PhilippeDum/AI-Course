@@ -13,10 +13,11 @@ public class SelectionManager : MonoBehaviour
     private Vector2 startPosition;
     private GameManager gameManager;
     private UnitManager currentUnit;
+    private ResourceGathering currentResource;
     private UIManager uiManager;
     private Production productionPlayer;
+    private List<ResourceGathering> resources = new List<ResourceGathering>();
 
-    // Double click
     [Header("Double Click")]
     [SerializeField] private float timeBetweenLeftClick = 0.3f;
 
@@ -59,9 +60,13 @@ public class SelectionManager : MonoBehaviour
         {
             startPosition = Input.mousePosition;
 
+            UnitManager workerSaved = null;
+
+            if (currentUnit != null && currentUnit.UnitData.TypeUnit == Unit.UnitType.Worker) workerSaved = currentUnit;
+
             DeselectAll();
 
-            DetectElement();
+            DetectElement(workerSaved);
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -115,7 +120,7 @@ public class SelectionManager : MonoBehaviour
         isTimeCheckAllowed = true;
     }
 
-    private void DetectElement()
+    private void DetectElement(UnitManager workerSelected = null)
     {
         if (EventSystem.current.IsPointerOverGameObject(-1)) return;
 
@@ -127,7 +132,7 @@ public class SelectionManager : MonoBehaviour
             {
                 currentUnit = hit.transform.GetComponent<UnitManager>();
 
-                uiManager.ShowInfos(currentUnit);
+                uiManager.ShowUnitInfos(currentUnit);
 
                 if (currentUnit.Selection == null) return;
 
@@ -143,6 +148,23 @@ public class SelectionManager : MonoBehaviour
 
                     DeselectUnit(currentUnit);
                 }
+            }
+            else if (hit.transform.GetComponent<ResourceGathering>())
+            {
+                currentResource = hit.transform.GetComponent<ResourceGathering>();
+
+                uiManager.ShowResourceInfos(currentResource);
+                
+                if (currentResource.Selection == null) return;
+
+                if (!currentResource.Selection.activeSelf)
+                    currentResource.Selection.SetActive(true);
+                else
+                    currentResource.Selection.SetActive(false);
+
+                if (workerSelected == null) return;
+
+                workerSelected.StartWork(currentResource);
             }
             else
             {
@@ -196,6 +218,7 @@ public class SelectionManager : MonoBehaviour
         if (unit == null) return;
 
         productionPlayer.SelectedUnits.Add(unit);
+
         unit.Selection.SetActive(true);
     }
 
@@ -220,8 +243,11 @@ public class SelectionManager : MonoBehaviour
         unit.Selection.SetActive(false);
     }
 
+    #endregion
+
     private void DeselectAll()
     {
+        // Units
         foreach (UnitManager unit in productionPlayer.SelectedUnits)
         {
             if (unit == null) return;
@@ -236,9 +262,13 @@ public class SelectionManager : MonoBehaviour
         }
 
         productionPlayer.SelectedUnits.Clear();
-    }
 
-    #endregion
+        // Resource
+        if (currentResource == null) return;
+
+        currentResource.Selection.SetActive(false);
+        currentResource = null;
+    }
 
     #endregion
 }

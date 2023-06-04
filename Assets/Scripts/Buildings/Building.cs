@@ -25,11 +25,6 @@ public class Building : MonoBehaviour
         blueprintManager.OnBuildingPlaced += BuildingPlacementComplete;
     }
 
-    private void OnDisable()
-    {
-        blueprintManager.OnBuildingPlaced -= BuildingPlacementComplete;
-    }
-
     private void Cost()
     {
         Debug.Log($"Cost");
@@ -54,6 +49,8 @@ public class Building : MonoBehaviour
 
     public virtual void BuildingPlacementComplete()
     {
+        blueprintManager.OnBuildingPlaced -= BuildingPlacementComplete;
+
         datas.AddBuildingCount();
 
         Debug.Log($"{name} placed on terrain");

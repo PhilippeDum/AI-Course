@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using System.Collections;
 
 public class UnitManager : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class UnitManager : MonoBehaviour
     private bool canAttack = false;
     private bool inAttack = false;
     private bool boostActive = false;
+    private bool isWorking = false;
+
+    private GameManager gameManager;
 
     #region Getters / Setters
 
@@ -52,6 +56,12 @@ public class UnitManager : MonoBehaviour
         set { isDead = value; }
     }
 
+    public bool IsWorking
+    {
+        get { return isWorking; }
+        set { isWorking = value; }
+    }
+
     public List<UnitManager> Enemies
     {
         get { return enemies; }
@@ -62,6 +72,8 @@ public class UnitManager : MonoBehaviour
 
     private void Start()
     {
+        gameManager = GameManager.instance;
+
         if (UnitData.TypeUnit != Unit.UnitType.King && UnitData.TypeUnit != Unit.UnitType.Tower)
         {
             InitializeMovement();
@@ -122,13 +134,18 @@ public class UnitManager : MonoBehaviour
 
         if (!isDead)
         {
-            HandleEnemies();
+            if (unitData.TypeUnit != Unit.UnitType.Worker)
+            {
+                HandleEnemies();
 
-            Clean();
+                Clean();
 
-            HandleAttack();
+                HandleAttack();
+            }
         }
     }
+
+    #region Attacking Unit
 
     private void HandleEnemies()
     {
@@ -185,6 +202,34 @@ public class UnitManager : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+    #region Worker Unit
+
+    public void StartWork(ResourceGathering resource)
+    {
+        if (!isWorking)
+        {
+            isWorking = true;
+
+            StartCoroutine(Working(resource));
+        }
+    }
+
+    private IEnumerator Working(ResourceGathering resource)
+    {
+        while (gameManager.Distance(transform.position, resource.transform.position) > unitData.DistanceToAttack)
+        {
+            MoveToPosition(resource.transform.position, unitData.StoppingDistance);
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        resource.Collect(this);
+    }
+
+    #endregion
 
     #region Handle Unit Stats
 

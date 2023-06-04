@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text goldUI;
 
     private UnitManager currentUnit;
+    private ResourceGathering currentElement;
     private bool showingInfos;
 
     private Button pawnProductButton;
@@ -109,7 +110,7 @@ public class UIManager : MonoBehaviour
         upgradeOptions.SetActive(isUpgrade);
     }
 
-    public void ShowInfos(UnitManager unit)
+    public void ShowUnitInfos(UnitManager unit)
     {
         if (!showingInfos)
         {
@@ -120,27 +121,31 @@ public class UIManager : MonoBehaviour
             mainUI.GetComponent<InterfaceRefs>().InfosTitle.text = $"{currentUnit.UnitData.Name}";
             mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = currentUnit.UnitData.Description;
 
-            //if (currentUnit.CompareTag("King"))
             if (currentUnit.UnitData.TypeUnit == Unit.UnitType.King && currentUnit.UnitData.TeamUnit == Unit.UnitTeam.Player)
             {
                 HandleUI(true, true);
 
-                SetupBuildingsButtons();
+                SetupBuildingsButtons(true);
 
                 SetupKingButtons(currentUnit.GetComponent<Production>());
 
                 currentUnit.GetComponent<Production>().UpdateKingText();
+
+                mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Gestion des troupes";
             }
             else if (currentUnit.CompareTag("Upgrade") && currentUnit.UnitData.TeamUnit == Unit.UnitTeam.Player) // Building
             {
                 HandleUI(true, false, true);
+
+                mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Gestion des troupes";
             }
             else
             {
+                mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Unité";
+
                 HandleUI(true);
             }
 
-            //if (currentUnit.CompareTag("King") || currentUnit.CompareTag("Unit") || currentUnit.CompareTag("Enemy"))
             if (currentUnit != null)
             {
                 UnitManager unitManager = currentUnit.GetComponent<UnitManager>();
@@ -152,9 +157,35 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void SetupBuildingsButtons()
+    public void ShowResourceInfos(ResourceGathering element)
     {
-        mainUI.GetComponent<InterfaceRefs>().BuildingsButtons.SetActive(true);
+        if (!showingInfos)
+        {
+            showingInfos = true;
+
+            currentElement = element;
+
+            mainUI.GetComponent<InterfaceRefs>().InfosTitle.text = $"{currentElement.ElementName}";
+            mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = currentElement.ElementDescription;
+
+            HandleUI(true);
+
+            SetupBuildingsButtons(false);
+
+            if (currentElement != null)
+            {
+                mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Ressource";
+
+                mainUI.GetComponent<InterfaceRefs>().OptionsDescription.text = $"Temps de collecte : {currentElement.TimeCollect}s";
+            }
+
+            showingInfos = false;
+        }
+    }
+
+    private void SetupBuildingsButtons(bool state)
+    {
+        mainUI.GetComponent<InterfaceRefs>().BuildingsButtons.SetActive(state);
     }
 
     private void SetupKingButtons(Production production)

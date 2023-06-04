@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     private int countBuildings = 0;
 
     private bool buildingPlacement = false;
+    private bool resourceCollected = false;
     private bool production = false;
     private bool reparation = false;
 
@@ -74,6 +75,24 @@ public class GameManager : MonoBehaviour
     {
         get { return startShowing; }
         set { startShowing = value; }
+    }
+
+    public int Wood
+    {
+        get { return wood; }
+        set { wood = value; }
+    }
+
+    public int Silver
+    {
+        get { return silver; }
+        set { silver = value; }
+    }
+
+    public int Gold
+    {
+        get { return gold; }
+        set { gold = value; }
     }
 
     public int CountPawns
@@ -174,6 +193,14 @@ public class GameManager : MonoBehaviour
     {
         switch (currentQuestType)
         {
+            case QuestType.BuildingPlacement:
+                SetQuest(currentQuestType, false, countBuildings);
+                QuestBuildingPlacement();
+                break;
+            case QuestType.ResourceCollect:
+                SetQuest(currentQuestType, false, wood);
+                QuestResourceCollect();
+                break;
             case QuestType.Production:
                 SetQuest(currentQuestType, true, countPawns, countRiders);
                 QuestProduction();
@@ -184,10 +211,6 @@ public class GameManager : MonoBehaviour
                 break;
             case QuestType.Attack:
                 SetQuest(currentQuestType, true, countPawns, countRiders);
-                break;
-            case QuestType.BuildingPlacement:
-                SetQuest(currentQuestType, false, countBuildings);
-                QuestBuildingPlacement();
                 break;
             default:
                 Debug.LogError($"Error : quest switch");
@@ -202,6 +225,18 @@ public class GameManager : MonoBehaviour
         if (countBuildings >= currentQuest.requiredAmount && !buildingPlacement)
         {
             buildingPlacement = true;
+
+            StartCoroutine(EndingQuest(QuestType.ResourceCollect));
+        }
+    }
+
+    private void QuestResourceCollect()
+    {
+        Quest currentQuest = GetCurrentQuest(currentQuestType);
+
+        if (wood >= currentQuest.requiredAmount && !resourceCollected)
+        {
+            resourceCollected = true;
 
             StartCoroutine(EndingQuest(QuestType.Production));
         }
@@ -382,13 +417,13 @@ public class GameManager : MonoBehaviour
     {
         switch (costType)
         {
-            case Resources.Wood:
+            case Resources.Bois:
                 wood -= cost;
                 break;
-            case Resources.Silver:
+            case Resources.Fer:
                 silver -= cost;
                 break;
-            case Resources.Gold:
+            case Resources.Or:
                 gold -= cost;
                 break;
             default:
@@ -401,13 +436,13 @@ public class GameManager : MonoBehaviour
     {
         switch (resource)
         {
-            case Resources.Wood:
+            case Resources.Bois:
                 wood += amount;
                 break;
-            case Resources.Silver:
+            case Resources.Fer:
                 silver += amount;
                 break;
-            case Resources.Gold:
+            case Resources.Or:
                 gold += amount;
                 break;
             default:
