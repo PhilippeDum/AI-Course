@@ -1019,7 +1019,7 @@ MonoBehaviour:
   defoggerRadius: 1000
   datas:
   - name: Moulin
-    prefab: {fileID: 888593635899021533, guid: 94e4d25a79d15164ba96d0b693c44c8e, type: 3}
+    prefab: {fileID: 8805973962387086378, guid: b18a819ca0796e84e8e1987f0af5554e, type: 3}
     cost: 0
     costType: 0
     energyGain: 0
@@ -1037,7 +1037,7 @@ MonoBehaviour:
     countBuildings: 0
     maxCountBuildings: 2
   - name: TourAvantPoste
-    prefab: {fileID: 888593635899021533, guid: 43e7a3cc999ea514f867fd94bc94810e, type: 3}
+    prefab: {fileID: 6522715786724429411, guid: 4570cc39b04e62043821c22e67eabae4, type: 3}
     cost: 0
     costType: 0
     energyGain: 0

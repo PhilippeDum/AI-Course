@@ -144,11 +144,24 @@ public class BlueprintManager : MonoBehaviour
     {
         if (blueprintGO == null) return;
 
-        fog.UnhideUnit(blueprintGO.transform, defoggerRadius);
+        //fog.UnhideUnit(blueprintGO.transform, defoggerRadius);
 
-        blueprintGO.GetComponent<Building>().Datas = datas[dataIndex];
+        Transform meshFog = null;
 
-        blueprintGO.GetComponent<Building>().enabled = true;
+        if (blueprintGO.GetComponent<UnitManager>())
+            meshFog = blueprintGO.GetComponent<UnitManager>().DefoggerMesh.transform;
+        else if (blueprintGO.GetComponent<Building>())
+            meshFog = blueprintGO.GetComponent<Building>().DefoggerMesh.transform;
+
+        if (meshFog != null)
+            fog.UnhideUnit(meshFog, defoggerRadius);
+
+        if (blueprintGO.GetComponent<Building>())
+        {
+            blueprintGO.GetComponent<Building>().Datas = datas[dataIndex];
+
+            blueprintGO.GetComponent<Building>().enabled = true;
+        }
 
         blueprintGO = null;
 

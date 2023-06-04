@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
+    [SerializeField] private GameObject defoggerMesh;
+
     private BuildingDatas datas;
+
     public GameManager gameManager;
     public BlueprintManager blueprintManager;
 
@@ -10,6 +13,12 @@ public class Building : MonoBehaviour
     {
         get { return datas; }
         set { datas = value; }
+    }
+
+    public GameObject DefoggerMesh
+    {
+        get { return defoggerMesh; }
+        set { defoggerMesh = value; }
     }
 
     public virtual void OnEnable()

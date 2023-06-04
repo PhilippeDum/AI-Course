@@ -21,7 +21,9 @@ public class BlueprintController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Building") || other.gameObject.layer == LayerMask.NameToLayer("Unit"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Building") 
+            || other.gameObject.layer == LayerMask.NameToLayer("Unit")
+            || other.gameObject.layer == LayerMask.NameToLayer("Resource"))
         {
             nbCollision++;
         }
@@ -29,7 +31,9 @@ public class BlueprintController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Building") || other.gameObject.layer == LayerMask.NameToLayer("Unit"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Building") 
+            || other.gameObject.layer == LayerMask.NameToLayer("Unit")
+            || other.gameObject.layer == LayerMask.NameToLayer("Resource"))
         {
             nbCollision--;
         }

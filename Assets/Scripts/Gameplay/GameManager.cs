@@ -165,8 +165,8 @@ public class GameManager : MonoBehaviour
         uiManager = UIManager.instance;
         uiManager.HandleResourcesUI(wood, silver, gold);
 
-        //StartCoroutine(king.GetComponent<UnitManager>().Defogger.Unhide());
-        //StartCoroutine(kingEnemy.GetComponent<UnitManager>().Defogger.Unhide());
+        //StartCoroutine(king.GetComponent<UnitManager>().DefoggerMesh.Unhide());
+        //StartCoroutine(kingEnemy.GetComponent<UnitManager>().DefoggerMesh.Unhide());
     }
 
     private void Update()

@@ -301,7 +301,7 @@ MonoBehaviour:
     damage: 30
     rangeTimeBetweenAttacks: {x: 1, y: 3}
     distanceToAttack: 2
-  defogger: {fileID: 4150683148406258385}
+  defoggerMesh: {fileID: 4150683148406258385}
   agent: {fileID: 7741649000348058692}
   selection: {fileID: 796471547477618502}
   healthSlider: {fileID: 1735316000849819888}
