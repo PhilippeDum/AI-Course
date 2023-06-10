@@ -17,9 +17,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject mainUI;
     [SerializeField] private GameObject questsUI;
     [SerializeField] private GameObject endGameUI;
-    [SerializeField] private Text woodUI;
-    [SerializeField] private Text ironUI;
-    [SerializeField] private Text goldUI;
+    [SerializeField] private GameObject selectionsInfos;
 
     private UnitManager currentUnit;
     private ResourceGathering currentElement;
@@ -70,6 +68,7 @@ public class UIManager : MonoBehaviour
 
         HandleUI(false);
 
+        selectionsInfos.SetActive(false);
         endGameUI.SetActive(false);
     }
 
@@ -228,6 +227,12 @@ public class UIManager : MonoBehaviour
         refs.WoodCount.text = $"{wood}";
         refs.IronCount.text = $"{iron}";
         refs.GoldCount.text = $"{gold}";
+    }
+
+    public void ShowGameInfos()
+    {
+        if (selectionsInfos.activeSelf) selectionsInfos.SetActive(false);
+        else selectionsInfos.SetActive(true);
     }
 
     #endregion
