@@ -12,8 +12,9 @@ public class BlueprintManager : MonoBehaviour
     [SerializeField] private Material invalidMaterial;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private int defoggerRadius = 1000;
-    [SerializeField] private List<BuildingDatas> datas = new List<BuildingDatas>();
     [SerializeField] private bool placeBuilding = false;
+    [SerializeField] private List<BuildingDatas> datas = new List<BuildingDatas>();
+    [SerializeField] private List<Sprite> resourcesSprite = new List<Sprite>();
 
     private GameObject blueprintGO;
     private BlueprintController blueprint;
@@ -23,6 +24,8 @@ public class BlueprintManager : MonoBehaviour
     private int dataIndex;
 
     public event Action OnBuildingPlaced;
+
+    #region Getters / Setters
 
     public GameObject PlayerInteractionArea
     {
@@ -35,6 +38,14 @@ public class BlueprintManager : MonoBehaviour
         get { return placeBuilding; }
         set { placeBuilding = value; }
     }
+
+    public List<BuildingDatas> Datas
+    {
+        get { return datas; }
+        set { datas = value; }
+    }
+
+    #endregion
 
     private void Awake()
     {
@@ -196,5 +207,32 @@ public class BlueprintManager : MonoBehaviour
 
             //transform.GetChild(0).GetComponent<Renderer>().sharedMaterial = invalidMaterial;
         }
+    }
+
+    public BuildingDatas GetBuildingDatas(string buildingName)
+    {
+        for (int i = 0; i < datas.Count; i++)
+        {
+            if (buildingName.Contains(datas[i].Name)) return datas[i];
+        }
+
+        return null;
+    }
+
+    public Sprite GetBuildingCostSprite(Resources resource)
+    {
+        switch (resource)
+        {
+            case Resources.Bois:
+                return resourcesSprite[0];
+            case Resources.Fer:
+                return resourcesSprite[1];
+            case Resources.Or:
+                return resourcesSprite[2];
+            default:
+                break;
+        }
+
+        return null;
     }
 }

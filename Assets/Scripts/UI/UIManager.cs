@@ -70,6 +70,9 @@ public class UIManager : MonoBehaviour
 
         selectionsInfos.SetActive(false);
         endGameUI.SetActive(false);
+
+        pawnProductButton = kingOptions.transform.GetChild(0).GetComponent<Button>();
+        riderProductButton = kingOptions.transform.GetChild(1).GetComponent<Button>();
     }
 
     public void HandleEndGameUI(bool endGame)
@@ -125,8 +128,6 @@ public class UIManager : MonoBehaviour
                 HandleUI(true, true);
 
                 SetupBuildingsButtons(true);
-
-                SetupKingButtons(currentUnit.GetComponent<Production>());
 
                 currentUnit.GetComponent<Production>().UpdateKingText();
 
@@ -187,28 +188,6 @@ public class UIManager : MonoBehaviour
         mainUI.GetComponent<InterfaceRefs>().BuildingsButtons.SetActive(state);
     }
 
-    private void SetupKingButtons(Production production)
-    {
-        pawnProductButton = kingOptions.transform.GetChild(0).GetComponent<Button>();
-        pawnProductButton.name = pawnButtonText;
-
-        pawnProductButton.onClick.RemoveAllListeners();
-        pawnProductButton.onClick.AddListener(delegate { production.AddPawnToProduction(); });
-
-        riderProductButton = kingOptions.transform.GetChild(1).GetComponent<Button>();
-        riderProductButton.name = riderButtonText;
-
-        riderProductButton.onClick.RemoveAllListeners();
-        riderProductButton.onClick.AddListener(delegate { production.AddRiderToProduction(); });
-    }
-
-    private void SetupUpgradeButton()
-    {
-        Button firstButton = upgradeOptions.transform.GetChild(0).GetComponent<Button>();
-        //firstButton.onClick.AddListener(delegate { production.AddPawnToProduction(); });
-        // Add upgrade function to onClick
-    }
-
     public void UpdateText(string text, int pawnsCount, int ridersCount)
     {
         if (pawnProductButton != null)
@@ -227,6 +206,11 @@ public class UIManager : MonoBehaviour
         refs.WoodCount.text = $"{wood}";
         refs.IronCount.text = $"{iron}";
         refs.GoldCount.text = $"{gold}";
+    }
+
+    private void ShowCost()
+    {
+
     }
 
     public void ShowGameInfos()

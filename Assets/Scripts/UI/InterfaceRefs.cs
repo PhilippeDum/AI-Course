@@ -14,6 +14,7 @@ public class InterfaceRefs : MonoBehaviour
     [SerializeField] private GameObject buildingsButtons;
     [SerializeField] private Text optionsTitle;
     [SerializeField] private Text optionsDescription;
+    [SerializeField] private GameObject buildingCost;
 
     #region Getters / Setters
 
@@ -65,5 +66,17 @@ public class InterfaceRefs : MonoBehaviour
         set { optionsDescription = value; }
     }
 
+    public GameObject BuildingCost
+    {
+        get { return buildingCost; }
+        set { buildingCost = value; }
+    }
+
     #endregion
+
+    public void SetCostUI(int price, Sprite resourceImage)
+    {
+        buildingCost.transform.GetChild(0).GetComponent<Text>().text = $"{price}";
+        buildingCost.transform.GetChild(1).GetComponent<Image>().sprite = resourceImage;
+    }
 }
