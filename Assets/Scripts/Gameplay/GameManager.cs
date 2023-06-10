@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Resources")]
     [SerializeField] private int wood = 0;
-    [SerializeField] private int silver = 0;
+    [SerializeField] private int iron = 0;
     [SerializeField] private int gold = 0;
 
     [Header("Camera - Broken Bridge Datas")]
@@ -85,8 +85,8 @@ public class GameManager : MonoBehaviour
 
     public int Silver
     {
-        get { return silver; }
-        set { silver = value; }
+        get { return iron; }
+        set { iron = value; }
     }
 
     public int Gold
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
         currentQuestType = QuestType.BuildingPlacement;
 
         uiManager = UIManager.instance;
-        uiManager.HandleResourcesUI(wood, silver, gold);
+        uiManager.HandleResourcesUI(wood, iron, gold);
 
         //StartCoroutine(king.GetComponent<UnitManager>().DefoggerMesh.Unhide());
         //StartCoroutine(kingEnemy.GetComponent<UnitManager>().DefoggerMesh.Unhide());
@@ -184,7 +184,7 @@ public class GameManager : MonoBehaviour
 
         HandleQuests();
 
-        uiManager.HandleResourcesUI(wood, silver, gold);
+        uiManager.HandleResourcesUI(wood, iron, gold);
     }
 
     #region Quests
@@ -421,7 +421,7 @@ public class GameManager : MonoBehaviour
                 wood -= cost;
                 break;
             case Resources.Fer:
-                silver -= cost;
+                iron -= cost;
                 break;
             case Resources.Or:
                 gold -= cost;
@@ -440,7 +440,7 @@ public class GameManager : MonoBehaviour
                 wood += amount;
                 break;
             case Resources.Fer:
-                silver += amount;
+                iron += amount;
                 break;
             case Resources.Or:
                 gold += amount;

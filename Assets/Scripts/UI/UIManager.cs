@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject questsUI;
     [SerializeField] private GameObject endGameUI;
     [SerializeField] private Text woodUI;
-    [SerializeField] private Text silverUI;
+    [SerializeField] private Text ironUI;
     [SerializeField] private Text goldUI;
 
     private UnitManager currentUnit;
@@ -95,7 +95,7 @@ public class UIManager : MonoBehaviour
 
     public void HandleUI(bool state, bool isKing = false, bool isUpgrade = false)
     {
-        resources.SetActive(state);
+        //resources.SetActive(state);
         infos.SetActive(state);
         options.SetActive(state);
 
@@ -221,11 +221,13 @@ public class UIManager : MonoBehaviour
         //mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = text;
     }
 
-    public void HandleResourcesUI(int wood, int silver, int gold)
+    public void HandleResourcesUI(int wood, int iron, int gold)
     {
-        /*woodUI.text = $"{wood}";
-        silverUI.text = $"{silver}";
-        goldUI.text = $"{gold}";*/
+        InterfaceRefs refs = mainUI.GetComponent<InterfaceRefs>();
+
+        refs.WoodCount.text = $"{wood}";
+        refs.IronCount.text = $"{iron}";
+        refs.GoldCount.text = $"{gold}";
     }
 
     #endregion

@@ -3,6 +3,12 @@ using UnityEngine.UI;
 
 public class InterfaceRefs : MonoBehaviour
 {
+    [Header("Resources Refs")]
+    [SerializeField] private Text woodCount;
+    [SerializeField] private Text ironCount;
+    [SerializeField] private Text goldCount;
+
+    [Header("Units/Buildings Refs")]
     [SerializeField] private Text infosTitle;
     [SerializeField] private Text infosDescription;
     [SerializeField] private GameObject buildingsButtons;
@@ -10,6 +16,24 @@ public class InterfaceRefs : MonoBehaviour
     [SerializeField] private Text optionsDescription;
 
     #region Getters / Setters
+
+    public Text WoodCount
+    {
+        get { return woodCount; }
+        set { woodCount = value; }
+    }
+
+    public Text IronCount
+    {
+        get { return ironCount; }
+        set { ironCount = value; }
+    }
+
+    public Text GoldCount
+    {
+        get { return goldCount; }
+        set { goldCount = value; }
+    }
 
     public Text InfosTitle
     {
