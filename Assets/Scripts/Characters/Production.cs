@@ -96,21 +96,16 @@ public class Production : MonoBehaviour
 
         HandleProduction();
 
-        Move();
-
         Clear();
     }
 
-    private void Move()
+    public void Move()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (currentCanvasWorld != null) Destroy(currentCanvasWorld);
+        if (currentCanvasWorld != null) Destroy(currentCanvasWorld);
 
-            if (BlueprintManager.instance.PlaceBuilding) return;
+        if (BlueprintManager.instance.PlaceBuilding) return;
 
-            HandleMovement();
-        }
+        HandleMovement();
     }
 
     private void Clear()

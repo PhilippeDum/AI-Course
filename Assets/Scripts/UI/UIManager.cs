@@ -134,12 +134,6 @@ public class UIManager : MonoBehaviour
 
                 mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Gestion des troupes";
             }
-            else if (currentUnit.CompareTag("Upgrade") && currentUnit.UnitData.TeamUnit == Unit.UnitTeam.Player) // Building
-            {
-                HandleUI(true, false, true);
-
-                mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Gestion des troupes";
-            }
             else
             {
                 mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Unité";
@@ -195,7 +189,10 @@ public class UIManager : MonoBehaviour
             mainUI.GetComponent<InterfaceRefs>().InfosTitle.text = $"{currentBuilding.Datas.Name}";
             mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = currentBuilding.Datas.Description;
 
-            HandleUI(true, false, true);
+            if (building.CompareTag("Upgrade"))
+                HandleUI(true, false, true);
+            else
+                HandleUI(true);
 
             SetupBuildingsButtons(false);
 

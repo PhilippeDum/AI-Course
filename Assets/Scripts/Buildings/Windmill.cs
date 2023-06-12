@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Windmill : Building
 {
+    [Header("References")]
     [SerializeField] private GameObject workerPrefab;
     [SerializeField] private GameObject worker;
     [SerializeField] private Transform spawn;

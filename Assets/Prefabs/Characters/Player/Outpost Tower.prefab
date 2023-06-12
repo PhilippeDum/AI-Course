@@ -109,7 +109,7 @@ VFXRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
 --- !u!1 &2850967277865023493
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,7 +219,7 @@ VFXRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
 --- !u!1 &6181057554383353872
 GameObject:
   m_ObjectHideFlags: 0
@@ -961,10 +961,11 @@ GameObject:
   - component: {fileID: 6522715786724429410}
   - component: {fileID: 1315818737201698083}
   - component: {fileID: 7979330183762323260}
-  - component: {fileID: 6332410624124863667}
   - component: {fileID: 2985879609750256804}
+  - component: {fileID: 6332410624124863667}
   - component: {fileID: 5831318442066963123}
   - component: {fileID: 2311396553930767618}
+  - component: {fileID: 1507873986832825269}
   m_Layer: 9
   m_Name: Outpost Tower
   m_TagString: Unit
@@ -1022,6 +1023,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 6, y: 18, z: 6}
   m_Center: {x: 0, y: 9, z: 0}
+--- !u!208 &2985879609750256804
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6522715786724429411}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3, y: 9, z: 3}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 9, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!114 &6332410624124863667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1035,22 +1052,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marge: 0.1
---- !u!208 &2985879609750256804
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6522715786724429411}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 1, y: 1, z: 1}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 1, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!114 &5831318442066963123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1115,6 +1116,23 @@ MonoBehaviour:
   slider: {fileID: 6522715784759582655}
   timeOfAbility: 5
   value: 10
+--- !u!114 &1507873986832825269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6522715786724429411}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a865cfdc7052e22438d972c4dcb57d87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defoggerMesh: {fileID: 1375882130638933021}
+  selection: {fileID: 6522715785968853974}
+  team: 0
+  gameManager: {fileID: 0}
+  blueprintManager: {fileID: 0}
 --- !u!1001 &8007188758567192080
 PrefabInstance:
   m_ObjectHideFlags: 0

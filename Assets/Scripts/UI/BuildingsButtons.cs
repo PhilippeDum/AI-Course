@@ -1,17 +1,37 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class BuildingsButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    InterfaceRefs refs;
-    BlueprintManager blueprintManager;
+    private InterfaceRefs refs;
+    private BlueprintManager blueprintManager;
 
-    private void Start()
+    private string buildingName;
+
+    private void Awake()
     {
         refs = GetComponentInParent<InterfaceRefs>();
         refs.BuildingCost.SetActive(false);
 
         blueprintManager = BlueprintManager.instance;
+
+        buildingName = GetComponentInChildren<Text>().text;
+    }
+
+    private void OnEnable()
+    {
+        ShowLimits();
+    }
+
+    private void ShowLimits()
+    {
+        BuildingDatas datas = blueprintManager.GetBuildingDatas(name);
+
+        int currentCount = datas.CountBuildings;
+        int maxLimit = datas.MaxCountBuildings;
+
+        GetComponentInChildren<Text>().text = $"{buildingName}\n({currentCount}/{maxLimit})";
     }
 
     public void OnPointerEnter(PointerEventData eventData)

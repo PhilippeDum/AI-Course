@@ -82,6 +82,8 @@ public class SelectionManager : MonoBehaviour
 
             if (currentUnit != null && currentUnit.UnitData.TypeUnit == Unit.UnitType.Worker) workerSaved = currentUnit;
 
+            productionPlayer.Move();
+
             DetectElement(workerSaved);
         }
     }
@@ -126,7 +128,7 @@ public class SelectionManager : MonoBehaviour
         isTimeCheckAllowed = true;
     }
 
-    private void DetectElement(UnitManager workerSelected = null)
+    private void DetectElement(UnitManager worker = null)
     {
         if (EventSystem.current.IsPointerOverGameObject(-1)) return;
 
@@ -134,65 +136,75 @@ public class SelectionManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            if (hit.transform.GetComponent<UnitManager>())
-            {
-                currentUnit = hit.transform.GetComponent<UnitManager>();
-
-                uiManager.ShowUnitInfos(currentUnit);
-
-                if (currentUnit.Selection == null) return;
-
-                if (!currentUnit.Selection.activeSelf)
-                {
-                    currentUnit.Selection.SetActive(true);
-
-                    SelectUnit(currentUnit);
-                }
-                else
-                {
-                    currentUnit.Selection.SetActive(false);
-
-                    DeselectUnit(currentUnit);
-                }
-            }
-            else if (hit.transform.GetComponent<ResourceGathering>())
-            {
-                currentResource = hit.transform.GetComponent<ResourceGathering>();
-
-                uiManager.ShowResourceInfos(currentResource);
-                
-                if (currentResource.Selection == null) return;
-
-                if (!currentResource.Selection.activeSelf)
-                    currentResource.Selection.SetActive(true);
-                else
-                    currentResource.Selection.SetActive(false);
-
-                if (workerSelected == null) return;
-
-                if (currentResource.IsRespawning) return;
-
-                workerSelected.StartWork(currentResource);
-            }
-            else if (hit.transform.GetComponent<Building>())
-            {
-                currentBuilding = hit.transform.GetComponent<Building>();
-
-                uiManager.ShowBuildingInfos(currentBuilding);
-
-                /*if (currentBuilding.Selection == null) return;
-
-                if (!currentBuilding.Selection.activeSelf)
-                    currentBuilding.Selection.SetActive(true);
-                else
-                    currentBuilding.Selection.SetActive(false);*/
-            }
+            if (hit.transform.GetComponent<UnitManager>()) 
+                DetectUnit(hit.transform.GetComponent<UnitManager>());
+            else if (hit.transform.GetComponent<ResourceGathering>()) 
+                DetectResource(hit.transform.GetComponent<ResourceGathering>(), worker);
+            else if (hit.transform.GetComponent<Building>()) 
+                DetectBuilding(hit.transform.GetComponent<Building>(), worker);
             else
             {
                 uiManager.HandleUI(false);
 
                 DeselectAll();
             }
+        }
+    }
+
+    private void DetectUnit(UnitManager unit)
+    {
+        currentUnit = unit;
+
+        uiManager.ShowUnitInfos(currentUnit);
+
+        HandleSelection(currentUnit.Selection, true);
+    }
+
+    private void DetectResource(ResourceGathering resource, UnitManager worker)
+    {
+        currentResource = resource;
+
+        uiManager.ShowResourceInfos(currentResource);
+
+        HandleSelection(currentResource.Selection);
+
+        if (worker == null) return;
+
+        if (currentResource.IsRespawning) return;
+
+        worker.StartWork(currentResource);
+    }
+
+    private void DetectBuilding(Building building, UnitManager worker)
+    {
+        currentBuilding = building;
+
+        //Debug.Log($"Select {building} with {worker}");
+
+        uiManager.ShowBuildingInfos(currentBuilding);
+
+        HandleSelection(currentBuilding.Selection);
+
+        if (worker == null && !building.GetComponent<Mine>()) return;
+
+        building.GetComponent<Mine>().CurrentMiner = worker;
+    }
+
+    private void HandleSelection(GameObject selection, bool isUnit = false)
+    {
+        if (selection == null) return;
+
+        if (!selection.activeSelf)
+        {
+            selection.SetActive(true);
+
+            if (isUnit) SelectUnit(currentUnit);
+        }
+        else
+        {
+            selection.SetActive(false);
+
+            if (isUnit) DeselectUnit(currentUnit);
         }
     }
 
@@ -285,10 +297,18 @@ public class SelectionManager : MonoBehaviour
         productionPlayer.SelectedUnits.Clear();
 
         // Resource
-        if (currentResource == null) return;
+        if (currentResource != null)
+        {
+            currentResource.Selection.SetActive(false);
+            currentResource = null;
+        }
 
-        currentResource.Selection.SetActive(false);
-        currentResource = null;
+        // Building
+        if (currentBuilding != null)
+        {
+            currentBuilding.Selection.SetActive(false);
+            currentBuilding = null;
+        }
     }
 
     #endregion
