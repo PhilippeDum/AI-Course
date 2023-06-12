@@ -4,6 +4,7 @@ public class Detection : MonoBehaviour
 {
     [SerializeField] private bool ability = false;
     [SerializeField] private bool upgrade = false;
+    [SerializeField] private bool mine = false;
 
     private Unit.UnitTeam currentTeam;
 
@@ -35,6 +36,8 @@ public class Detection : MonoBehaviour
                 GetComponentInParent<Ability>().AddUnit(unitDetected);
             else if (unitDetected.UnitData.TeamUnit == currentTeam && upgrade)
                 GetComponentInParent<UpgradeBuilding>().Units.Add(unitDetected);
+            else if (unitDetected.UnitData.TeamUnit == currentTeam && unitDetected.UnitData.TypeUnit == Unit.UnitType.Worker && mine)
+                GetComponentInParent<Mine>().CurrentMiner = unitDetected;
             else if (unitDetected.UnitData.TeamUnit != currentTeam)
                 GetComponentInParent<UnitManager>().Enemies.Add(unitDetected);
         }
@@ -45,6 +48,8 @@ public class Detection : MonoBehaviour
                 GetComponentInParent<Ability>().RemoveUnit(unitDetected);
             else if (unitDetected.UnitData.TeamUnit == currentTeam && upgrade)
                 GetComponentInParent<UpgradeBuilding>().Units.Remove(unitDetected);
+            else if (unitDetected.UnitData.TeamUnit == currentTeam && unitDetected.UnitData.TypeUnit == Unit.UnitType.Worker && mine)
+                GetComponentInParent<Mine>().CurrentMiner = null;
             else if (unitDetected.UnitData.TeamUnit != currentTeam)
                 GetComponentInParent<UnitManager>().Enemies.Remove(unitDetected);
         }

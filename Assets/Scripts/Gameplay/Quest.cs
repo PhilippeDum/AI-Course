@@ -16,7 +16,9 @@ public class Quest : ScriptableObject
         Production,
         Reparation,
         Attack,
-        BuildingPlacement,
-        ResourceCollect
+        BuildingPlacementWindmill,
+        ResourceCollectWood,
+        BuildingPlacementMine,
+        ResourceCollectIron
     }
 }

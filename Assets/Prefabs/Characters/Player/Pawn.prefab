@@ -60,6 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ability: 0
   upgrade: 0
+  mine: 0
 --- !u!1 &937240306167808187
 GameObject:
   m_ObjectHideFlags: 0
@@ -686,8 +687,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8021298446065388414, guid: a41749e9410f1d9429c1f3318fffe939, type: 3}
+      propertyPath: isUnit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8021298446065388414, guid: a41749e9410f1d9429c1f3318fffe939, type: 3}
       propertyPath: defoggerRadius
-      value: 500
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a41749e9410f1d9429c1f3318fffe939, type: 3}

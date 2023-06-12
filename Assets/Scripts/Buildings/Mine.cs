@@ -44,13 +44,28 @@ public class Mine : Building
         base.OnEnable();
     }
 
+    public override void BuildingPlacementComplete()
+    {
+        base.BuildingPlacementComplete();
+
+        if (gameManager.CurrentQuestType == Quest.QuestType.BuildingPlacementMine)
+            gameManager.CountMines++;
+    }
+
     #region Mining
 
     private void Update()
     {
         miningSlider.transform.parent.LookAt(Camera.main.transform.position);
 
-        if (currentMiner != null && !isMining)
+        if (currentMiner == null)
+        {
+            isMining = false;
+            miningSlider.gameObject.SetActive(false);
+            return;
+        }
+
+        if (!isMining)
         {
             timeRemaining = timeOfMining;
 

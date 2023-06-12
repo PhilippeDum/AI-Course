@@ -16,8 +16,8 @@ public class Windmill : Building
     {
         base.BuildingPlacementComplete();
 
-        if (gameManager.CurrentQuestType == Quest.QuestType.BuildingPlacement)
-            gameManager.CountBuildings++;
+        if (gameManager.CurrentQuestType == Quest.QuestType.BuildingPlacementWindmill)
+            gameManager.CountWindmills++;
 
         InstantiateWorker();
     }

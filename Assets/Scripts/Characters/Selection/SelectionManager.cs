@@ -140,7 +140,7 @@ public class SelectionManager : MonoBehaviour
             else if (hit.transform.GetComponent<ResourceGathering>()) 
                 DetectResource(hit.transform.GetComponent<ResourceGathering>(), worker);
             else if (hit.transform.GetComponent<Building>()) 
-                DetectBuilding(hit.transform.GetComponent<Building>(), worker);
+                DetectBuilding(hit.transform.GetComponent<Building>());
             else
             {
                 uiManager.HandleUI(false);
@@ -174,19 +174,13 @@ public class SelectionManager : MonoBehaviour
         worker.StartWork(currentResource);
     }
 
-    private void DetectBuilding(Building building, UnitManager worker)
+    private void DetectBuilding(Building building)
     {
         currentBuilding = building;
-
-        //Debug.Log($"Select {building} with {worker}");
 
         uiManager.ShowBuildingInfos(currentBuilding);
 
         HandleSelection(currentBuilding.Selection);
-
-        if (worker == null && !building.GetComponent<Mine>()) return;
-
-        building.GetComponent<Mine>().CurrentMiner = worker;
     }
 
     private void HandleSelection(GameObject selection, bool isUnit = false)

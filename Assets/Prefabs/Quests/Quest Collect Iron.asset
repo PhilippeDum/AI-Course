@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4f9625066538d04fa24097c08bd981c, type: 3}
-  m_Name: Quest Building
+  m_Name: Quest Collect Iron
   m_EditorClassIdentifier: 
-  questName: "Placement d'un b\xE2timent"
-  questDescription: "Cliquez sur la tour du Roi pour afficher les b\xE2timents disponibles
-    et placez un moulin"
-  questType: 3
-  requiredAmount: 1
+  questName: Collecter des ressources 2/2
+  questDescription: "S\xE9lectionnez un ouvrier, puis cliquez (droit) sur la mine
+    pour miner du fer"
+  questType: 6
+  requiredAmount: 5
   requiredAmount2: 0

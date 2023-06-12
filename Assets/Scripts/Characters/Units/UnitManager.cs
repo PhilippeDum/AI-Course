@@ -156,8 +156,6 @@ public class UnitManager : MonoBehaviour
 
         if (!isDead)
         {
-            if (refreshFog) defoggerMesh.ContinueUnhide();
-
             if (currentData.TypeUnit != Unit.UnitType.Worker)
             {
                 HandleEnemies();

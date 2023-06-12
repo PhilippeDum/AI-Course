@@ -245,8 +245,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 325, y: -180}
-  m_SizeDelta: {x: 650, y: 250}
+  m_AnchoredPosition: {x: 325, y: -210}
+  m_SizeDelta: {x: 650, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &26562341
 MonoBehaviour:
@@ -2216,6 +2216,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4240277065036326971, guid: d99bfc7f45e985444b859d2896cd0927, type: 3}
+      propertyPath: resolution
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4240277065036326972, guid: d99bfc7f45e985444b859d2896cd0927, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2226,7 +2230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4240277065036326972, guid: d99bfc7f45e985444b859d2896cd0927, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4240277065036326972, guid: d99bfc7f45e985444b859d2896cd0927, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3376,8 +3380,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -40, y: -40}
+  m_AnchoredPosition: {x: 15, y: 0}
+  m_SizeDelta: {x: -30, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &533917669
 MonoBehaviour:
@@ -3416,7 +3420,9 @@ MonoBehaviour:
     S\xE9lection d'une unit\xE9\n\t- Clic gauche + Shift : Ajout d'une unit\xE9 \xE0
     la s\xE9lection\n\t- Clic gauche maintenu : S\xE9lection des unit\xE9s dans la
     zone\n\t- Double clic gauche : S\xE9lection des unit\xE9s d'un m\xEAme type\n\nPour
-    s\xE9lectionner un \xE9l\xE9ment : Clic gauche"
+    s\xE9lectionner un \xE9l\xE9ment : Clic gauche\n\nPour ordonner \xE0 un ouvrier
+    de r\xE9colter des ressources ou de le faire travailler dans la mine \n==> Clic
+    droit (box de s\xE9lection = s\xE9lection simple)"
 --- !u!222 &533917670
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7366,6 +7372,8 @@ MonoBehaviour:
   quests:
   - {fileID: 11400000, guid: 5eeb7f64b6535924d90a0c5683f12c89, type: 2}
   - {fileID: 11400000, guid: a5d89f657aa0a0e4fb1f25fff2163664, type: 2}
+  - {fileID: 11400000, guid: 643b6d9c4853b0c43939d88aa25f6956, type: 2}
+  - {fileID: 11400000, guid: 1671276eed5c13643b59819ca8ec470c, type: 2}
   - {fileID: 11400000, guid: 349a8f0ce218b2042aec9adc8ba8baeb, type: 2}
   - {fileID: 11400000, guid: c4e077b30befd10469bafd9d0a0d846a, type: 2}
   - {fileID: 11400000, guid: 39c6c146b7c58404b8e27ca7ab51cf6e, type: 2}
@@ -7375,7 +7383,7 @@ MonoBehaviour:
   timeChangingQuest: 2
   wood: 10
   iron: 25
-  gold: 100
+  gold: 0
   smoothing: 1
   timeBeforeShowing: 2
   timeShowingBrokenBridge: 2

@@ -26,10 +26,13 @@ public class GameManager : MonoBehaviour
     private int countWorkers = 0;
     private int countPawns = 0;
     private int countRiders = 0;
-    private int countBuildings = 0;
+    private int countWindmills = 0;
+    private int countMines = 0;
 
-    private bool buildingPlacement = false;
-    private bool resourceCollected = false;
+    private bool windmillPlacement = false;
+    private bool minePlacement = false;
+    private bool woodResourceCollected = false;
+    private bool ironResourceCollected = false;
     private bool production = false;
     private bool reparation = false;
 
@@ -114,10 +117,16 @@ public class GameManager : MonoBehaviour
         set { countRiders = value; }
     }
 
-    public int CountBuildings
+    public int CountWindmills
     {
-        get { return countBuildings; }
-        set { countBuildings = value; }
+        get { return countWindmills; }
+        set { countWindmills = value; }
+    }
+
+    public int CountMines
+    {
+        get { return countMines; }
+        set { countMines = value; }
     }
 
     public int CountPawnsDetection
@@ -166,7 +175,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        currentQuestType = QuestType.BuildingPlacement;
+        currentQuestType = QuestType.BuildingPlacementWindmill;
 
         uiManager = UIManager.instance;
         uiManager.HandleResourcesUI(wood, iron, gold);
@@ -196,13 +205,21 @@ public class GameManager : MonoBehaviour
     {
         switch (currentQuestType)
         {
-            case QuestType.BuildingPlacement:
-                SetQuest(currentQuestType, false, countBuildings);
-                QuestBuildingPlacement();
+            case QuestType.BuildingPlacementWindmill:
+                SetQuest(currentQuestType, false, countWindmills);
+                QuestBuildingPlacementWindmill();
                 break;
-            case QuestType.ResourceCollect:
+            case QuestType.ResourceCollectWood:
                 SetQuest(currentQuestType, false, wood);
-                QuestResourceCollect();
+                QuestResourceCollectWood();
+                break;
+            case QuestType.BuildingPlacementMine:
+                SetQuest(currentQuestType, false, countMines);
+                QuestBuildingPlacementMine();
+                break;
+            case QuestType.ResourceCollectIron:
+                SetQuest(currentQuestType, false, iron);
+                QuestResourceCollectIron();
                 break;
             case QuestType.Production:
                 SetQuest(currentQuestType, true, countPawns, countRiders);
@@ -221,25 +238,49 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void QuestBuildingPlacement()
+    private void QuestBuildingPlacementWindmill()
     {
         Quest currentQuest = GetCurrentQuest(currentQuestType);
 
-        if (countBuildings >= currentQuest.requiredAmount && !buildingPlacement)
+        if (countWindmills >= currentQuest.requiredAmount && !windmillPlacement)
         {
-            buildingPlacement = true;
+            windmillPlacement = true;
 
-            StartCoroutine(EndingQuest(QuestType.ResourceCollect));
+            StartCoroutine(EndingQuest(QuestType.ResourceCollectWood));
         }
     }
 
-    private void QuestResourceCollect()
+    private void QuestResourceCollectWood()
     {
         Quest currentQuest = GetCurrentQuest(currentQuestType);
 
-        if (wood >= currentQuest.requiredAmount && !resourceCollected)
+        if (wood >= currentQuest.requiredAmount && !woodResourceCollected)
         {
-            resourceCollected = true;
+            woodResourceCollected = true;
+
+            StartCoroutine(EndingQuest(QuestType.BuildingPlacementMine));
+        }
+    }
+
+    private void QuestBuildingPlacementMine()
+    {
+        Quest currentQuest = GetCurrentQuest(currentQuestType);
+
+        if (countMines >= currentQuest.requiredAmount && !minePlacement)
+        {
+            minePlacement = true;
+
+            StartCoroutine(EndingQuest(QuestType.ResourceCollectIron));
+        }
+    }
+
+    private void QuestResourceCollectIron()
+    {
+        Quest currentQuest = GetCurrentQuest(currentQuestType);
+
+        if (iron >= currentQuest.requiredAmount && !ironResourceCollected)
+        {
+            ironResourceCollected = true;
 
             StartCoroutine(EndingQuest(QuestType.Production));
         }
