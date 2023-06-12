@@ -1187,6 +1187,7 @@ MonoBehaviour:
   placeBuilding: 0
   datas:
   - name: Moulin
+    description: 
     prefab: {fileID: 8805973962387086378, guid: b18a819ca0796e84e8e1987f0af5554e, type: 3}
     cost: 10
     costType: 0
@@ -1196,6 +1197,7 @@ MonoBehaviour:
     countBuildings: 0
     maxCountBuildings: 2
   - name: Mine
+    description: 
     prefab: {fileID: 8805973962387086378, guid: 4a62b8922d2543e4e90bef9af2f4b5a7, type: 3}
     cost: 25
     costType: 1
@@ -1205,6 +1207,7 @@ MonoBehaviour:
     countBuildings: 0
     maxCountBuildings: 2
   - name: TourAvantPoste
+    description: 
     prefab: {fileID: 6522715786724429411, guid: 4570cc39b04e62043821c22e67eabae4, type: 3}
     cost: 50
     costType: 2
@@ -1214,6 +1217,7 @@ MonoBehaviour:
     countBuildings: 0
     maxCountBuildings: 2
   - name: "Am\xE9lioration"
+    description: 
     prefab: {fileID: 8805973962387086378, guid: 4447ad409530fd9429b77e8c4a9d4e14, type: 3}
     cost: 20
     costType: 2
@@ -11385,6 +11389,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c39430efef18cd045bfcd773f9630701, type: 3}
+--- !u!1001 &4906757988476798414
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8292127867805419280, guid: fc30ab07dd2bb784583b51a9689f0e2d, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292127867805419280, guid: fc30ab07dd2bb784583b51a9689f0e2d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292127867805419280, guid: fc30ab07dd2bb784583b51a9689f0e2d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292127867805419280, guid: fc30ab07dd2bb784583b51a9689f0e2d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292127867805419280, guid: fc30ab07dd2bb784583b51a9689f0e2d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292127867805419280, guid: fc30ab07dd2bb784583b51a9689f0e2d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292127867805419280, guid: fc30ab07dd2bb784583b51a9689f0e2d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292127867805419280, guid: fc30ab07dd2bb784583b51a9689f0e2d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292127867805419280, guid: fc30ab07dd2bb784583b51a9689f0e2d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292127867805419280, guid: fc30ab07dd2bb784583b51a9689f0e2d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292127867805419280, guid: fc30ab07dd2bb784583b51a9689f0e2d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8671785467959090602, guid: fc30ab07dd2bb784583b51a9689f0e2d, type: 3}
+      propertyPath: m_Name
+      value: batiment d'amelioration_Ennemi
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fc30ab07dd2bb784583b51a9689f0e2d, type: 3}
 --- !u!1 &7342265113941380936 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7272639121058847900, guid: dd0f0b1bd9a62ff44acfedd30424d79a, type: 3}
