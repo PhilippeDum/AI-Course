@@ -60,13 +60,9 @@ public class SelectionManager : MonoBehaviour
         {
             startPosition = Input.mousePosition;
 
-            UnitManager workerSaved = null;
-
-            if (currentUnit != null && currentUnit.UnitData.TypeUnit == Unit.UnitType.Worker) workerSaved = currentUnit;
-
             DeselectAll();
 
-            DetectElement(workerSaved);
+            DetectElement();
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -77,6 +73,15 @@ public class SelectionManager : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             UpdateSelectionBox(Input.mousePosition);
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            UnitManager workerSaved = null;
+
+            if (currentUnit != null && currentUnit.UnitData.TypeUnit == Unit.UnitType.Worker) workerSaved = currentUnit;
+
+            DetectElement(workerSaved);
         }
     }
 
@@ -163,6 +168,8 @@ public class SelectionManager : MonoBehaviour
                     currentResource.Selection.SetActive(false);
 
                 if (workerSelected == null) return;
+
+                if (currentResource.IsRespawning) return;
 
                 workerSelected.StartWork(currentResource);
             }

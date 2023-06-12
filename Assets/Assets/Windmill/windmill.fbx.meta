@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f2aa767de8e0e5f49ad614f2798747e6
+guid: ac788d56b0f8ad24b84006bec0652cb2
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: helices|helicesAction
-      takeName: helices|helicesAction
-      internalID: 6476151778956773466
+      name: Helices rotation
+      takeName: Armature|ArmatureAction
+      internalID: 4781951162920444690
       firstFrame: 0
-      lastFrame: 5
+      lastFrame: 100
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

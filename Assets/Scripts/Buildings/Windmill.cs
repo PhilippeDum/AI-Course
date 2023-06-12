@@ -30,6 +30,10 @@ public class Windmill : Building
         worker = Instantiate(workerPrefab, spawn.position, Quaternion.identity);
         worker.transform.SetParent(transform);
 
+        GameManager.instance.CountWorkers++;
+
+        GameManager.instance.KingPlayer.GetComponent<Production>().Units.Add(worker.GetComponent<UnitManager>());
+
         Debug.Log($"+1 Worker !");
     }
 

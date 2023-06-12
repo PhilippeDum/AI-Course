@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private QuestType currentQuestType;
     [SerializeField] private float timeChangingQuest = 2f;
 
+    private int countWorkers = 0;
     private int countPawns = 0;
     private int countRiders = 0;
     private int countBuildings = 0;
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
     private bool endingQuest = false;
 
     [Header("Resources")]
-    [SerializeField] private int wood = 0;
+    [SerializeField] private int wood = 10;
     [SerializeField] private int iron = 0;
     [SerializeField] private int gold = 0;
 
@@ -93,6 +94,12 @@ public class GameManager : MonoBehaviour
     {
         get { return gold; }
         set { gold = value; }
+    }
+
+    public int CountWorkers
+    {
+        get { return countWorkers; }
+        set { countWorkers = value; }
     }
 
     public int CountPawns

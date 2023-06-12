@@ -226,6 +226,7 @@ public class UnitManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
+        Debug.Log($"{name} collect {resource}");
         resource.Collect(this);
     }
 
