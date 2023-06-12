@@ -8,6 +8,10 @@ public class UpgradeBuilding : Building
     [SerializeField] private Slider upgradeSlider;
     [SerializeField] private List<UnitManager> units;
 
+    private UIManager uiManager;
+
+    private Button upgradeButton;
+
     #region Getters / Setters
 
     public List<UnitManager> Units
@@ -22,16 +26,23 @@ public class UpgradeBuilding : Building
     {
         base.OnEnable();
 
-        Something();
-    }
+        uiManager = UIManager.instance;
 
-    private void Something()
-    {
-
+        upgradeButton = uiManager.UpgradeOptions.transform.GetComponentInChildren<Button>();
+        upgradeButton.onClick.RemoveAllListeners();
+        upgradeButton.onClick.AddListener(UpgradeUnits);
     }
 
     private void Update()
     {
         upgradeSlider.transform.parent.LookAt(Camera.main.transform.position);
+    }
+
+    private void UpgradeUnits()
+    {
+        for (int i = 0; i < units.Count; i++)
+        {
+            units[i].SetUnitData(units[i].UnitDataUpgraded);
+        }
     }
 }

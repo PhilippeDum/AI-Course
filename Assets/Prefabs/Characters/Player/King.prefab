@@ -485,7 +485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitData:
     name: Tour du Roi
-    description: "Pi\xE8ce principale - Objectif de l'ennemi"
+    description: "Permet de produire des unit\xE9s / Objectif de l'ennemi"
     unitType: 4
     unitTeam: 0
     unitModel: {fileID: 2675477476808600323}
@@ -517,6 +517,7 @@ MonoBehaviour:
   healthSlider: {fileID: 138643601831929231}
   otherSlider: {fileID: 2470331814993431136}
   isDead: 0
+  refreshFog: 0
   enemies: []
 --- !u!114 &5720448359828392448
 MonoBehaviour:
@@ -576,7 +577,7 @@ GameObject:
   - component: {fileID: 1330147896745217927}
   - component: {fileID: 4504246876122174064}
   - component: {fileID: 7545126868645351695}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: Detection
   m_TagString: Untagged
   m_Icon: {fileID: 0}

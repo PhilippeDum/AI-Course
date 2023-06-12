@@ -593,7 +593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitData:
     name: Cavalier Lance
-    description: "2\xE8me unit\xE9"
+    description: "2\xE8me unit\xE9 + rapide"
     unitType: 1
     unitTeam: 0
     unitModel: {fileID: 7675948841879770691}
@@ -606,17 +606,17 @@ MonoBehaviour:
     rangeTimeBetweenAttacks: {x: 1, y: 3}
     distanceToAttack: 2
   unitDataUpgraded:
-    name: Cavalier Lance
-    description: "2\xE8me unit\xE9"
+    name: "Cavalier Lance Dor\xE9"
+    description: "2\xE8me unit\xE9  (Am\xE9lior\xE9)"
     unitType: 1
     unitTeam: 0
     unitModel: {fileID: 3313425062095556776}
     defoggerMesh: {fileID: 649144458753884888}
-    speed: 5
+    speed: 7
     stoppingDistance: 1
-    maxHealth: 200
-    health: 0
-    damage: 30
+    maxHealth: 300
+    health: 300
+    damage: 45
     rangeTimeBetweenAttacks: {x: 1, y: 3}
     distanceToAttack: 2
   defoggerMesh: {fileID: 7330070933134674053}
@@ -625,6 +625,7 @@ MonoBehaviour:
   healthSlider: {fileID: 4915257111583689380}
   otherSlider: {fileID: 0}
   isDead: 0
+  refreshFog: 0
   enemies: []
 --- !u!1001 &570214043693528768
 PrefabInstance:
@@ -633,6 +634,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7092014799705158636}
     m_Modifications:
+    - target: {fileID: 1075225430119347224, guid: a5a087461bb8c4a45ab4819f7414f728, type: 3}
+      propertyPath: defoggerRadius
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 2403154751692733650, guid: a5a087461bb8c4a45ab4819f7414f728, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -758,6 +763,10 @@ PrefabInstance:
     - target: {fileID: 8173555982753569214, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438139384406203842, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}
+      propertyPath: defoggerRadius
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 8801614155380146948, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}
       propertyPath: m_Name

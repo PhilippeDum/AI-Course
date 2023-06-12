@@ -10,14 +10,6 @@ public class Windmill : Building
     public override void OnEnable()
     {
         base.OnEnable();
-
-        GainEnergy();
-    }
-
-    private void GainEnergy()
-    {
-        Debug.Log($"GainEnergy : {Datas.EnergyGain}");
-        gameManager.AddFreeEnergy(Datas.EnergyGain);
     }
 
     public override void BuildingPlacementComplete()
@@ -40,7 +32,5 @@ public class Windmill : Building
         GameManager.instance.CountWorkers++;
 
         GameManager.instance.KingPlayer.GetComponent<Production>().Units.Add(worker.GetComponent<UnitManager>());
-
-        Debug.Log($"+1 Worker !");
     }
 }

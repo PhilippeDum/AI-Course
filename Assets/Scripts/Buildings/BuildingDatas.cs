@@ -6,9 +6,9 @@ public class BuildingDatas
     [SerializeField] private string name;
     [SerializeField] private string description;
     [SerializeField] private GameObject prefab;
-    [SerializeField] private int cost;
+    [SerializeField] private int placementCost;
     [SerializeField] private Resources costType;
-    [SerializeField] private int energyGain;
+    [SerializeField] private int resourceGain;
     [SerializeField] private int energyCost;
     [SerializeField] private int healthPoint;
     [SerializeField] private int countBuildings = 0;
@@ -17,9 +17,9 @@ public class BuildingDatas
     public string Name => name;
     public string Description => description;
     public GameObject Prefab => prefab;
-    public int Cost => cost;
+    public int PlacementCost => placementCost;
     public Resources CostType => costType;
-    public int EnergyGain => energyGain;
+    public int ResourceGain => resourceGain;
     public int EnergyCost => energyCost;
     public int HealthPoint => healthPoint;
     public int CountBuildings => countBuildings;

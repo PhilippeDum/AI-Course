@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,6 +8,7 @@ public class SelectionManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private RectTransform selectionBox;
     [SerializeField] private CanvasScaler canvasScaler;
+    [SerializeField] private LayerMask layersToIgnore;
 
     private Vector2 startPosition;
     private GameManager gameManager;
@@ -17,7 +17,6 @@ public class SelectionManager : MonoBehaviour
     private Building currentBuilding;
     private UIManager uiManager;
     private Production productionPlayer;
-    private List<ResourceGathering> resources = new List<ResourceGathering>();
 
     [Header("Double Click")]
     [SerializeField] private float timeBetweenLeftClick = 0.3f;
@@ -134,9 +133,9 @@ public class SelectionManager : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit, 10000f, ~layersToIgnore))
         {
-            if (hit.transform.GetComponent<UnitManager>()) 
+            if (hit.transform.GetComponent<UnitManager>() && !hit.transform.GetComponent<BlueprintController>()) 
                 DetectUnit(hit.transform.GetComponent<UnitManager>());
             else if (hit.transform.GetComponent<ResourceGathering>()) 
                 DetectResource(hit.transform.GetComponent<ResourceGathering>(), worker);
@@ -278,7 +277,7 @@ public class SelectionManager : MonoBehaviour
 
     #endregion
 
-    private void DeselectAll()
+    public void DeselectAll()
     {
         // Units
         foreach (UnitManager unit in productionPlayer.SelectedUnits)

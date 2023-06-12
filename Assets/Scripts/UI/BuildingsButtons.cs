@@ -9,6 +9,9 @@ public class BuildingsButtons : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     private string buildingName;
 
+    private string defaultInfosTitle;
+    private string defaultInfosDescription;
+
     private void Awake()
     {
         refs = GetComponentInParent<InterfaceRefs>();
@@ -17,6 +20,9 @@ public class BuildingsButtons : MonoBehaviour, IPointerEnterHandler, IPointerExi
         blueprintManager = BlueprintManager.instance;
 
         buildingName = GetComponentInChildren<Text>().text;
+
+        defaultInfosTitle = refs.InfosTitle.text;
+        defaultInfosDescription = refs.InfosDescription.text;
     }
 
     private void OnEnable()
@@ -44,6 +50,9 @@ public class BuildingsButtons : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerExit(PointerEventData eventData)
     {
         refs.BuildingCost.SetActive(false);
+
+        refs.InfosTitle.text = defaultInfosTitle;
+        refs.InfosDescription.text = defaultInfosDescription;
     }
 
     private void GetBuildingInfos(string buildingName)
@@ -56,6 +65,9 @@ public class BuildingsButtons : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
         if (costSprite == null) return;
 
-        refs.SetCostUI(buildingDatas.Cost, costSprite);
+        refs.SetCostUI(buildingDatas.PlacementCost, costSprite);
+
+        refs.InfosTitle.text = buildingDatas.Name;
+        refs.InfosDescription.text = buildingDatas.Description;
     }
 }

@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 8657660834972103889}
   - component: {fileID: 8801500576113394510}
   - component: {fileID: 3467814823236397178}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: Detection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1098,6 +1098,7 @@ MonoBehaviour:
   healthSlider: {fileID: 6522715786304420950}
   otherSlider: {fileID: 6522715784759582655}
   isDead: 0
+  refreshFog: 0
   enemies: []
 --- !u!114 &2311396553930767618
 MonoBehaviour:

@@ -70,7 +70,7 @@ public class Fog : MonoBehaviour
             Ray ray = new Ray(transform.position, verticePos - transform.position);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 10000, fogLayer, QueryTriggerInteraction.Collide))
+            if (Physics.Raycast(ray, out hit, 10000f, fogLayer, QueryTriggerInteraction.Collide))
             {
                 for (int i = 0; i < vertices.Length; i++)
                 {

@@ -19,6 +19,7 @@ public class UnitManager : MonoBehaviour
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Slider otherSlider;
     [SerializeField] private bool isDead;
+    [SerializeField] private bool refreshFog = false;
 
     [Header("Enemies Detected")]
     [SerializeField] private List<UnitManager> enemies;
@@ -35,10 +36,16 @@ public class UnitManager : MonoBehaviour
 
     #region Getters / Setters
 
-    public Unit UnitData 
-    { 
+    public Unit UnitData
+    {
         get { return unitData; }
         set { unitData = value; }
+    }
+
+    public Unit UnitDataUpgraded
+    { 
+        get { return unitDataUpgraded; }
+        set { unitDataUpgraded = value; }
     }
 
     public Defogger DefoggerMesh
@@ -85,11 +92,13 @@ public class UnitManager : MonoBehaviour
         SetUnitData(unitData);
 
         InitializeStats();
+
+        defoggerMesh.Unhide();
     }
 
     private void Update()
     {
-        //if (GameManager.instance.GameFinished) return;
+        if (GameManager.instance.GameFinished) return;
 
         UpdateStats();
     }
@@ -98,8 +107,12 @@ public class UnitManager : MonoBehaviour
 
     public void SetUnitData(Unit unitData)
     {
+        if (currentData != null) currentData.UnitModel.SetActive(false);
+
         currentData = unitData;
         defoggerMesh = currentData.DefoggerMesh;
+
+        if (currentData != null) currentData.UnitModel.SetActive(true);
     }
 
     #region Movement
@@ -128,8 +141,6 @@ public class UnitManager : MonoBehaviour
 
     private void InitializeStats()
     {
-        //unit = GetComponent<UnitManager>();
-
         currentData.Health = currentData.MaxHealth;
 
         healthSlider.maxValue = currentData.Health;
@@ -145,6 +156,8 @@ public class UnitManager : MonoBehaviour
 
         if (!isDead)
         {
+            if (refreshFog) defoggerMesh.ContinueUnhide();
+
             if (currentData.TypeUnit != Unit.UnitType.Worker)
             {
                 HandleEnemies();
@@ -237,7 +250,6 @@ public class UnitManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
-        Debug.Log($"{name} collect {resource}");
         resource.Collect(this);
     }
 

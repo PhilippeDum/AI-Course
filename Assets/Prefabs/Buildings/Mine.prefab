@@ -544,6 +544,9 @@ MonoBehaviour:
   blueprintManager: {fileID: 0}
   miningSlider: {fileID: 5548951319739456606}
   currentMiner: {fileID: 0}
+  resourcesType: 0100000002000000
+  randomRate: 30
+  timeOfMining: 10
 --- !u!1 &9028587989452055598
 GameObject:
   m_ObjectHideFlags: 0

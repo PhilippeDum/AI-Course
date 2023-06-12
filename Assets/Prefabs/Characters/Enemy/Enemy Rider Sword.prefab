@@ -332,7 +332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitData:
     name: "Cavalier Ep\xE9e Ennemi"
-    description: "2\xE8me unit\xE9"
+    description: "2\xE8me unit\xE9 + rapide"
     unitType: 1
     unitTeam: 1
     unitModel: {fileID: 5097811702161513878}
@@ -364,6 +364,7 @@ MonoBehaviour:
   healthSlider: {fileID: 8372190411171452323}
   otherSlider: {fileID: 0}
   isDead: 0
+  refreshFog: 0
   enemies: []
 --- !u!1 &6814535337686098072
 GameObject:
@@ -616,7 +617,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 724905388e80e6241aaa76c8673b1ec1, type: 3}
-  m_Color: {r: 0, g: 0.29803923, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -861,6 +862,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5643722356184004665}
     m_Modifications:
+    - target: {fileID: 1075225430119347224, guid: a5a087461bb8c4a45ab4819f7414f728, type: 3}
+      propertyPath: defoggerRadius
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 2403154751692733650, guid: a5a087461bb8c4a45ab4819f7414f728, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -986,6 +991,10 @@ PrefabInstance:
     - target: {fileID: 8173555982753569214, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438139384406203842, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}
+      propertyPath: defoggerRadius
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 8801614155380146948, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}
       propertyPath: m_Name

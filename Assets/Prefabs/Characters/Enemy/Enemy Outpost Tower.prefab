@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 8943572025907429058}
   - component: {fileID: 9087971387429439837}
   - component: {fileID: 3754846239318942313}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: Detection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -553,6 +553,7 @@ MonoBehaviour:
   healthSlider: {fileID: 6827057384100607557}
   otherSlider: {fileID: 6827057385910719916}
   isDead: 0
+  refreshFog: 0
   enemies: []
 --- !u!114 &2605465547766052625
 MonoBehaviour:
@@ -566,11 +567,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5224419378379054abec313f4e5c73b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defoggerMesh: {fileID: 0}
-  selection: {fileID: 0}
-  team: 0
-  gameManager: {fileID: 0}
-  blueprintManager: {fileID: 0}
   units: []
   role: 0
   slider: {fileID: 6827057385910719916}
@@ -650,7 +646,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 724905388e80e6241aaa76c8673b1ec1, type: 3}
-  m_Color: {r: 0, g: 0.3, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

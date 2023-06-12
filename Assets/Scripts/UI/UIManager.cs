@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +29,12 @@ public class UIManager : MonoBehaviour
     private string riderButtonText = "Cavalier";
 
     #region Getters / Setters
+
+    public GameObject UpgradeOptions
+    {
+        get { return upgradeOptions; }
+        set { upgradeOptions = value; }
+    }
 
     public GameObject MainUI
     {
@@ -98,7 +103,6 @@ public class UIManager : MonoBehaviour
 
     public void HandleUI(bool state, bool isKing = false, bool isUpgrade = false)
     {
-        //resources.SetActive(state);
         infos.SetActive(state);
         options.SetActive(state);
 
@@ -115,96 +119,109 @@ public class UIManager : MonoBehaviour
 
     public void ShowUnitInfos(UnitManager unit)
     {
-        if (!showingInfos)
+        if (unit == null || showingInfos) return;
+
+        showingInfos = true;
+
+        currentUnit = unit;
+
+        if (currentUnit == null)
         {
-            showingInfos = true;
-
-            currentUnit = unit;
-
-            mainUI.GetComponent<InterfaceRefs>().InfosTitle.text = $"{currentUnit.UnitData.Name}";
-            mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = currentUnit.UnitData.Description;
-
-            if (currentUnit.UnitData.TypeUnit == Unit.UnitType.King && currentUnit.UnitData.TeamUnit == Unit.UnitTeam.Player)
-            {
-                HandleUI(true, true);
-
-                SetupBuildingsButtons(true);
-
-                currentUnit.GetComponent<Production>().UpdateKingText();
-
-                mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Gestion des troupes";
-            }
-            else
-            {
-                mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Unité";
-
-                HandleUI(true);
-            }
-
-            if (currentUnit != null)
-            {
-                UnitManager unitManager = currentUnit.GetComponent<UnitManager>();
-
-                mainUI.GetComponent<InterfaceRefs>().OptionsDescription.text = $"{unitManager.UnitData.Health} / {unitManager.UnitData.MaxHealth}";
-            }
-
             showingInfos = false;
+            return;
         }
+
+        mainUI.GetComponent<InterfaceRefs>().InfosTitle.text = $"{currentUnit.UnitData.Name}";
+        mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = currentUnit.UnitData.Description;
+
+        if (currentUnit.UnitData.TypeUnit == Unit.UnitType.King && currentUnit.UnitData.TeamUnit == Unit.UnitTeam.Player)
+        {
+            HandleUI(true, true);
+
+            SetupBuildingsButtons(true);
+
+            currentUnit.GetComponent<Production>().UpdateKingText();
+
+            mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Gestion des troupes";
+        }
+        else
+        {
+            mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Unité";
+
+            HandleUI(true);
+        }
+
+        if (currentUnit != null)
+        {
+            UnitManager unitManager = currentUnit.GetComponent<UnitManager>();
+
+            mainUI.GetComponent<InterfaceRefs>().OptionsDescription.text = $"{unitManager.UnitData.Health} / {unitManager.UnitData.MaxHealth}";
+        }
+
+        showingInfos = false;
     }
 
     public void ShowResourceInfos(ResourceGathering element)
     {
-        if (!showingInfos)
+        if (element == null || showingInfos) return;
+
+        showingInfos = true;
+
+        currentElement = element;
+
+        if (currentElement == null)
         {
-            showingInfos = true;
-
-            currentElement = element;
-
-            mainUI.GetComponent<InterfaceRefs>().InfosTitle.text = $"{currentElement.ElementName}";
-            mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = currentElement.ElementDescription;
-
-            HandleUI(true);
-
-            SetupBuildingsButtons(false);
-
-            if (currentElement != null)
-            {
-                mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Ressource";
-
-                mainUI.GetComponent<InterfaceRefs>().OptionsDescription.text = $"Temps de collecte : {currentElement.TimeCollect}s";
-            }
-
             showingInfos = false;
+            return;
         }
+
+        mainUI.GetComponent<InterfaceRefs>().InfosTitle.text = $"{currentElement.ElementName}";
+        mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = currentElement.ElementDescription;
+
+        HandleUI(true);
+
+        SetupBuildingsButtons(false);
+
+        if (currentElement != null)
+        {
+            mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Ressource";
+
+            mainUI.GetComponent<InterfaceRefs>().OptionsDescription.text = $"Temps de collecte : {currentElement.TimeCollect}s";
+        }
+
+        showingInfos = false;
     }
 
     public void ShowBuildingInfos(Building building)
     {
-        if (!showingInfos)
+        if (building == null || showingInfos) return;
+
+        showingInfos = true;
+
+        currentBuilding = building;
+
+        if (currentBuilding == null || currentBuilding.Datas == null)
         {
-            showingInfos = true;
-
-            currentBuilding = building;
-
-            mainUI.GetComponent<InterfaceRefs>().InfosTitle.text = $"{currentBuilding.Datas.Name}";
-            mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = currentBuilding.Datas.Description;
-
-            if (building.CompareTag("Upgrade"))
-                HandleUI(true, false, true);
-            else
-                HandleUI(true);
-
-            SetupBuildingsButtons(false);
-
-            if (currentBuilding != null)
-            {
-                mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Ressource";
-
-                //mainUI.GetComponent<InterfaceRefs>().OptionsDescription.text = $"Temps de collecte : {currentBuilding.TimeCollect}s";
-            }
-
             showingInfos = false;
+            return;
         }
+
+        mainUI.GetComponent<InterfaceRefs>().InfosTitle.text = $"{currentBuilding.Datas.Name}";
+        mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = currentBuilding.Datas.Description;
+
+        if (building.CompareTag("Upgrade"))
+            HandleUI(true, false, true);
+        else
+            HandleUI(true);
+
+        SetupBuildingsButtons(false);
+
+        if (currentBuilding != null)
+        {
+            mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Ressource";
+        }
+
+        showingInfos = false;
     }
 
     private void SetupBuildingsButtons(bool state)
@@ -219,8 +236,6 @@ public class UIManager : MonoBehaviour
 
         if (riderProductButton != null)
             riderProductButton.GetComponentInChildren<Text>().text = $"{riderButtonText} ({ridersCount})";
-
-        //mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = text;
     }
 
     public void HandleResourcesUI(int wood, int iron, int gold)

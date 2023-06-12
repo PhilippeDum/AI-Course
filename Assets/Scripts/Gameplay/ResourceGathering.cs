@@ -95,7 +95,6 @@ public class ResourceGathering : MonoBehaviour
 
     public void Collect(UnitManager worker)
     {
-        Debug.Log($"Collect {worker} => {name} ({isCollecting})");
         if (!isCollecting)
         {
             isCollecting = true;
@@ -114,13 +113,11 @@ public class ResourceGathering : MonoBehaviour
         if (!isCollecting && !isRespawning) return;
 
         respawnSlider.gameObject.SetActive(true);
-        Debug.Log($"Collecting");
 
         if (timeRemaining > 0f)
         {
             timeRemaining -= Time.deltaTime;
 
-            Debug.Log($"Waiting... {timeRemaining}");
             respawnSlider.value = timeRemaining;
         }
         else
@@ -130,7 +127,6 @@ public class ResourceGathering : MonoBehaviour
             // Collecting
             if (isCollecting)
             {
-                Debug.Log($"End timer collect");
                 isCollecting = false;
 
                 elementModel.SetActive(false);
@@ -167,14 +163,11 @@ public class ResourceGathering : MonoBehaviour
             // Respawning
             if (isRespawning)
             {
-                Debug.Log($"End timer respawn");
                 isRespawning = false;
 
                 respawnSlider.gameObject.SetActive(false);
 
                 elementModel.SetActive(true);
-
-                //isCollecting = false;
             }
         }
     }

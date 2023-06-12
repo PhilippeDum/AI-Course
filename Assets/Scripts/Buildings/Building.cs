@@ -44,35 +44,15 @@ public class Building : MonoBehaviour
         gameManager = GameManager.instance;
         blueprintManager = BlueprintManager.instance;
 
-        Cost();
-        /*PlayPlacementAnimation();
-        PlayPlacementSound();
-        SetParameters();*/
+        ApplyPlacementCost();
 
         blueprintManager.OnBuildingPlaced += BuildingPlacementComplete;
     }
 
-    private void Cost()
+    private void ApplyPlacementCost()
     {
-        Debug.Log($"Cost ({datas})");
-
-        gameManager.ApplyCost(datas.CostType, datas.Cost);
+        gameManager.ApplyCost(datas.CostType, datas.PlacementCost);
     }
-
-    /*private void PlayPlacementAnimation()
-    {
-
-    }
-
-    private void PlayPlacementSound()
-    {
-
-    }
-
-    private void SetParameters()
-    {
-
-    }*/
 
     public virtual void BuildingPlacementComplete()
     {

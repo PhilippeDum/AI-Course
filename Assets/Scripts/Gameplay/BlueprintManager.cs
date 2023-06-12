@@ -23,6 +23,8 @@ public class BlueprintManager : MonoBehaviour
     private Fog fog;
     private int dataIndex;
 
+    private GameManager gameManager;
+
     public event Action OnBuildingPlaced;
 
     #region Getters / Setters
@@ -61,6 +63,8 @@ public class BlueprintManager : MonoBehaviour
 
     private void Start()
     {
+        gameManager = GameManager.instance;
+
         fog = Fog.instance;
     }
 
@@ -90,7 +94,7 @@ public class BlueprintManager : MonoBehaviour
         {
             if (datas[i].Name == name)
             {
-                if (datas[i].CountBuildings < datas[i].MaxCountBuildings)
+                if (datas[i].CountBuildings < datas[i].MaxCountBuildings && gameManager.GetResourceValue(datas[i].CostType) >= datas[i].PlacementCost)
                 {
                     dataIndex = i;
 
@@ -99,13 +103,15 @@ public class BlueprintManager : MonoBehaviour
                     InstantiateBuilding(datas[i].Prefab);
                 }
                 else
-                    Debug.Log($"{datas[i].CountBuildings}/{datas[i].MaxCountBuildings} ==> limit reached for {datas[i].Name}");
+                    Debug.Log($"{datas[i].CountBuildings}/{datas[i].MaxCountBuildings} ==> limit reached for {datas[i].Name} OR not enough resources");
             }
         }
     }
 
     private void InstantiateBuilding(GameObject building)
     {
+        UIManager.instance.HandleUI(false);
+
         blueprintGO = Instantiate(building, Vector3.zero, Quaternion.identity);
         blueprintGO.transform.SetParent(playerBuildings);
         blueprint = blueprintGO.GetComponent<BlueprintController>();
@@ -123,7 +129,6 @@ public class BlueprintManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 150, layerMaskTerrain))
         {
-            //blueprintGO.transform.position = new Vector3(hit.point.x, blueprintGO.transform.position.y, hit.point.z);
             blueprintGO.transform.position = hit.point;
         }
 
@@ -148,14 +153,16 @@ public class BlueprintManager : MonoBehaviour
 
             blueprintGO = null;
             blueprint = null;
+
+            placeBuilding = false;
+
+            UIManager.instance.HandleUI(false);
         }
     }
 
     private void PlaceBlueprint()
     {
         if (blueprintGO == null) return;
-
-        //fog.UnhideUnit(blueprintGO.transform, defoggerRadius);
 
         Transform meshFog = null;
 
@@ -193,8 +200,6 @@ public class BlueprintManager : MonoBehaviour
             {
                 renderer.sharedMaterial = defaultMaterial;
             }
-
-            //transform.GetChild(0).GetComponent<Renderer>().sharedMaterial = defaultMaterial;
         }
         else
         {
@@ -204,8 +209,6 @@ public class BlueprintManager : MonoBehaviour
             {
                 renderer.sharedMaterial = invalidMaterial;
             }
-
-            //transform.GetChild(0).GetComponent<Renderer>().sharedMaterial = invalidMaterial;
         }
     }
 

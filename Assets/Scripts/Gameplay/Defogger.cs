@@ -27,7 +27,19 @@ public class Defogger : MonoBehaviour
         canUnhide = true;
     }
 
-    public IEnumerator Unhide()
+    public void Unhide()
+    {
+        StartCoroutine(Unhiding());
+    }
+
+    public void ContinueUnhide()
+    {
+        canUnhide = true;
+
+        StartCoroutine(Unhiding());
+    }
+
+    public IEnumerator Unhiding()
     {
         while (!canUnhide)
         {

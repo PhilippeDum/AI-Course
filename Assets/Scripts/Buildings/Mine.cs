@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +8,14 @@ public class Mine : Building
     [SerializeField] private Slider miningSlider;
     [SerializeField] private UnitManager currentMiner;
 
-    [Header("Timers")]
-    [SerializeField] private float timer = 10f;
+    [Header("Mining Datas")]
+    [SerializeField] private List<Resources> resourcesType;
+    [SerializeField] private float randomRate = 30f;
+    [SerializeField] private float timeOfMining = 10f;
 
-    bool canStartMining = false;
+    private float timeRemaining = 0f;
+
+    private bool isMining = false;
 
     #region Getters / Setters
 
@@ -21,6 +25,18 @@ public class Mine : Building
         set { currentMiner = value; }
     }
 
+    public List<Resources> ResourcesType
+    {
+        get { return resourcesType; }
+        set { resourcesType = value; }
+    }
+
+    public bool IsMining
+    {
+        get { return isMining; }
+        set { isMining = value; }
+    }
+
     #endregion
 
     public override void OnEnable()
@@ -28,24 +44,48 @@ public class Mine : Building
         base.OnEnable();
     }
 
-    private IEnumerator Mining()
-    {
-        yield return new WaitForSeconds(10f);
-    }
+    #region Mining
 
     private void Update()
     {
         miningSlider.transform.parent.LookAt(Camera.main.transform.position);
 
-        if (currentMiner != null && !canStartMining)
+        if (currentMiner != null && !isMining)
         {
-            canStartMining = true;
+            timeRemaining = timeOfMining;
 
-            StartCoroutine(Mining());
+            miningSlider.maxValue = timeOfMining;
+            miningSlider.value = timeOfMining;
 
-            Debug.Log($"{currentMiner} start mining in {name}");
+            isMining = true;
+        }
+
+        if (isMining)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+
+                miningSlider.value = timeRemaining;
+            }
+            else
+            {
+                Resources resource = GetRandomResource();
+
+                gameManager.AddResouce(resource, Datas.ResourceGain);
+
+                isMining = false;
+            }
         }
     }
 
+    private Resources GetRandomResource()
+    {
+        int random = Random.Range(0, 100);
 
+        if (random <= randomRate) return resourcesType[1];
+        else return resourcesType[0];
+    }
+
+    #endregion
 }

@@ -170,9 +170,6 @@ public class GameManager : MonoBehaviour
 
         uiManager = UIManager.instance;
         uiManager.HandleResourcesUI(wood, iron, gold);
-
-        StartCoroutine(king.GetComponent<UnitManager>().DefoggerMesh.Unhide());
-        StartCoroutine(kingEnemy.GetComponent<UnitManager>().DefoggerMesh.Unhide());
     }
 
     private void Update()
@@ -457,9 +454,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void AddFreeEnergy(int energyToAdd)
+    public int GetResourceValue(Resources resource)
     {
-        Debug.Log($"Add free energy {energyToAdd}");
+        switch (resource)
+        {
+            case Resources.Bois:
+                return wood;
+            case Resources.Fer:
+                return iron;
+            case Resources.Or:
+                return gold;
+            default:
+                Debug.Log($"Error ApplyCost costType={resource}");
+                break;
+        }
+
+        return -1;
     }
 
     #endregion
