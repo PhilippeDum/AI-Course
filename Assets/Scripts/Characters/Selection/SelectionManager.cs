@@ -14,6 +14,7 @@ public class SelectionManager : MonoBehaviour
     private GameManager gameManager;
     private UnitManager currentUnit;
     private ResourceGathering currentResource;
+    private Building currentBuilding;
     private UIManager uiManager;
     private Production productionPlayer;
     private List<ResourceGathering> resources = new List<ResourceGathering>();
@@ -172,6 +173,19 @@ public class SelectionManager : MonoBehaviour
                 if (currentResource.IsRespawning) return;
 
                 workerSelected.StartWork(currentResource);
+            }
+            else if (hit.transform.GetComponent<Building>())
+            {
+                currentBuilding = hit.transform.GetComponent<Building>();
+
+                uiManager.ShowBuildingInfos(currentBuilding);
+
+                /*if (currentBuilding.Selection == null) return;
+
+                if (!currentBuilding.Selection.activeSelf)
+                    currentBuilding.Selection.SetActive(true);
+                else
+                    currentBuilding.Selection.SetActive(false);*/
             }
             else
             {

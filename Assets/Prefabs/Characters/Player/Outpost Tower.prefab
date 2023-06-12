@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ability: 1
+  upgrade: 0
 --- !u!1 &6522715784660845199
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,12 +847,28 @@ MonoBehaviour:
     description: "Peut soigner les unit\xE9s dans la zone"
     unitType: 2
     unitTeam: 0
+    unitModel: {fileID: 1375882130638933021}
+    defoggerMesh: {fileID: 4921713419165788231}
     speed: 0
     stoppingDistance: 1
     maxHealth: 400
     health: 0
     damage: 0
     rangeTimeBetweenAttacks: {x: 2, y: 4}
+    distanceToAttack: 2
+  unitDataUpgraded:
+    name: 
+    description: 
+    unitType: 0
+    unitTeam: 0
+    unitModel: {fileID: 0}
+    defoggerMesh: {fileID: 0}
+    speed: 0
+    stoppingDistance: 1
+    maxHealth: 0
+    health: 0
+    damage: 0
+    rangeTimeBetweenAttacks: {x: 1, y: 3}
     distanceToAttack: 2
   defoggerMesh: {fileID: 4921713419165788231}
   agent: {fileID: 0}
@@ -1024,6 +1041,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55590c5fcd5297a41a917aa70b9a8570, type: 3}
+--- !u!1 &1375882130638933021 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8937149654859811341, guid: 55590c5fcd5297a41a917aa70b9a8570, type: 3}
+  m_PrefabInstance: {fileID: 8007188758567192080}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1752970279765333671 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8596512892908261559, guid: 55590c5fcd5297a41a917aa70b9a8570, type: 3}
@@ -1034,7 +1056,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3121644936185802327, guid: 55590c5fcd5297a41a917aa70b9a8570, type: 3}
   m_PrefabInstance: {fileID: 8007188758567192080}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1375882130638933021}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1f363575f319ed4e8064716b286283f, type: 3}

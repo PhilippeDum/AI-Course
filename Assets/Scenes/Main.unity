@@ -7365,7 +7365,7 @@ MonoBehaviour:
   questDescription: {fileID: 577703301}
   currentQuestType: 0
   timeChangingQuest: 2
-  wood: 0
+  wood: 10
   iron: 0
   gold: 0
   smoothing: 1

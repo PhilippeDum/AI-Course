@@ -294,6 +294,22 @@ MonoBehaviour:
     description: "2\xE8me unit\xE9"
     unitType: 1
     unitTeam: 1
+    unitModel: {fileID: 3937806568443896855}
+    defoggerMesh: {fileID: 4150683148406258385}
+    speed: 5
+    stoppingDistance: 1
+    maxHealth: 200
+    health: 0
+    damage: 30
+    rangeTimeBetweenAttacks: {x: 1, y: 3}
+    distanceToAttack: 2
+  unitDataUpgraded:
+    name: Cavalier Lance Ennemi
+    description: "2\xE8me unit\xE9"
+    unitType: 1
+    unitTeam: 1
+    unitModel: {fileID: 8203362184316183292}
+    defoggerMesh: {fileID: 6134374977013330060}
     speed: 5
     stoppingDistance: 1
     maxHealth: 200
@@ -519,6 +535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ability: 0
+  upgrade: 0
 --- !u!1 &7037121957108468339
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,6 +858,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}
+--- !u!1 &3937806568443896855 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8801614155380146948, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}
+  m_PrefabInstance: {fileID: 5512541480573970195}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4150683148406258385 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8438139384406203842, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}
@@ -918,6 +940,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5a087461bb8c4a45ab4819f7414f728, type: 3}
+--- !u!114 &6134374977013330060 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1075225430119347224, guid: a5a087461bb8c4a45ab4819f7414f728, type: 3}
+  m_PrefabInstance: {fileID: 6614198365613081748}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1f363575f319ed4e8064716b286283f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8203362184316183292 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3031600051192309352, guid: a5a087461bb8c4a45ab4819f7414f728, type: 3}
+  m_PrefabInstance: {fileID: 6614198365613081748}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8832652733467703366 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2403154751692733650, guid: a5a087461bb8c4a45ab4819f7414f728, type: 3}

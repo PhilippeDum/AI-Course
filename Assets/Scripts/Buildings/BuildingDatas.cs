@@ -4,6 +4,7 @@ using UnityEngine;
 public class BuildingDatas
 {
     [SerializeField] private string name;
+    [SerializeField] private string description;
     [SerializeField] private GameObject prefab;
     [SerializeField] private int cost;
     [SerializeField] private Resources costType;
@@ -14,6 +15,7 @@ public class BuildingDatas
     [SerializeField] private int maxCountBuildings = 2;
 
     public string Name => name;
+    public string Description => description;
     public GameObject Prefab => prefab;
     public int Cost => cost;
     public Resources CostType => costType;

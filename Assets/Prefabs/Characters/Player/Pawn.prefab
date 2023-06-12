@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ability: 0
+  upgrade: 0
 --- !u!1 &937240306167808187
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,11 +418,27 @@ MonoBehaviour:
     description: "1\xE8re unit\xE9"
     unitType: 0
     unitTeam: 0
+    unitModel: {fileID: 1329654700028506617}
+    defoggerMesh: {fileID: 4061405439160335986}
     speed: 3.5
     stoppingDistance: 1
     maxHealth: 100
     health: 0
     damage: 10
+    rangeTimeBetweenAttacks: {x: 1, y: 3}
+    distanceToAttack: 2
+  unitDataUpgraded:
+    name: 
+    description: 
+    unitType: 0
+    unitTeam: 0
+    unitModel: {fileID: 0}
+    defoggerMesh: {fileID: 0}
+    speed: 0
+    stoppingDistance: 1
+    maxHealth: 0
+    health: 0
+    damage: 0
     rangeTimeBetweenAttacks: {x: 1, y: 3}
     distanceToAttack: 2
   defoggerMesh: {fileID: 4061405439160335986}
@@ -669,6 +686,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a41749e9410f1d9429c1f3318fffe939, type: 3}
+--- !u!1 &1329654700028506617 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5007865540220536053, guid: a41749e9410f1d9429c1f3318fffe939, type: 3}
+  m_PrefabInstance: {fileID: 6272497003610207500}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1817256648902765379 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5635220849770602063, guid: a41749e9410f1d9429c1f3318fffe939, type: 3}
@@ -679,7 +701,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8021298446065388414, guid: a41749e9410f1d9429c1f3318fffe939, type: 3}
   m_PrefabInstance: {fileID: 6272497003610207500}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1329654700028506617}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1f363575f319ed4e8064716b286283f, type: 3}

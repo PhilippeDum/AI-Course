@@ -24,6 +24,8 @@ public class Unit
     [SerializeField] private string description;
     [SerializeField] private UnitType unitType;
     [SerializeField] private UnitTeam unitTeam;
+    [SerializeField] private GameObject unitModel;
+    [SerializeField] private Defogger defoggerMesh;
 
     [Header("Movement")]
     [SerializeField] private float speed;
@@ -102,6 +104,18 @@ public class Unit
     {
         get { return distanceToAttack; }
         set { distanceToAttack = value; }
+    }
+
+    public GameObject UnitModel
+    {
+        get { return unitModel; }
+        set { unitModel = value; }
+    }
+
+    public Defogger DefoggerMesh
+    {
+        get { return defoggerMesh; }
+        set { defoggerMesh = value; }
     }
 
     #endregion

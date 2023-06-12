@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     private bool endingQuest = false;
 
     [Header("Resources")]
-    [SerializeField] private int wood = 10;
+    [SerializeField] private int wood = 0;
     [SerializeField] private int iron = 0;
     [SerializeField] private int gold = 0;
 
@@ -166,14 +166,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //currentQuestType = QuestType.Production;
         currentQuestType = QuestType.BuildingPlacement;
 
         uiManager = UIManager.instance;
         uiManager.HandleResourcesUI(wood, iron, gold);
 
-        //StartCoroutine(king.GetComponent<UnitManager>().DefoggerMesh.Unhide());
-        //StartCoroutine(kingEnemy.GetComponent<UnitManager>().DefoggerMesh.Unhide());
+        StartCoroutine(king.GetComponent<UnitManager>().DefoggerMesh.Unhide());
+        StartCoroutine(kingEnemy.GetComponent<UnitManager>().DefoggerMesh.Unhide());
     }
 
     private void Update()

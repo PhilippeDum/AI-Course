@@ -36,7 +36,7 @@ public class Building : MonoBehaviour
 
     private void Cost()
     {
-        Debug.Log($"Cost");
+        Debug.Log($"Cost ({datas})");
 
         gameManager.ApplyCost(datas.CostType, datas.Cost);
     }

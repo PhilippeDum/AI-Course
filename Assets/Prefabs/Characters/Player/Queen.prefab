@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ability: 1
+  upgrade: 0
 --- !u!1 &1256763127723432301
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,9 +673,25 @@ MonoBehaviour:
     description: "Pi\xE8ce importante"
     unitType: 3
     unitTeam: 0
+    unitModel: {fileID: 4928666762385645878}
+    defoggerMesh: {fileID: 7918297927057504127}
     speed: 0
     stoppingDistance: 1
     maxHealth: 50
+    health: 0
+    damage: 0
+    rangeTimeBetweenAttacks: {x: 1, y: 3}
+    distanceToAttack: 2
+  unitDataUpgraded:
+    name: 
+    description: 
+    unitType: 0
+    unitTeam: 0
+    unitModel: {fileID: 0}
+    defoggerMesh: {fileID: 0}
+    speed: 0
+    stoppingDistance: 1
+    maxHealth: 0
     health: 0
     damage: 0
     rangeTimeBetweenAttacks: {x: 1, y: 3}
@@ -926,6 +943,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7db346a995e36a4438d693ce28f3a0a6, type: 3}
+--- !u!1 &4928666762385645878 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1716572278131992397, guid: 7db346a995e36a4438d693ce28f3a0a6, type: 3}
+  m_PrefabInstance: {fileID: 6031543841118635643}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5705485555504331660 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2060869383297138167, guid: 7db346a995e36a4438d693ce28f3a0a6, type: 3}

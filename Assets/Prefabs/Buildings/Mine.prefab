@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3850782069560400745}
   - component: {fileID: 8101632202222297654}
   - component: {fileID: 4919066049333708630}
+  - component: {fileID: -578664107485978014}
   m_Layer: 9
   m_Name: Mine
   m_TagString: Untagged
@@ -78,6 +79,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 8, y: 4, z: 8}
   m_Center: {x: 0, y: 4, z: 0}
+--- !u!114 &-578664107485978014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8805973962387086378}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df28d1a628149bf41a713df9190b523f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defoggerMesh: {fileID: 7320615027136202162}
+  gameManager: {fileID: 0}
+  blueprintManager: {fileID: 0}
 --- !u!1 &9028587989452055598
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,6 +157,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7265401686246459284, guid: 9072fab8cc73f1d4ab318d075641f425, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265401686246459284, guid: 9072fab8cc73f1d4ab318d075641f425, type: 3}
       propertyPath: m_Name
       value: Mine Model
       objectReference: {fileID: 0}
@@ -149,5 +169,10 @@ PrefabInstance:
 --- !u!4 &3462341691531160985 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3550909837948022719, guid: 9072fab8cc73f1d4ab318d075641f425, type: 3}
+  m_PrefabInstance: {fileID: 93424144576250406}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7320615027136202162 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7265401686246459284, guid: 9072fab8cc73f1d4ab318d075641f425, type: 3}
   m_PrefabInstance: {fileID: 93424144576250406}
   m_PrefabAsset: {fileID: 0}

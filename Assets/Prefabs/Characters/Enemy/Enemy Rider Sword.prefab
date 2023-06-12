@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ability: 0
+  upgrade: 0
 --- !u!1 &665348966539460441
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +335,22 @@ MonoBehaviour:
     description: "2\xE8me unit\xE9"
     unitType: 1
     unitTeam: 1
+    unitModel: {fileID: 5097811702161513878}
+    defoggerMesh: {fileID: 5296451806603412304}
+    speed: 5
+    stoppingDistance: 1
+    maxHealth: 200
+    health: 0
+    damage: 30
+    rangeTimeBetweenAttacks: {x: 1, y: 3}
+    distanceToAttack: 2
+  unitDataUpgraded:
+    name: "Cavalier Ep\xE9e Ennemi"
+    description: "2\xE8me unit\xE9"
+    unitType: 1
+    unitTeam: 1
+    unitModel: {fileID: 126880342193675133}
+    defoggerMesh: {fileID: 2682838077688924429}
     speed: 5
     stoppingDistance: 1
     maxHealth: 200
@@ -898,11 +915,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5a087461bb8c4a45ab4819f7414f728, type: 3}
+--- !u!1 &126880342193675133 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3031600051192309352, guid: a5a087461bb8c4a45ab4819f7414f728, type: 3}
+  m_PrefabInstance: {fileID: 3157213350374456597}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &759160359572423111 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2403154751692733650, guid: a5a087461bb8c4a45ab4819f7414f728, type: 3}
   m_PrefabInstance: {fileID: 3157213350374456597}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2682838077688924429 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1075225430119347224, guid: a5a087461bb8c4a45ab4819f7414f728, type: 3}
+  m_PrefabInstance: {fileID: 3157213350374456597}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1f363575f319ed4e8064716b286283f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4366958692416970386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -964,6 +997,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}
+--- !u!1 &5097811702161513878 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8801614155380146948, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}
+  m_PrefabInstance: {fileID: 4366958692416970386}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5296451806603412304 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8438139384406203842, guid: 8f4d883661abeb149b73bf350eb059b2, type: 3}

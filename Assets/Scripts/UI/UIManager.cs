@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
 
     private UnitManager currentUnit;
     private ResourceGathering currentElement;
+    private Building currentBuilding;
     private bool showingInfos;
 
     private Button pawnProductButton;
@@ -183,6 +184,32 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void ShowBuildingInfos(Building building)
+    {
+        if (!showingInfos)
+        {
+            showingInfos = true;
+
+            currentBuilding = building;
+
+            mainUI.GetComponent<InterfaceRefs>().InfosTitle.text = $"{currentBuilding.Datas.Name}";
+            mainUI.GetComponent<InterfaceRefs>().InfosDescription.text = currentBuilding.Datas.Description;
+
+            HandleUI(true, false, true);
+
+            SetupBuildingsButtons(false);
+
+            if (currentBuilding != null)
+            {
+                mainUI.GetComponent<InterfaceRefs>().OptionsTitle.text = "Ressource";
+
+                //mainUI.GetComponent<InterfaceRefs>().OptionsDescription.text = $"Temps de collecte : {currentBuilding.TimeCollect}s";
+            }
+
+            showingInfos = false;
+        }
+    }
+
     private void SetupBuildingsButtons(bool state)
     {
         mainUI.GetComponent<InterfaceRefs>().BuildingsButtons.SetActive(state);
@@ -206,11 +233,6 @@ public class UIManager : MonoBehaviour
         refs.WoodCount.text = $"{wood}";
         refs.IronCount.text = $"{iron}";
         refs.GoldCount.text = $"{gold}";
-    }
-
-    private void ShowCost()
-    {
-
     }
 
     public void ShowGameInfos()

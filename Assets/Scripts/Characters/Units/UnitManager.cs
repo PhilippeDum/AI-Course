@@ -8,6 +8,9 @@ public class UnitManager : MonoBehaviour
 {
     [Header("Datas")]
     [SerializeField] private Unit unitData;
+    [SerializeField] private Unit unitDataUpgraded;
+
+    private Unit currentData;
 
     [Header("References")]
     [SerializeField] private Defogger defoggerMesh;
@@ -79,6 +82,8 @@ public class UnitManager : MonoBehaviour
             InitializeMovement();
         }
 
+        SetUnitData(unitData);
+
         InitializeStats();
     }
 
@@ -90,6 +95,12 @@ public class UnitManager : MonoBehaviour
     }
 
     #region Custom Methods
+
+    public void SetUnitData(Unit unitData)
+    {
+        currentData = unitData;
+        defoggerMesh = currentData.DefoggerMesh;
+    }
 
     #region Movement
 
@@ -119,13 +130,13 @@ public class UnitManager : MonoBehaviour
     {
         //unit = GetComponent<UnitManager>();
 
-        unitData.Health = unitData.MaxHealth;
+        currentData.Health = currentData.MaxHealth;
 
-        healthSlider.maxValue = unitData.Health;
-        healthSlider.value = unitData.Health;
+        healthSlider.maxValue = currentData.Health;
+        healthSlider.value = currentData.Health;
 
-        defaultRangeAttacks = unitData.RangeTimeBetweenAttacks;
-        defaultSpeed = unitData.Speed;
+        defaultRangeAttacks = currentData.RangeTimeBetweenAttacks;
+        defaultSpeed = currentData.Speed;
     }
 
     private void UpdateStats()
@@ -134,7 +145,7 @@ public class UnitManager : MonoBehaviour
 
         if (!isDead)
         {
-            if (unitData.TypeUnit != Unit.UnitType.Worker)
+            if (currentData.TypeUnit != Unit.UnitType.Worker)
             {
                 HandleEnemies();
 
@@ -155,7 +166,7 @@ public class UnitManager : MonoBehaviour
 
             if (enemy == null || enemy.isDead) return;
 
-            MoveToPosition(enemy.transform.position, unitData.DistanceToAttack);
+            MoveToPosition(enemy.transform.position, currentData.DistanceToAttack);
 
             canAttack = true;
         }
@@ -175,7 +186,7 @@ public class UnitManager : MonoBehaviour
         {
             canAttack = false;
 
-            timeRemaining = Random.Range(unitData.RangeTimeBetweenAttacks.x, unitData.RangeTimeBetweenAttacks.y);
+            timeRemaining = Random.Range(currentData.RangeTimeBetweenAttacks.x, currentData.RangeTimeBetweenAttacks.y);
 
             inAttack = true;
         }
@@ -219,9 +230,9 @@ public class UnitManager : MonoBehaviour
 
     private IEnumerator Working(ResourceGathering resource)
     {
-        while (gameManager.Distance(transform.position, resource.transform.position) > unitData.DistanceToAttack)
+        while (gameManager.Distance(transform.position, resource.transform.position) > currentData.DistanceToAttack)
         {
-            MoveToPosition(resource.transform.position, unitData.StoppingDistance);
+            MoveToPosition(resource.transform.position, currentData.StoppingDistance);
 
             yield return new WaitForSeconds(0.1f);
         }
@@ -236,27 +247,27 @@ public class UnitManager : MonoBehaviour
 
     private void HandleHealth()
     {
-        if (unitData.Health <= 0)
+        if (currentData.Health <= 0)
         {
-            unitData.Health = 0;
+            currentData.Health = 0;
 
             isDead = false;
 
-            Destroy(gameObject/*, unitData.timeDeath*/);
+            Destroy(gameObject);
         }
 
         healthSlider.transform.parent.LookAt(Camera.main.transform.position);
-        healthSlider.value = unitData.Health;
+        healthSlider.value = currentData.Health;
     }
 
     public void Heal(int value)
     {
-        unitData.Health += value;
+        currentData.Health += value;
     }
 
     public void TakeDamage(int damage)
     {
-        unitData.Health -= damage;
+        currentData.Health -= damage;
     }
 
     public void Boost(float value)
@@ -264,8 +275,8 @@ public class UnitManager : MonoBehaviour
         // Reset Boost
         if (value == -1 && boostActive)
         {
-            unitData.Speed = defaultSpeed;
-            unitData.RangeTimeBetweenAttacks = defaultRangeAttacks;
+            currentData.Speed = defaultSpeed;
+            currentData.RangeTimeBetweenAttacks = defaultRangeAttacks;
 
             boostActive = false;
 
@@ -275,8 +286,8 @@ public class UnitManager : MonoBehaviour
         {
             boostActive = true;
 
-            unitData.Speed *= value;
-            unitData.RangeTimeBetweenAttacks /= 2;
+            currentData.Speed *= value;
+            currentData.RangeTimeBetweenAttacks /= 2;
         }
     }
 
